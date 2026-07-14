@@ -2,18 +2,15 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { getEnv } from '@/lib/validation/env';
 import { createSession } from '@/lib/auth/session';
-import { corsResponse } from '@/lib/auth/cors';
 
 export async function GET(request: NextRequest) {
   const env = getEnv();
   const { searchParams } = new URL(request.url);
   const code = searchParams.get('code');
-  const state = searchParams.get('state');
   const error = searchParams.get('error');
 
   if (error || !code) {
-    const frontendUrl = env.FRONTEND_URL;
-    return NextResponse.redirect(`${frontendUrl}/auth/callback?error=access_denied`);
+    return NextResponse.redirect(`${env.FRONTEND_URL}/auth/callback?error=access_denied`);
   }
 
   try {
@@ -94,10 +91,9 @@ export async function GET(request: NextRequest) {
       createdAt: Date.now(),
     });
 
-    return NextResponse.redirect(env.FRONTEND_URL + '/auth/callback');
+    return NextResponse.redirect(`${env.FRONTEND_URL}/auth/callback`);
   } catch (err) {
     console.error('LINE Login error:', err);
-    const frontendUrl = env.FRONTEND_URL;
-    return NextResponse.redirect(`${frontendUrl}/auth/callback?error=login_failed`);
+    return NextResponse.redirect(`${env.FRONTEND_URL}/auth/callback?error=login_failed`);
   }
 }

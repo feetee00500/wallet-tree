@@ -3,17 +3,16 @@ import { z } from 'zod';
 const envSchema = z.object({
   MONGODB_URI: z.string().min(1, 'MONGODB_URI is required'),
   MONGODB_DB_NAME: z.string().min(1).default('wallet-tree'),
-  LINE_CHANNEL_ID: z.string().min(1),
-  LINE_CHANNEL_SECRET: z.string().min(1),
-  LINE_CHANNEL_ACCESS_TOKEN: z.string().min(1),
-  LINE_LOGIN_CHANNEL_ID: z.string().min(1),
-  LINE_LOGIN_CHANNEL_SECRET: z.string().min(1),
+  LINE_CHANNEL_ID: z.string().optional().default(''),
+  LINE_CHANNEL_SECRET: z.string().optional().default(''),
+  LINE_CHANNEL_ACCESS_TOKEN: z.string().optional().default(''),
+  LINE_LOGIN_CHANNEL_ID: z.string().min(1, 'LINE_LOGIN_CHANNEL_ID is required'),
+  LINE_LOGIN_CHANNEL_SECRET: z.string().min(1, 'LINE_LOGIN_CHANNEL_SECRET is required'),
   LINE_LOGIN_CALLBACK_URL: z.string().url(),
   FRONTEND_URL: z.string().url(),
   ALLOWED_ORIGINS: z.string().default(''),
   SESSION_SECRET: z.string().min(32, 'SESSION_SECRET must be at least 32 characters'),
   CSRF_SECRET: z.string().min(32, 'CSRF_SECRET must be at least 32 characters'),
-  NEXT_PUBLIC_BACKEND_URL: z.string().url().optional(),
 });
 
 export type EnvConfig = z.infer<typeof envSchema>;
