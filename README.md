@@ -5,13 +5,12 @@ Personal income and expense tracking application accessible through LINE chatbot
 ```mermaid
 flowchart LR
     USER[User] --> LINE[LINE Platform]
-    LINE --> API[Next.js Backend on Vercel]
-    API --> DB[(MongoDB Atlas)]
+    LINE --> APP[Next.js App on Vercel]
+    APP --> DB[(MongoDB Atlas)]
 
-    USER --> WEB[React Frontend on Vercel]
-    WEB --> API
-    WEB --> LOGIN[LINE Login]
-    LOGIN --> API
+    USER --> APP
+    APP --> LOGIN[LINE Login]
+    LOGIN --> APP
 ```
 
 ## Features
@@ -29,27 +28,26 @@ flowchart LR
 
 ```
 wallet-tree/
-├── apps/
-│   ├── frontend/          # React + Vite dashboard
-│   └── backend/           # Next.js API server
+├── app/                  # Next.js App (pages + API)
 ├── packages/
 │   └── shared/            # Shared types, schemas, constants
 ├── .github/workflows/     # CI pipeline
 └── pnpm-workspace.yaml
 ```
 
-## React frontend architecture
+## Tech stack
 
-- **Framework**: React 19 with TypeScript
-- **Bundler**: Vite 6
+- **Framework**: Next.js 15 with App Router
 - **Styling**: Tailwind CSS 3
-- **Routing**: React Router 7
 - **Data fetching**: TanStack Query 5
 - **Forms**: React Hook Form with Zod validation
 - **Charts**: Recharts
+- **Database**: MongoDB Atlas (via `mongodb` driver)
+- **Authentication**: LINE Login
+- **Chatbot**: LINE Messaging API
 - **Deployment**: Vercel
 
-### Frontend pages
+### Pages
 
 | Route              | Page              |
 | ------------------ | ----------------- |
@@ -111,24 +109,17 @@ wallet-tree/
 1. Go to [LINE Developers Console](https://developers.line.biz/console/)
 2. Create a new provider and a Messaging API channel
 3. Get `LINE_CHANNEL_ID`, `LINE_CHANNEL_SECRET`, `LINE_CHANNEL_ACCESS_TOKEN`
-4. Set the webhook URL to `https://wallet-tree-api.vercel.app/api/line/webhook`
+4. Set the webhook URL to `https://wallet-tree.vercel.app/api/line/webhook`
 
 ## LINE Login setup
 
 1. In the same LINE provider, create a LINE Login channel
-2. Set the callback URL to `https://wallet-tree-api.vercel.app/api/auth/line/callback`
+2. Set the callback URL to `https://wallet-tree.vercel.app/api/auth/line/callback`
 3. Get `LINE_LOGIN_CHANNEL_ID` and `LINE_LOGIN_CHANNEL_SECRET`
 
 ## Environment variables
 
-### Frontend (`apps/frontend/.env`)
-
-```env
-VITE_APP_NAME=Wallet Tree
-VITE_API_BASE_URL=http://localhost:3000
-```
-
-### Backend (`apps/backend/.env`)
+### App (`app/.env`)
 
 ```env
 MONGODB_URI=mongodb+srv://...
@@ -142,12 +133,11 @@ LINE_LOGIN_CHANNEL_ID=
 LINE_LOGIN_CHANNEL_SECRET=
 LINE_LOGIN_CALLBACK_URL=http://localhost:3000/api/auth/line/callback
 
-FRONTEND_URL=http://localhost:5173
-ALLOWED_ORIGINS=http://localhost:5173
+FRONTEND_URL=http://localhost:3000
+ALLOWED_ORIGINS=http://localhost:3000
 
 SESSION_SECRET=<32-char-min>
 CSRF_SECRET=<32-char-min>
-NEXT_PUBLIC_BACKEND_URL=http://localhost:3000
 ```
 
 ## Local development
@@ -156,12 +146,7 @@ NEXT_PUBLIC_BACKEND_URL=http://localhost:3000
 # Install dependencies
 pnpm install
 
-# Start both frontend and backend
-pnpm dev
-
-# Start individually
-pnpm dev:frontend   # http://localhost:5173
-pnpm dev:backend    # http://localhost:3000
+pnpm dev            # http://localhost:3000
 ```
 
 ## Testing
@@ -178,42 +163,29 @@ The CI pipeline runs on push/PR to `main`:
 
 1. Install dependencies
 2. Build shared package
-3. Frontend typecheck
-4. Backend typecheck
-5. Backend tests
-6. Frontend production build
-7. Backend production build
+3. Typecheck
+4. Tests
+5. Production build
 
-## Deploying the frontend to Vercel
+## Deploying to Vercel
 
 1. Create a Vercel project from the GitHub repository
-2. Set **Root Directory** to `apps/frontend`
-3. Set **Framework Preset** to `Vite`
-4. Add environment variable:
-   - `VITE_API_BASE_URL=https://wallet-tree-api.vercel.app`
+2. Set **Root Directory** to `app`
+3. Set **Framework Preset** to `Next.js`
+4. Add all environment variables
 5. Deploy
 
 Expected URL: `https://wallet-tree.vercel.app`
 
-## Deploying the backend to Vercel
-
-1. Create a second Vercel project from the same repository
-2. Set **Root Directory** to `apps/backend`
-3. Set **Framework Preset** to `Next.js`
-4. Add all backend environment variables
-5. Deploy
-
-Expected URL: `https://wallet-tree-api.vercel.app`
-
 ## Configuring CORS
 
-The backend allows cross-origin requests from configured origins. Set `ALLOWED_ORIGINS` as a comma-separated list:
+The app allows cross-origin requests from configured origins. Set `ALLOWED_ORIGINS` as a comma-separated list:
 
 ```env
-ALLOWED_ORIGINS=https://wallet-tree.vercel.app,http://localhost:5173
+ALLOWED_ORIGINS=https://wallet-tree.vercel.app,http://localhost:3000
 ```
 
-The backend returns `Access-Control-Allow-Origin` with the specific requesting origin, not `*`. Credentials are supported with `Access-Control-Allow-Credentials: true`.
+The app returns `Access-Control-Allow-Origin` with the specific requesting origin, not `*`. Credentials are supported with `Access-Control-Allow-Credentials: true`.
 
 ## Configuring authentication cookies
 
@@ -224,14 +196,14 @@ The session cookie is named `wallet-tree-session` with:
 - `SameSite=Lax` in development
 - 7-day expiration
 
-For cross-domain cookies to work in production, both frontend and backend must use `https`.
+Cookies are same-origin in production (`SameSite=Lax`).
 
 ## Setting the LINE webhook URL
 
 Configure the webhook in the LINE Developers Console:
 
 ```
-https://wallet-tree-api.vercel.app/api/line/webhook
+https://wallet-tree.vercel.app/api/line/webhook
 ```
 
 The webhook verifies the `x-line-signature` header against the raw request body using `LINE_CHANNEL_SECRET`.
