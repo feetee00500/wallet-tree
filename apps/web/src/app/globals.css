@@ -1,0 +1,143 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --color-canvas: 7 7 10;
+  --color-foreground: 250 250 250;
+  --color-surface: 12 12 16;
+  --color-elevated: 18 18 24;
+  --color-muted: 31 31 40;
+  --color-border: 52 52 64;
+  --color-subtle: 166 166 179;
+  --color-accent: 167 139 250;
+  --color-income: 74 222 128;
+  --color-expense: 248 113 113;
+  --color-warning: 251 191 36;
+  --shadow-panel: 0 1px 0 rgb(255 255 255 / 0.025);
+  --radius-control: 5px;
+  --radius-panel: 7px;
+  --duration-ui: 150ms;
+  --ease-ui: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@layer base {
+  * {
+    border-color: rgb(var(--color-border) / 0.55);
+  }
+
+  html {
+    background: rgb(var(--color-canvas));
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-width: 320px;
+    background: rgb(var(--color-canvas));
+    color: rgb(var(--color-foreground));
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+      "Segoe UI", sans-serif;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    text-rendering: optimizeLegibility;
+    letter-spacing: -0.006em;
+  }
+
+  ::selection {
+    background: rgb(var(--color-accent) / 0.32);
+  }
+
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--color-accent));
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .panel {
+    border: 1px solid rgb(var(--color-border) / 0.68);
+    border-radius: var(--radius-panel);
+    background: rgb(var(--color-surface));
+    box-shadow: var(--shadow-panel);
+  }
+
+  .control {
+    min-height: 44px;
+    border: 1px solid rgb(var(--color-border) / 0.82);
+    border-radius: var(--radius-control);
+    background: rgb(var(--color-elevated));
+    color: rgb(var(--color-foreground));
+    transition:
+      border-color var(--duration-ui) var(--ease-ui),
+      background-color var(--duration-ui) var(--ease-ui),
+      opacity var(--duration-ui) var(--ease-ui),
+      transform var(--duration-ui) var(--ease-ui);
+  }
+
+  .control:hover:not(:disabled) {
+    border-color: rgb(var(--color-subtle) / 0.68);
+  }
+
+  .control:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+
+  .money {
+    font-variant-numeric: tabular-nums lining-nums;
+    letter-spacing: -0.025em;
+  }
+
+  .technical-label {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+      "Liberation Mono", monospace;
+    font-size: 0.6875rem;
+    line-height: 1rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .data-row {
+    display: grid;
+    align-items: center;
+    border-bottom: 1px solid rgb(var(--color-border) / 0.52);
+  }
+
+  .data-row:last-child {
+    border-bottom: 0;
+  }
+
+  .ledger-grid {
+    background-image:
+      linear-gradient(rgb(var(--color-border) / 0.13) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(var(--color-border) / 0.13) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: linear-gradient(to bottom, black, transparent 88%);
+  }
+
+  .safe-bottom {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

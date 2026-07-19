@@ -2,10 +2,13 @@ node_modules/
 dist/
 .next/
 .env
-.env.local
-.env.*.local
+.env.*
+!.env.example
+!**/.env.example
 *.log
 .DS_Store
 coverage/
 .turbo/
+.pnpm-store/
 *.tsbuildinfo
+artifacts/

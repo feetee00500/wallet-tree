@@ -23,14 +23,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build shared package
-        run: pnpm --filter @wallet-tree/shared build
+      - name: Lint
+        run: pnpm lint
 
       - name: Typecheck
-        run: pnpm --filter app typecheck
+        run: pnpm typecheck
 
       - name: Tests
-        run: pnpm --filter app test
+        run: pnpm test
 
       - name: Build
-        run: pnpm --filter app build
+        run: pnpm build

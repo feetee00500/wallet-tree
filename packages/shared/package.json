@@ -14,13 +14,16 @@
   "scripts": {
     "build": "tsc",
     "typecheck": "tsc --noEmit",
-    "lint": "echo 'no linter configured'"
+    "lint": "eslint src",
+    "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\""
   },
   "files": ["src"],
   "dependencies": {
     "zod": "^3.25.76"
   },
   "devDependencies": {
+    "@wallet-tree/eslint-config": "workspace:*",
+    "eslint": "^9.0.0",
     "typescript": "^5.7.0"
   }
 }

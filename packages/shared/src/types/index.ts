@@ -2,16 +2,23 @@ import { TransactionType, TransactionSource } from '../constants';
 
 export interface UserProfile {
   _id: string;
-  lineUserId: string;
+  lineUserId?: string;
+  authProvider?: 'line' | 'local_admin';
+  role?: 'user' | 'admin';
+  status?: 'active' | 'disabled';
+  username?: string;
+  email?: string;
   displayName: string;
   pictureUrl?: string;
   statusMessage?: string;
-  preferredCurrency: string;
-  timezone: string;
-  language: string;
+  preferredCurrency?: string;
+  timezone?: string;
+  language?: string;
+  mustChangePassword?: boolean;
+  lastLoginAt?: string;
   createdAt: string;
   updatedAt: string;
-  lastActiveAt: string;
+  lastActiveAt?: string;
 }
 
 export interface Category {
@@ -64,6 +71,10 @@ export interface MonthlySummary {
   averageDailyExpense: number;
   highestExpense: number;
   expenseByCategory: { categoryName: string; amount: number; percentage: number }[];
+  incomeByCategory: { categoryName: string; amount: number; percentage: number }[];
+  dailyTrend: { day: number; income: number; expenses: number; net: number }[];
+  highestSpendingDay: { day: number; amount: number } | null;
+  savingsRate: number | null;
   previousMonth: {
     income: number;
     expenses: number;
