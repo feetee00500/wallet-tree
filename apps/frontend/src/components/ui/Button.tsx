@@ -11,15 +11,15 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantClass: Record<ButtonVariant, string> = {
   primary:
-    'bg-emerald-500 text-zinc-950 hover:bg-emerald-400 focus-visible:ring-emerald-500/50 disabled:bg-emerald-500/40 disabled:text-zinc-900/60',
+    'border border-cyan-400/40 bg-cyan-500 text-white hover:bg-cyan-400 focus-visible:ring-cyan-400/50 disabled:bg-cyan-500/40 disabled:text-zinc-500',
   secondary:
     'bg-zinc-800 text-zinc-100 hover:bg-zinc-700 focus-visible:ring-zinc-500/40 disabled:bg-zinc-800/60 disabled:text-zinc-500',
   ghost:
-    'bg-transparent text-zinc-300 hover:text-emerald-400 focus-visible:ring-emerald-500/30',
+    'bg-transparent text-zinc-300 hover:bg-zinc-800 hover:text-cyan-400 focus-visible:ring-cyan-400/30',
   outline:
     'border border-zinc-700 bg-transparent text-zinc-100 hover:border-zinc-600 hover:bg-zinc-800/50 focus-visible:ring-zinc-500/40',
   danger:
-    'bg-rose-500 text-zinc-950 hover:bg-rose-400 focus-visible:ring-rose-500/50 disabled:bg-rose-500/40 disabled:text-zinc-900/60',
+    'border border-rose-400/40 bg-rose-500 text-white hover:bg-rose-400 focus-visible:ring-rose-500/50 disabled:bg-rose-500/40 disabled:text-zinc-500',
 };
 
 const sizeClass: Record<ButtonSize, string> = {
@@ -43,7 +43,7 @@ export function Button({
     <button
       type={type}
       disabled={isDisabled}
-      className={`inline-flex items-center justify-center rounded-xl font-semibold tracking-wide transition duration-200 focus:outline-none focus-visible:ring-2 active:scale-95 hover:scale-[1.02] disabled:cursor-not-allowed disabled:hover:scale-100 disabled:active:scale-100 ${variantClass[variant]} ${sizeClass[size]} ${className}`}
+      className={`inline-flex items-center justify-center rounded-md font-semibold tracking-wide transition duration-100 focus:outline-none focus-visible:ring-2 disabled:cursor-not-allowed ${variantClass[variant]} ${sizeClass[size]} ${className}`}
       {...rest}
     >
       {loading ? <span>กำลังดำเนินการ...</span> : children}

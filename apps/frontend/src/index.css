@@ -1,8 +1,28 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Sarabun", system-ui, sans-serif;
-  --font-heading: "Kanit", system-ui, sans-serif;
+  --font-sans: "Inter", "Noto Sans Thai", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-heading: "Inter", "Noto Sans Thai", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+
+  --color-zinc-950: #0d1117;
+  --color-zinc-900: #161b22;
+  --color-zinc-800: #21262d;
+  --color-zinc-700: #30363d;
+  --color-zinc-600: #484f58;
+  --color-zinc-500: #8b949e;
+  --color-zinc-400: #8b949e;
+  --color-zinc-300: #c9d1d9;
+  --color-zinc-200: #d0d7de;
+  --color-zinc-100: #e6edf3;
+  --color-cyan-500: #388bfd;
+  --color-cyan-400: #58a6ff;
+  --color-emerald-500: #2ea043;
+  --color-emerald-400: #3fb950;
+  --color-rose-500: #ee3124;
+  --color-rose-400: #ff7b72;
+  --color-orange-500: #ff6b00;
+  --color-orange-400: #ff8a33;
 }
 
 @layer base {
@@ -23,6 +43,17 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    font-size: 13px;
+    line-height: 1.5;
+    background-image:
+      linear-gradient(rgb(48 54 61 / 0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(48 54 61 / 0.08) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  ::selection {
+    background: rgb(88 166 255 / 0.28);
+    color: #e6edf3;
   }
 
   button:not(:disabled),
@@ -42,6 +73,16 @@
   h3,
   h4 {
     font-family: var(--font-heading);
+  }
+
+  :focus-visible {
+    outline: 2px solid #58a6ff;
+    outline-offset: 2px;
+  }
+
+  .font-mono,
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
   }
 
   input[type="date"]::-webkit-calendar-picker-indicator {
@@ -111,6 +152,22 @@
     to {
       opacity: 1;
       transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes signalIn {
+    from { background-color: rgb(88 166 255 / 0.16); }
+    to { background-color: transparent; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
     }
   }
 }

@@ -25,8 +25,8 @@ const sizeClass = {
 
 const toneActive = {
   income: 'bg-emerald-500/15 text-emerald-300 ring-emerald-500/40',
-  expense: 'bg-rose-500/15 text-rose-300 ring-rose-500/40',
-  neutral: 'bg-zinc-800 text-zinc-100 ring-zinc-700',
+  expense: 'bg-orange-500/15 text-orange-400 ring-orange-500/40',
+  neutral: 'bg-cyan-500/10 text-cyan-400 ring-cyan-400/30',
 };
 
 export function SegmentedControl<T extends string>({
@@ -45,7 +45,7 @@ export function SegmentedControl<T extends string>({
       <div
         role="tablist"
         aria-label={ariaLabel ?? label}
-        className={`inline-flex items-center gap-1 rounded-xl border border-zinc-800 bg-zinc-900 p-1 ${
+        className={`inline-flex items-center gap-1 rounded-md border border-zinc-700 bg-zinc-900 p-1 ${
           fullWidth ? 'w-full' : ''
         }`}
       >
@@ -60,7 +60,7 @@ export function SegmentedControl<T extends string>({
               aria-selected={isActive}
               disabled={disabled}
               onClick={() => onChange(option.value)}
-              className={`inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg px-3 font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/40 disabled:cursor-not-allowed disabled:opacity-60 ${
+              className={`inline-flex flex-1 items-center justify-center gap-1.5 rounded-sm px-3 font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/40 disabled:cursor-not-allowed disabled:opacity-60 ${
                 sizeClass[size]
               } ${
                 isActive

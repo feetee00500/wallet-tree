@@ -4,7 +4,7 @@ interface SkeletonProps {
 }
 
 const variantClass: Record<NonNullable<SkeletonProps['variant']>, string> = {
-  block: 'rounded-xl',
+  block: 'rounded-md',
   line: 'h-3 rounded-full',
   circle: 'rounded-full',
 };

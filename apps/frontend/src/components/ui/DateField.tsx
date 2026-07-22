@@ -43,10 +43,10 @@ export function DateField({
   };
 
   const wrapperClass = [
-    'relative flex min-h-[44px] items-center rounded-xl border bg-zinc-900 transition',
+    'relative flex min-h-[44px] items-center rounded-md border bg-zinc-800 transition',
     error
       ? 'border-rose-500/60'
-      : 'border-zinc-800 hover:border-zinc-700 focus-within:border-emerald-500/60 focus-within:ring-2 focus-within:ring-emerald-500/30',
+      : 'border-zinc-700 hover:border-zinc-600 focus-within:border-cyan-400/70 focus-within:ring-2 focus-within:ring-cyan-400/30',
   ].join(' ');
 
   return (
@@ -74,7 +74,7 @@ export function DateField({
           onClick={handleIconClick}
           tabIndex={-1}
           aria-label="เปิดปฏิทิน"
-          className="absolute right-1.5 flex h-9 w-9 items-center justify-center rounded-lg text-zinc-400 transition hover:bg-zinc-800 hover:text-emerald-400"
+          className="absolute right-1.5 flex h-9 w-9 items-center justify-center rounded-sm text-zinc-400 transition hover:bg-zinc-700 hover:text-cyan-400"
         >
           <CalendarIcon className="h-5 w-5" />
         </button>

@@ -20,11 +20,11 @@ export function TransactionsTable({
 }: TransactionsTableProps) {
   return (
     <>
-      <div className="hidden overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900 shadow-lg sm:block">
-        <table className="w-full text-sm">
+      <div className="hidden overflow-hidden rounded-md border border-zinc-700 bg-zinc-900 shadow-[0_1px_4px_rgba(0,0,0,0.4)] sm:block">
+        <table className="w-full text-[13px]">
           <thead className="bg-zinc-900/80 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">
             <tr>
-              <th className="px-4 py-3 font-medium">วันที่</th>
+              <th className="px-4 py-2.5 font-medium">วันที่</th>
               <th className="px-4 py-3 font-medium">รายละเอียด</th>
               <th className="px-4 py-3 font-medium">หมวดหมู่</th>
               <th className="px-4 py-3 font-medium">ประเภท</th>
@@ -58,7 +58,7 @@ export function TransactionsTable({
                   </td>
                   <td
                     className={`whitespace-nowrap px-4 py-3 text-right font-semibold tabular-nums ${
-                      isIncome ? 'text-emerald-400' : 'text-rose-400'
+                      isIncome ? 'text-emerald-400' : 'text-orange-400'
                     }`}
                   >
                     {isIncome ? '+' : '-'}
@@ -99,7 +99,7 @@ export function TransactionsTable({
           return (
             <li
               key={transaction.id}
-              className="rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-3 shadow-lg"
+              className="rounded-md border border-zinc-700 bg-zinc-900 px-4 py-3 shadow-[0_1px_4px_rgba(0,0,0,0.4)]"
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex min-w-0 items-center gap-3">
@@ -115,7 +115,7 @@ export function TransactionsTable({
                 </div>
                 <span
                   className={`shrink-0 text-sm font-semibold tabular-nums ${
-                    isIncome ? 'text-emerald-400' : 'text-rose-400'
+                    isIncome ? 'text-emerald-400' : 'text-orange-400'
                   }`}
                 >
                   {isIncome ? '+' : '-'}

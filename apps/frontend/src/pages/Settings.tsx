@@ -8,7 +8,7 @@ import { useAuth } from '../contexts/AuthContext';
 export function Settings() {
   const { user, logout } = useAuth();
   return (
-    <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 animate-[fadeIn_300ms_ease-out]">
+    <div className="mx-auto flex w-full max-w-3xl flex-col gap-4 animate-[fadeIn_200ms_ease-out]">
       <PageHeader title="ตั้งค่า" subtitle="บัญชี LINE และการเชื่อมต่อ" />
       <Card className="px-5 py-5 sm:px-6 sm:py-6">
         <h2 className="font-heading text-lg font-semibold text-zinc-100">บัญชีของฉัน</h2>

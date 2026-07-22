@@ -20,13 +20,13 @@ interface PaletteEntry {
 
 const palettes: Record<Palette, PaletteEntry[]> = {
   expense: [
-    { hex: '#f43f5e', dotClass: 'bg-rose-500' },
-    { hex: '#f97316', dotClass: 'bg-orange-500' },
-    { hex: '#fb923c', dotClass: 'bg-orange-400' },
-    { hex: '#f59e0b', dotClass: 'bg-amber-500' },
-    { hex: '#dc2626', dotClass: 'bg-red-600' },
-    { hex: '#fbbf24', dotClass: 'bg-amber-400' },
-    { hex: '#fda4af', dotClass: 'bg-rose-300' },
+    { hex: '#ff6b00', dotClass: 'bg-orange-500' },
+    { hex: '#f5a623', dotClass: 'bg-amber-500' },
+    { hex: '#ff8a33', dotClass: 'bg-orange-400' },
+    { hex: '#d29922', dotClass: 'bg-amber-600' },
+    { hex: '#a371f7', dotClass: 'bg-violet-400' },
+    { hex: '#db6d28', dotClass: 'bg-orange-600' },
+    { hex: '#8b949e', dotClass: 'bg-zinc-500' },
   ],
   income: [
     { hex: '#10b981', dotClass: 'bg-emerald-500' },
@@ -48,8 +48,8 @@ export function CategoryPieChart({ title, data, palette, className = '' }: Categ
   const isEmpty = data.length === 0;
 
   return (
-    <Card className={`flex flex-col px-5 py-4 ${className}`}>
-      <h3 className="font-heading text-base font-semibold text-zinc-100">{title}</h3>
+    <Card className={`flex flex-col px-4 py-4 ${className}`}>
+      <h3 className="font-heading text-sm font-semibold text-zinc-100">{title}</h3>
       {isEmpty ? (
         <EmptyState
           title="ยังไม่มีข้อมูลเดือนนี้"
@@ -68,7 +68,7 @@ export function CategoryPieChart({ title, data, palette, className = '' }: Categ
                   innerRadius="58%"
                   outerRadius="90%"
                   paddingAngle={data.length > 1 ? 2 : 0}
-                  stroke="#09090b"
+                  stroke="#0d1117"
                   strokeWidth={2}
                   isAnimationActive={false}
                   label={false}
@@ -80,12 +80,12 @@ export function CategoryPieChart({ title, data, palette, className = '' }: Categ
                 </Pie>
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: '#18181b',
-                    border: '1px solid #27272a',
-                    borderRadius: 12,
+                    backgroundColor: '#161b22',
+                    border: '1px solid #30363d',
+                    borderRadius: 4,
                   }}
-                  itemStyle={{ color: '#f4f4f5' }}
-                  labelStyle={{ color: '#a1a1aa' }}
+                  itemStyle={{ color: '#e6edf3' }}
+                  labelStyle={{ color: '#8b949e' }}
                   formatter={(value: number, _name: string, item) => {
                     const payload = item.payload as CategoryBreakdown;
                     return [`${formatCurrency(value)} (${payload.percentage}%)`, payload.name];

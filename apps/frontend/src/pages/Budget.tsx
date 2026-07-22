@@ -190,7 +190,7 @@ export function Budget() {
   const modalCurrentAmount = modal.kind === 'edit' ? modal.currentAmount : undefined;
 
   return (
-    <div className="flex flex-col gap-6 animate-[fadeIn_300ms_ease-out]">
+    <div className="flex flex-col gap-4 animate-[fadeIn_200ms_ease-out]">
       <PageHeader title="งบประมาณ" subtitle={`${THAI_MONTH_NAMES[month - 1]} ${year}`} />
 
       {error ? <ErrorState message={error} /> : null}
@@ -326,7 +326,7 @@ function BudgetItemRow({ row, onSet, onEdit }: BudgetItemRowProps) {
   const barWidth = Math.min(row.percentage, 100);
 
   return (
-    <li className="rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-4 shadow-lg transition hover:border-zinc-700">
+    <li className="rounded-md border border-zinc-700 bg-zinc-900 px-4 py-4 shadow-[0_1px_4px_rgba(0,0,0,0.4)] transition hover:bg-zinc-800/40">
       <div className="flex items-center justify-between gap-4">
         <div className="flex min-w-0 items-center gap-3">
           <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-zinc-800 text-xl">

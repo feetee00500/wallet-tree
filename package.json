@@ -11,6 +11,7 @@
     "backend:dev": "pnpm --filter backend start:dev",
     "db:generate": "pnpm --filter @wallet-tree/database prisma:generate",
     "db:migrate": "pnpm --filter @wallet-tree/database prisma:migrate",
+    "db:deploy": "pnpm --filter @wallet-tree/database prisma:deploy",
     "db:seed": "pnpm --filter @wallet-tree/database db:seed",
     "db:studio": "pnpm --filter @wallet-tree/database prisma:studio",
     "bootstrap": "pnpm install && pnpm db:generate && pnpm build && pnpm db:migrate && pnpm db:seed"

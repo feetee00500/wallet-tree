@@ -31,7 +31,7 @@ wallet-tree/
 
 ## Setup
 
-ต้องมี Node.js 22+, pnpm 11 และ PostgreSQL
+ต้องมี Node.js 22.12+, pnpm 11 และ PostgreSQL
 
 ```bash
 cp .env.example .env
@@ -64,4 +64,22 @@ http://localhost:3000/api/auth/line/callback
 pnpm typecheck
 pnpm test
 pnpm build
+```
+
+## Vercel deployment
+
+GitHub repository เดียวเชื่อมกับ Vercel สองโปรเจกต์:
+
+- `wallet-tree` — root `apps/frontend`, Vite, `https://wallet-tree.vercel.app`
+- `wallet-tree-backend` — root `apps/backend`, NestJS, `https://wallet-tree-backend.vercel.app`
+
+เมื่อ push branch `main` ไป GitHub ทั้งสองโปรเจกต์จะ deploy อัตโนมัติ โดย frontend ต้องมี
+`VITE_API_BASE_URL` และ backend ต้องมีตัวแปรตาม `.env.example` งาน recurring ใช้ Vercel Cron
+เรียก `/api/cron/recurring` พร้อม `CRON_SECRET` แทน scheduler ที่รันค้างใน process
+
+หลังสร้างหรือเปลี่ยน production PostgreSQL ให้ apply migrations และ seed หนึ่งครั้ง:
+
+```bash
+DATABASE_URL='<production-postgres-url>' pnpm db:deploy
+DATABASE_URL='<production-postgres-url>' ADMIN_USERNAME='<admin>' ADMIN_PASSWORD='<password>' pnpm db:seed
 ```

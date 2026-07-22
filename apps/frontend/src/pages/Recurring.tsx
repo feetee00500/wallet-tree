@@ -107,7 +107,7 @@ export function Recurring() {
   );
 
   return (
-    <div className="flex flex-col gap-6 animate-[fadeIn_300ms_ease-out]">
+    <div className="flex flex-col gap-4 animate-[fadeIn_200ms_ease-out]">
       <PageHeader
         title="รายการประจำ"
         subtitle="ระบบจะสร้างรายการให้อัตโนมัติตามวันที่กำหนด"
@@ -182,12 +182,12 @@ interface RecurringCardProps {
 
 function RecurringCard({ item, onEdit, onDelete, onToggleActive }: RecurringCardProps) {
   const isIncome = item.type === TransactionType.INCOME;
-  const amountClass = isIncome ? 'text-emerald-400' : 'text-rose-400';
+  const amountClass = isIncome ? 'text-emerald-400' : 'text-orange-400';
   const sign = isIncome ? '+' : '-';
 
   return (
     <li
-      className={`flex flex-col gap-4 rounded-xl border bg-zinc-900 px-4 py-4 shadow-lg transition hover:border-zinc-700 ${
+      className={`flex flex-col gap-4 rounded-md border bg-zinc-900 px-4 py-4 shadow-[0_1px_4px_rgba(0,0,0,0.4)] transition hover:bg-zinc-800/40 ${
         item.active ? 'border-zinc-800' : 'border-zinc-800/60 opacity-75'
       }`}
     >

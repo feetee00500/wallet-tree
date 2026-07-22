@@ -102,9 +102,9 @@ export function Dashboard() {
   }, [refreshVersion]);
 
   return (
-    <div className="flex flex-col gap-6 animate-[fadeIn_300ms_ease-out]">
+    <div className="flex flex-col gap-4 animate-[fadeIn_200ms_ease-out]">
       <PageHeader
-        title="ภาพรวม Updated"
+        title="ภาพรวมการเงิน"
         subtitle={`สรุปประจำเดือน ${THAI_MONTH_NAMES[month - 1]} ${year}`}
         action={<MonthPicker month={month} year={year} onChange={handleMonthChange} />}
       />
@@ -162,7 +162,7 @@ interface ChartsSectionProps {
 function ChartsSection({ summary, loading, error }: ChartsSectionProps) {
   if (loading || !summary) {
     return (
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
         <Skeleton className="h-80" />
         <Skeleton className="h-80" />
       </div>
@@ -177,7 +177,7 @@ function ChartsSection({ summary, loading, error }: ChartsSectionProps) {
         <TopCategoriesCard data={summary.byCategoryExpense} />
         <DailyBarChart data={summary.dailyTotals} />
       </div>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
         <CategoryPieChart title="รายจ่ายแยกหมวดหมู่" data={summary.byCategoryExpense} palette="expense" />
         <CategoryPieChart title="รายรับแยกหมวดหมู่" data={summary.byCategoryIncome} palette="income" />
       </div>

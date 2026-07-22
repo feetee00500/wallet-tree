@@ -8,9 +8,9 @@ interface CardProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const variantClass: Record<CardVariant, string> = {
-  default: 'bg-zinc-900 border-zinc-800',
-  muted: 'bg-zinc-900/60 border-zinc-800',
-  subtle: 'bg-zinc-900/40 border-zinc-800/80',
+  default: 'bg-zinc-900 border-zinc-700',
+  muted: 'bg-zinc-900/85 border-zinc-700',
+  subtle: 'bg-zinc-900/60 border-zinc-800',
 };
 
 export function Card({
@@ -21,8 +21,8 @@ export function Card({
 }: CardProps) {
   return (
     <div
-      className={`rounded-xl border shadow-lg ${variantClass[variant]} ${
-        interactive ? 'transition hover:border-zinc-700 hover:bg-zinc-900/80' : ''
+      className={`rounded-md border shadow-[0_1px_4px_rgba(0,0,0,0.4)] ${variantClass[variant]} ${
+        interactive ? 'transition hover:border-zinc-600 hover:bg-zinc-800/80' : ''
       } ${className}`}
       {...rest}
     />

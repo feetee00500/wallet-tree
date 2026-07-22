@@ -29,14 +29,14 @@ export function Modal({ open, onClose, title, children, footer, closeOnBackdrop 
 
   return (
     <div
-      className="fixed inset-0 z-50 flex bg-black/70 backdrop-blur-sm sm:items-center sm:justify-center sm:p-4"
+      className="fixed inset-0 z-50 flex bg-black/80 backdrop-blur-sm sm:items-center sm:justify-center sm:p-4"
       role="dialog"
       aria-modal="true"
       aria-label={title}
       onClick={closeOnBackdrop ? onClose : undefined}
     >
       <div
-        className="relative flex min-h-screen w-full flex-col bg-zinc-900 text-zinc-100 sm:min-h-0 sm:max-h-[90vh] sm:max-w-lg sm:rounded-xl sm:border sm:border-zinc-800 sm:shadow-xl animate-[fadeIn_200ms_ease-out]"
+        className="relative flex min-h-screen w-full flex-col bg-zinc-900 text-zinc-100 sm:min-h-0 sm:max-h-[90vh] sm:max-w-lg sm:rounded-md sm:border sm:border-zinc-700 sm:shadow-[0_8px_40px_rgba(0,0,0,0.8)] animate-[fadeIn_150ms_ease-out]"
         onClick={(event) => event.stopPropagation()}
       >
         <header className="flex items-center justify-between border-b border-zinc-800 px-5 py-4">
@@ -44,7 +44,7 @@ export function Modal({ open, onClose, title, children, footer, closeOnBackdrop 
           <button
             type="button"
             aria-label="ปิด"
-            className="flex h-9 w-9 items-center justify-center rounded-full text-zinc-400 transition hover:bg-zinc-800 hover:text-zinc-100"
+            className="flex h-9 w-9 items-center justify-center rounded-sm text-zinc-400 transition hover:bg-zinc-800 hover:text-zinc-100"
             onClick={onClose}
           >
             <XIcon className="h-5 w-5" />

@@ -36,8 +36,8 @@ export function DailyBarChart({ data, className = '' }: DailyBarChartProps) {
   const isEmpty = data.every((entry) => entry.income === 0 && entry.expense === 0);
 
   return (
-    <Card className={`flex flex-col px-5 py-4 ${className}`}>
-      <h3 className="font-heading text-base font-semibold text-zinc-100">รายรับ/รายจ่ายรายวัน</h3>
+    <Card className={`flex flex-col px-4 py-4 ${className}`}>
+      <h3 className="font-heading text-sm font-semibold text-zinc-100">รายรับ/รายจ่ายรายวัน</h3>
       {isEmpty ? (
         <EmptyState
           title="ยังไม่มีข้อมูลเดือนนี้"
@@ -48,33 +48,33 @@ export function DailyBarChart({ data, className = '' }: DailyBarChartProps) {
         <div className="mt-3 h-72 w-full">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={toChartData(data)} margin={{ top: 8, right: 8, left: -8, bottom: 0 }}>
-              <CartesianGrid stroke="#27272a" strokeDasharray="3 3" vertical={false} />
+              <CartesianGrid stroke="#30363d" strokeDasharray="3 3" vertical={false} />
               <XAxis
                 dataKey="day"
-                stroke="#71717a"
+                stroke="#8b949e"
                 fontSize={11}
                 tickLine={false}
-                axisLine={{ stroke: '#27272a' }}
+                axisLine={{ stroke: '#30363d' }}
                 interval="preserveStartEnd"
                 minTickGap={8}
               />
               <YAxis
-                stroke="#71717a"
+                stroke="#8b949e"
                 fontSize={11}
                 tickLine={false}
-                axisLine={{ stroke: '#27272a' }}
+                axisLine={{ stroke: '#30363d' }}
                 tickFormatter={(value: number) => formatCompactCurrency(value)}
                 width={60}
               />
               <Tooltip
                 cursor={{ fill: 'rgba(255,255,255,0.04)' }}
                 contentStyle={{
-                  backgroundColor: '#18181b',
-                  border: '1px solid #27272a',
-                  borderRadius: 12,
+                  backgroundColor: '#161b22',
+                  border: '1px solid #30363d',
+                  borderRadius: 4,
                 }}
-                itemStyle={{ color: '#f4f4f5' }}
-                labelStyle={{ color: '#a1a1aa', fontWeight: 600 }}
+                itemStyle={{ color: '#e6edf3' }}
+                labelStyle={{ color: '#8b949e', fontWeight: 600 }}
                 labelFormatter={(label: number) => `วันที่ ${label}`}
                 formatter={(value: number, name: string) => [formatCurrency(value), name]}
               />
@@ -82,8 +82,8 @@ export function DailyBarChart({ data, className = '' }: DailyBarChartProps) {
                 iconType="circle"
                 wrapperStyle={{ paddingTop: 8, fontSize: 12, color: '#a1a1aa' }}
               />
-              <Bar dataKey="income" fill="#10b981" name="รายรับ" radius={[4, 4, 0, 0]} />
-              <Bar dataKey="expense" fill="#f43f5e" name="รายจ่าย" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="income" fill="#3fb950" name="รายรับ" radius={[2, 2, 0, 0]} />
+              <Bar dataKey="expense" fill="#ff6b00" name="รายจ่าย" radius={[2, 2, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>

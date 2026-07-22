@@ -187,14 +187,14 @@ export function Select({
   };
 
   const triggerClass = [
-    'group flex min-h-[44px] w-full items-center justify-between gap-3 rounded-xl border bg-zinc-900 px-3.5 text-left text-sm transition outline-none',
+    'group flex min-h-[44px] w-full items-center justify-between gap-3 rounded-md border bg-zinc-800 px-3 text-left text-sm transition outline-none',
     error
       ? 'border-rose-500/60'
       : open
-        ? 'border-emerald-500/60 ring-2 ring-emerald-500/30'
+        ? 'border-cyan-400/70 ring-2 ring-cyan-400/30'
         : 'border-zinc-800 hover:border-zinc-700',
     disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer',
-    'focus-visible:ring-2 focus-visible:ring-emerald-500/40 focus-visible:border-emerald-500/60',
+    'focus-visible:ring-2 focus-visible:ring-cyan-400/40 focus-visible:border-cyan-400/70',
     className,
   ].join(' ');
 
@@ -233,7 +233,7 @@ export function Select({
         </span>
         <ChevronDownIcon
           className={`h-4 w-4 shrink-0 transition-all duration-200 ${
-            open ? 'rotate-180 text-emerald-400' : 'text-zinc-400 group-hover:text-zinc-200'
+            open ? 'rotate-180 text-cyan-400' : 'text-zinc-400 group-hover:text-zinc-200'
           }`}
         />
       </button>
@@ -244,7 +244,7 @@ export function Select({
               ref={popoverRef}
               id={listboxId}
               role="listbox"
-              className="fixed z-[60] overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900 shadow-2xl shadow-black/60 ring-1 ring-black/40"
+              className="fixed z-[60] overflow-hidden rounded-md border border-zinc-700 bg-zinc-900 shadow-2xl shadow-black/60 ring-1 ring-black/40"
               style={{
                 top: position.top,
                 left: position.left,
@@ -282,7 +282,7 @@ export function Select({
                           : 'cursor-pointer',
                         !option.disabled && isHighlighted ? 'bg-zinc-800 text-zinc-100' : '',
                         !option.disabled && !isHighlighted && isSelected
-                          ? 'text-emerald-400'
+                          ? 'text-cyan-400'
                           : '',
                         !option.disabled && !isHighlighted && !isSelected ? 'text-zinc-200' : '',
                       ].join(' ')}
@@ -300,7 +300,7 @@ export function Select({
                           <span className="text-xs text-zinc-500">{option.hint}</span>
                         ) : null}
                         {isSelected ? (
-                          <CheckIcon className="h-4 w-4 text-emerald-400" />
+                          <CheckIcon className="h-4 w-4 text-cyan-400" />
                         ) : null}
                       </span>
                     </li>

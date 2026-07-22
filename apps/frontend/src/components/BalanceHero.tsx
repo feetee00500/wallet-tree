@@ -60,7 +60,7 @@ function SparkTooltip({ active, payload }: { active?: boolean; payload?: SparkTo
   const point = payload[0]?.payload;
   if (!point) return null;
   return (
-    <div className="rounded-lg border border-zinc-800 bg-zinc-900/95 px-2.5 py-1.5 text-xs shadow-lg">
+    <div className="rounded-sm border border-zinc-700 bg-zinc-900/95 px-2.5 py-1.5 text-xs shadow-lg">
       <p className="text-zinc-500">วันที่ {point.day}</p>
       <p className="font-semibold tabular-nums text-cyan-400">{formatCurrency(point.balance)}</p>
     </div>
@@ -77,29 +77,29 @@ export function BalanceHero({ summary, prevSummary, month, year }: BalanceHeroPr
   const showSparkline = hasMeaningfulMovement(sparkline);
 
   return (
-    <Card className="relative overflow-hidden px-5 py-6 sm:px-7 sm:py-7">
-      <div className="absolute -right-8 -top-8 hidden h-40 w-40 rounded-full bg-cyan-500/10 blur-3xl sm:block" />
+    <Card className="relative overflow-hidden px-4 py-4 sm:px-5 sm:py-5">
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-400/70 to-transparent" />
 
-      <div className="relative grid gap-6 sm:grid-cols-[1fr_minmax(0,220px)]">
+      <div className="relative grid gap-4 sm:grid-cols-[1fr_minmax(0,260px)]">
         <div className="min-w-0">
           <div className="flex items-center gap-2">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-cyan-500/15 text-cyan-400 ring-1 ring-cyan-500/20">
+            <span className="flex h-7 w-7 items-center justify-center rounded-sm bg-cyan-500/10 text-cyan-400 ring-1 ring-cyan-400/30">
               <WalletIcon className="h-4 w-4" />
             </span>
-            <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
+            <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-zinc-500">
               ยอดคงเหลือเดือนนี้
             </p>
           </div>
 
-          <p className="mt-3 font-heading text-3xl font-bold tabular-nums text-cyan-400 sm:text-4xl">
+          <p className="mt-2 font-mono text-3xl font-bold tabular-nums text-cyan-400 sm:text-[36px]">
             {formatCurrency(summary.balance)}
           </p>
 
-          <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-sm">
+          <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[12px]">
             {delta ? (
               <span
                 className={`inline-flex items-center gap-1 font-medium ${
-                  delta.isPositive ? 'text-emerald-400' : 'text-rose-400'
+                  delta.isPositive ? 'text-emerald-400' : 'text-orange-400'
                 }`}
               >
                 {delta.isPositive ? (
@@ -121,7 +121,7 @@ export function BalanceHero({ summary, prevSummary, month, year }: BalanceHeroPr
             </span>
           </div>
 
-          <div className="mt-5 grid grid-cols-2 gap-3">
+          <div className="mt-4 grid grid-cols-2 gap-2">
             <MiniMetric
               label="รายรับ"
               amount={summary.totalIncome}
@@ -140,7 +140,7 @@ export function BalanceHero({ summary, prevSummary, month, year }: BalanceHeroPr
         {showSparkline ? (
           <SparklinePanel points={sparkline} />
         ) : (
-          <div className="hidden h-full min-h-[180px] flex-col items-center justify-center rounded-xl border border-dashed border-zinc-800 bg-zinc-950/40 px-4 py-6 text-center sm:flex">
+          <div className="hidden h-full min-h-[160px] flex-col items-center justify-center rounded-md border border-dashed border-zinc-700 bg-zinc-950/40 px-4 py-6 text-center sm:flex">
             <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
               ยอดสะสมรายวัน
             </p>
@@ -161,7 +161,7 @@ function SparklinePanel({ points }: { points: SparkPoint[] }) {
   const trough = points.reduce((min, p) => (p.balance < min.balance ? p : min), points[0]!);
 
   return (
-    <div className="flex h-full min-h-[180px] flex-col gap-2 rounded-xl border border-zinc-800 bg-zinc-950/40 px-3 py-3">
+    <div className="flex h-full min-h-[160px] flex-col gap-2 rounded-md border border-zinc-700 bg-zinc-950/50 px-3 py-3">
       <div className="flex items-baseline justify-between">
         <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
           ยอดสะสมรายวัน
@@ -175,19 +175,19 @@ function SparklinePanel({ points }: { points: SparkPoint[] }) {
           <AreaChart data={points} margin={{ top: 4, right: 0, left: 0, bottom: 0 }}>
             <defs>
               <linearGradient id="balanceSpark" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#06b6d4" stopOpacity={0.45} />
-                <stop offset="100%" stopColor="#06b6d4" stopOpacity={0} />
+                <stop offset="0%" stopColor="#58a6ff" stopOpacity={0.4} />
+                <stop offset="100%" stopColor="#58a6ff" stopOpacity={0} />
               </linearGradient>
             </defs>
             <YAxis hide domain={['dataMin', 'dataMax']} />
             <Tooltip
-              cursor={{ stroke: '#27272a', strokeDasharray: '3 3' }}
+              cursor={{ stroke: '#30363d', strokeDasharray: '3 3' }}
               content={<SparkTooltip />}
             />
             <Area
               type="monotone"
               dataKey="balance"
-              stroke="#22d3ee"
+              stroke="#58a6ff"
               strokeWidth={2}
               fill="url(#balanceSpark)"
               isAnimationActive={false}
@@ -199,7 +199,7 @@ function SparklinePanel({ points }: { points: SparkPoint[] }) {
         <span className="text-zinc-500">
           เริ่ม <span className="text-zinc-300">{formatCurrency(start)}</span>
         </span>
-        <span className={end >= start ? 'text-emerald-400' : 'text-rose-400'}>
+        <span className={end >= start ? 'text-emerald-400' : 'text-orange-400'}>
           ล่าสุด {formatCurrency(end)}
         </span>
       </div>
@@ -220,14 +220,14 @@ interface MiniMetricProps {
 }
 
 function MiniMetric({ label, amount, tone, icon }: MiniMetricProps) {
-  const toneClass = tone === 'income' ? 'text-emerald-400' : 'text-rose-400';
+  const toneClass = tone === 'income' ? 'text-emerald-400' : 'text-orange-400';
   const ringClass =
     tone === 'income'
       ? 'bg-emerald-500/10 ring-emerald-500/20'
-      : 'bg-rose-500/10 ring-rose-500/20';
+      : 'bg-orange-500/10 ring-orange-500/30';
   return (
-    <div className="flex items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-950/40 px-3 py-2.5">
-      <span className={`flex h-8 w-8 items-center justify-center rounded-lg ring-1 ${ringClass} ${toneClass}`}>
+    <div className="flex items-center gap-3 rounded-md border border-zinc-700 bg-zinc-950/50 px-3 py-2.5">
+      <span className={`flex h-8 w-8 items-center justify-center rounded-sm ring-1 ${ringClass} ${toneClass}`}>
         {icon}
       </span>
       <div className="min-w-0">

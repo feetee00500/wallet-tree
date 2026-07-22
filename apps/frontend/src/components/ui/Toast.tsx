@@ -100,7 +100,7 @@ function ToastItem({ toast, onDismiss }: { toast: Toast; onDismiss: (id: number)
     <div
       role="status"
       aria-live="polite"
-      className={`pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-xl border px-4 py-3 text-sm shadow-lg transition-all duration-200 ${
+      className={`pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-md border px-4 py-3 text-sm shadow-[0_4px_16px_rgba(0,0,0,0.6)] transition-all duration-200 ${
         toneClass[toast.tone]
       } ${visible ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'}`}
     >

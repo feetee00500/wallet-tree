@@ -34,9 +34,9 @@ export function RecentTransactionsCard({ transactions, categories }: RecentTrans
   const groups = groupByDay(transactions);
 
   return (
-    <Card className="px-5 py-4">
+    <Card className="px-4 py-4">
       <div className="flex items-baseline justify-between">
-        <h3 className="font-heading text-base font-semibold text-zinc-100">รายการล่าสุด</h3>
+        <h3 className="font-heading text-sm font-semibold text-zinc-100">รายการล่าสุด</h3>
         {transactions.length > 0 ? (
           <p className="text-xs text-zinc-500">{transactions.length} รายการ</p>
         ) : null}

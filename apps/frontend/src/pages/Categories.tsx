@@ -133,7 +133,7 @@ export function Categories() {
     modal.kind === 'create' ? modal.type : modal.kind === 'edit' ? modal.category.type : undefined;
 
   return (
-    <div className="flex flex-col gap-6 animate-[fadeIn_300ms_ease-out]">
+    <div className="flex flex-col gap-4 animate-[fadeIn_200ms_ease-out]">
       <PageHeader
         title="หมวดหมู่"
         subtitle="จัดการหมวดหมู่ของรายรับและรายจ่าย หมวดเริ่มต้นแก้ไขไม่ได้"
@@ -227,7 +227,7 @@ interface CategoryCardProps {
 function CategoryCard({ category, onEdit, onDelete }: CategoryCardProps) {
   const isDefault = category.userId === null;
   return (
-    <li className="flex items-center justify-between gap-3 rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-3 shadow-lg transition hover:border-zinc-700">
+    <li className="flex items-center justify-between gap-3 rounded-md border border-zinc-700 bg-zinc-900 px-4 py-3 shadow-[0_1px_4px_rgba(0,0,0,0.4)] transition hover:bg-zinc-800/40">
       <div className="flex min-w-0 items-center gap-3">
         <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-zinc-800 text-xl">
           {category.icon}

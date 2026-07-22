@@ -18,7 +18,7 @@ const sizeClass: Record<IconButtonSize, string> = {
 const toneClass: Record<IconButtonTone, string> = {
   neutral: 'text-zinc-400 hover:bg-zinc-800 hover:text-zinc-100',
   danger: 'text-zinc-400 hover:bg-rose-500/10 hover:text-rose-400',
-  accent: 'text-zinc-400 hover:bg-emerald-500/10 hover:text-emerald-400',
+  accent: 'text-zinc-400 hover:bg-cyan-500/10 hover:text-cyan-400',
 };
 
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
@@ -32,7 +32,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
         type={type}
         aria-label={label}
         title={label}
-        className={`inline-flex shrink-0 items-center justify-center rounded-lg transition focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/40 disabled:cursor-not-allowed disabled:opacity-50 ${sizeClass[size]} ${toneClass[tone]} ${className}`}
+        className={`inline-flex shrink-0 items-center justify-center rounded-sm transition focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/40 disabled:cursor-not-allowed disabled:opacity-50 ${sizeClass[size]} ${toneClass[tone]} ${className}`}
         {...rest}
       >
         {children}

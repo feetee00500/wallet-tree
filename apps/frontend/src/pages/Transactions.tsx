@@ -161,7 +161,7 @@ export function Transactions() {
   const formInitial = typeof modal === 'object' ? modal.transaction : null;
 
   return (
-    <div className="flex flex-col gap-6 animate-[fadeIn_300ms_ease-out]">
+    <div className="flex flex-col gap-4 animate-[fadeIn_200ms_ease-out]">
       <PageHeader
         title="รายการ"
         subtitle="จัดการรายรับรายจ่ายทั้งหมดของคุณ"

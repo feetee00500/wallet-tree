@@ -1,20 +1,29 @@
+import { lazy, Suspense } from 'react';
 import { Navigate, Route, Routes } from 'react-router';
 import { AdminRoute, LineUserRoute } from './contexts/AuthContext';
-import { RootLayout } from './layouts/RootLayout';
-import { Budget } from './pages/Budget';
-import { Categories } from './pages/Categories';
-import { Dashboard } from './pages/Dashboard';
-import { Login } from './pages/Login';
-import { Recurring } from './pages/Recurring';
-import { AuthCallback } from './pages/AuthCallback';
-import { AdminLogin } from './pages/AdminLogin';
-import { AdminDashboard } from './pages/AdminDashboard';
-import { Settings } from './pages/Settings';
-import { Transactions } from './pages/Transactions';
+
+const RootLayout = lazy(() => import('./layouts/RootLayout').then((module) => ({ default: module.RootLayout })));
+const Budget = lazy(() => import('./pages/Budget').then((module) => ({ default: module.Budget })));
+const Categories = lazy(() => import('./pages/Categories').then((module) => ({ default: module.Categories })));
+const Dashboard = lazy(() => import('./pages/Dashboard').then((module) => ({ default: module.Dashboard })));
+const Login = lazy(() => import('./pages/Login').then((module) => ({ default: module.Login })));
+const Recurring = lazy(() => import('./pages/Recurring').then((module) => ({ default: module.Recurring })));
+const AuthCallback = lazy(() => import('./pages/AuthCallback').then((module) => ({ default: module.AuthCallback })));
+const AdminLogin = lazy(() => import('./pages/AdminLogin').then((module) => ({ default: module.AdminLogin })));
+const AdminDashboard = lazy(() => import('./pages/AdminDashboard').then((module) => ({ default: module.AdminDashboard })));
+const Settings = lazy(() => import('./pages/Settings').then((module) => ({ default: module.Settings })));
+const Transactions = lazy(() => import('./pages/Transactions').then((module) => ({ default: module.Transactions })));
 
 export function App() {
   return (
-    <Routes>
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center bg-zinc-950 text-zinc-400" role="status">
+          <span className="font-mono text-[11px] uppercase tracking-[0.16em]">Loading finance module…</span>
+        </div>
+      }
+    >
+      <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/auth/callback" element={<AuthCallback />} />
       <Route path="/admin/login" element={<AdminLogin />} />
@@ -35,6 +44,7 @@ export function App() {
         <Route path="settings" element={<Settings />} />
       </Route>
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
-    </Routes>
+      </Routes>
+    </Suspense>
   );
 }
