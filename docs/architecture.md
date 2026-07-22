@@ -4,10 +4,10 @@
 
 - `apps/frontend`: React Router pages, UI components, auth context และ API client เท่านั้น
 - `apps/backend`: NestJS controllers/services/repos, JWT guards, LINE Login และ webhook
-- `packages/database`: Prisma Client adapter, PostgreSQL schema, migrations และ seed
+- `packages/database`: MongoDB documents/domain types, compatibility mappers, indexes และ seed
 - `packages/shared`: DTO classes, response interfaces และ enums ที่ใช้ข้าม wire
 
-Backend ใช้ลำดับ `Module → Controller → Service → Repo → Prisma` โดย controller ตรวจ request, service ถือ business logic และ repo เป็นขอบเขตเดียวที่เข้าถึง Prisma
+Backend ใช้ลำดับ `Module → Controller → Service → Repo → MongoDB` โดย controller ตรวจ request, service ถือ business logic และ repo เป็นขอบเขตเดียวที่เข้าถึง MongoDB
 
 ## Authentication flows
 
@@ -28,6 +28,6 @@ Backend ใช้ลำดับ `Module → Controller → Service → Repo →
 
 ระบบไม่มี register/email-password flow สำหรับผู้ใช้ทั่วไป
 
-## Persistence migration
+## Persistence compatibility
 
-โครงสร้างใหม่ใช้ PostgreSQL/Prisma แทน MongoDB เดิม การย้ายข้อมูล production ต้องทำเป็นงาน migration แยก: export MongoDB, map identifiers/amount/date/category แล้ว import หลัง `pnpm db:migrate` ห้ามชี้ deployment ใหม่ไปฐาน production ก่อนตรวจจำนวน record และยอดรวม
+Backend ใช้ MongoDB native driver และอ่าน schema เดิมได้โดยตรง: รองรับทั้ง `ObjectId`/string id, `nameTh`/`name`, type ตัวเล็ก/ตัวใหญ่ และ `transactionDate`/`createdAt` โดย normalize ที่ repository boundary ข้อมูลใหม่เขียนด้วย number สำหรับ amount และเก็บ `transactionDate` ควบคู่ timestamps จึงไม่ต้องย้ายหรือลบ collection เดิม

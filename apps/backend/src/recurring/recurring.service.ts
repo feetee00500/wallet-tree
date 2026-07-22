@@ -24,7 +24,7 @@ export class RecurringService {
   private toResponse(r: RecurringWithCategory): RecurringResponse {
     return {
       id: r.id,
-      amount: r.amount.toNumber(),
+      amount: r.amount,
       type: r.type as TransactionType,
       description: r.description,
       categoryId: r.categoryId,
@@ -91,7 +91,7 @@ export class RecurringService {
   }
 
   private async processOne(item: Recurring): Promise<void> {
-    const amount = item.amount.toNumber();
+    const amount = item.amount;
     const alreadyCreated = await this.recurringRepo.hasRecurringTransactionToday(
       item.userId,
       item.categoryId,

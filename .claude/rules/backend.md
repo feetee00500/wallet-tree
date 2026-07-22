@@ -1,6 +1,6 @@
 # Backend rules
 
-- Use NestJS modules and the Controller → Service → Repo → Prisma layering.
+- Use NestJS modules and the Controller → Service → Repo → MongoDB layering.
 - Import DTOs and response contracts from `@wallet-tree/shared`.
 - Protect finance endpoints with `LineUserGuard`.
 - Protect administrator endpoints with `AdminGuard`.

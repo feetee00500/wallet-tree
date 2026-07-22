@@ -27,7 +27,7 @@ export class TransactionService {
   private toResponse(t: Transaction): TransactionResponse {
     return {
       id: t.id,
-      amount: t.amount.toNumber(),
+      amount: t.amount,
       type: t.type as TransactionType,
       description: t.description,
       categoryId: t.categoryId,
@@ -81,7 +81,7 @@ export class TransactionService {
     const dailyMap = new Map<string, { income: number; expense: number }>();
 
     for (const t of transactions) {
-      const amount = t.amount.toNumber();
+      const amount = t.amount;
       const date = formatLocalDate(t.createdAt);
 
       const daily = dailyMap.get(date) ?? { income: 0, expense: 0 };

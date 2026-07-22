@@ -55,6 +55,7 @@ describe('LineService', () => {
         {
           provide: ConfigService,
           useValue: {
+            get: (key: string) => key === 'LINE_CHANNEL_ACCESS_TOKEN' ? 'test-token' : undefined,
             getOrThrow: (key: string) => {
               if (key === 'LINE_CHANNEL_ACCESS_TOKEN') return 'test-token';
               throw new Error(`Missing env: ${key}`);
@@ -87,7 +88,7 @@ describe('LineService', () => {
     categoryRepo = module.get(CategoryRepo);
     categorizer = module.get(AutoCategorizerService);
     replySpy = jest
-      .spyOn(service['client'], 'replyMessage')
+      .spyOn(service['client']!, 'replyMessage')
       .mockResolvedValue({} as never);
   });
 

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, ServiceUnavailableException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { messagingApi, webhook } from '@line/bot-sdk';
 import { AuthProvider, UserRole, UserStatus } from '@wallet-tree/database';
@@ -13,7 +13,7 @@ const HELP_TEXT =
 
 @Injectable()
 export class LineService {
-  private readonly client: messagingApi.MessagingApiClient;
+  private readonly client: messagingApi.MessagingApiClient | null;
 
   constructor(
     private readonly config: ConfigService,
@@ -21,12 +21,16 @@ export class LineService {
     private readonly categoryRepo: CategoryRepo,
     private readonly categorizer: AutoCategorizerService,
   ) {
-    this.client = new messagingApi.MessagingApiClient({
-      channelAccessToken: this.config.getOrThrow<string>('LINE_CHANNEL_ACCESS_TOKEN'),
-    });
+    const channelAccessToken = this.config.get<string>('LINE_CHANNEL_ACCESS_TOKEN');
+    this.client = channelAccessToken
+      ? new messagingApi.MessagingApiClient({ channelAccessToken })
+      : null;
   }
 
   async handleWebhook(body: webhook.CallbackRequest): Promise<void> {
+    if (!this.client) {
+      throw new ServiceUnavailableException('LINE Messaging API is not configured');
+    }
     for (const event of body.events) {
       await this.handleEvent(event);
     }
@@ -56,7 +60,7 @@ export class LineService {
     }
     const replyText = await this.buildReply(text, user.id);
 
-    await this.client.replyMessage({
+    await this.client!.replyMessage({
       replyToken,
       messages: [{ type: 'text', text: replyText }],
     });

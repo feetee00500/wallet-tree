@@ -13,7 +13,7 @@ describe('RecurringService', () => {
   const userId = 'user1';
   const makeRecurring = (overrides: Record<string, unknown> = {}) => ({
     id: 'rec1',
-    amount: { toNumber: () => 500 },
+    amount: 500,
     type: TransactionType.EXPENSE,
     description: 'Netflix',
     categoryId: 'cat1',

@@ -43,6 +43,7 @@ describe('AutoCategorizerService', () => {
         {
           provide: ConfigService,
           useValue: {
+            get: (key: string) => key === 'ANTHROPIC_API_KEY' ? 'test-key' : undefined,
             getOrThrow: (key: string) => {
               if (key === 'ANTHROPIC_API_KEY') return 'test-key';
               throw new Error(`Unexpected config key: ${key}`);
@@ -53,7 +54,7 @@ describe('AutoCategorizerService', () => {
     }).compile();
 
     service = module.get(AutoCategorizerService);
-    createSpy = jest.spyOn(service['anthropic'].messages, 'create');
+    createSpy = jest.spyOn(service['anthropic']!.messages, 'create');
   });
 
   afterEach(() => jest.clearAllMocks());

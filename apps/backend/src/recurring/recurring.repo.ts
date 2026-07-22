@@ -1,94 +1,110 @@
-import { Injectable } from '@nestjs/common';
-import { Recurring, Transaction, TransactionSource } from '@wallet-tree/database';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  CategoryDocument,
+  idFilter,
+  ObjectId,
+  Recurring,
+  RecurringDocument,
+  toCategory,
+  toRecurring,
+  toTransaction,
+  Transaction,
+  TransactionDocument,
+  TransactionSource,
+} from '@wallet-tree/database';
 import { TransactionType } from '@wallet-tree/shared';
-import { PrismaService } from '../prisma/prisma.service';
+import { MongoService } from '../mongo/mongo.service';
 
 type RecurringWithCategory = Recurring & { category: { name: string; icon: string } };
 
 @Injectable()
 export class RecurringRepo {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly mongo: MongoService) {}
 
-  findAll(userId: string): Promise<RecurringWithCategory[]> {
-    return this.prisma.recurring.findMany({
-      where: { userId },
-      include: { category: { select: { name: true, icon: true } } },
-      orderBy: { createdAt: 'desc' },
-    });
+  private async recurrings() {
+    return (await this.mongo.db()).collection<RecurringDocument>('recurrings');
   }
 
-  findById(id: string): Promise<Recurring | null> {
-    return this.prisma.recurring.findUnique({ where: { id } });
+  private async withCategory(doc: RecurringDocument): Promise<RecurringWithCategory> {
+    const categoryDoc = await (await this.mongo.db()).collection<CategoryDocument>('categories').findOne(idFilter<CategoryDocument>(doc.categoryId));
+    const category = categoryDoc ? toCategory(categoryDoc) : null;
+    return { ...toRecurring(doc), category: { name: category?.name ?? 'ไม่ระบุ', icon: category?.icon ?? '📌' } };
   }
 
-  findActiveByDayOfMonth(dayOfMonth: number): Promise<Recurring[]> {
-    return this.prisma.recurring.findMany({ where: { active: true, dayOfMonth } });
+  async findAll(userId: string): Promise<RecurringWithCategory[]> {
+    const docs = await (await this.recurrings()).find({ userId }).sort({ createdAt: -1 }).toArray();
+    return Promise.all(docs.map((doc) => this.withCategory(doc)));
   }
 
-  create(data: {
-    amount: number;
-    type: TransactionType;
-    description?: string;
-    categoryId: string;
-    userId: string;
-    dayOfMonth: number;
-  }): Promise<RecurringWithCategory> {
-    return this.prisma.recurring.create({
-      data,
-      include: { category: { select: { name: true, icon: true } } },
-    });
+  async findById(id: string): Promise<Recurring | null> {
+    const doc = await (await this.recurrings()).findOne(idFilter<RecurringDocument>(id));
+    return doc ? toRecurring(doc) : null;
   }
 
-  update(
-    id: string,
-    data: {
-      amount?: number;
-      type?: TransactionType;
-      description?: string;
-      categoryId?: string;
-      dayOfMonth?: number;
-      active?: boolean;
-    },
-  ): Promise<RecurringWithCategory> {
-    return this.prisma.recurring.update({
-      where: { id },
-      data,
-      include: { category: { select: { name: true, icon: true } } },
-    });
+  async findActiveByDayOfMonth(dayOfMonth: number): Promise<Recurring[]> {
+    const docs = await (await this.recurrings()).find({ active: true, dayOfMonth }).toArray();
+    return docs.map(toRecurring);
   }
 
-  delete(id: string): Promise<Recurring> {
-    return this.prisma.recurring.delete({ where: { id } });
+  async create(data: { amount: number; type: TransactionType; description?: string; categoryId: string; userId: string; dayOfMonth: number }): Promise<RecurringWithCategory> {
+    const now = new Date();
+    const doc: RecurringDocument = {
+      _id: new ObjectId(),
+      ...data,
+      description: data.description ?? null,
+      active: true,
+      createdAt: now,
+      updatedAt: now,
+    };
+    await (await this.recurrings()).insertOne(doc);
+    return this.withCategory(doc);
   }
 
-  createTransaction(data: {
-    amount: number;
-    type: TransactionType;
-    description?: string;
-    categoryId: string;
-    userId: string;
-  }): Promise<Transaction> {
-    return this.prisma.transaction.create({
-      data: { ...data, source: TransactionSource.RECURRING },
-    });
+  async update(id: string, data: { amount?: number; type?: TransactionType; description?: string; categoryId?: string; dayOfMonth?: number; active?: boolean }): Promise<RecurringWithCategory> {
+    const clean = Object.fromEntries(Object.entries(data).filter(([, value]) => value !== undefined));
+    const doc = await (await this.recurrings()).findOneAndUpdate(
+      idFilter<RecurringDocument>(id),
+      { $set: { ...clean, updatedAt: new Date() } },
+      { returnDocument: 'after' },
+    );
+    if (!doc) throw new NotFoundException('Recurring not found');
+    return this.withCategory(doc);
   }
 
-  async hasRecurringTransactionToday(
-    userId: string,
-    categoryId: string,
-    amount: number,
-  ): Promise<boolean> {
+  async delete(id: string): Promise<Recurring> {
+    const doc = await (await this.recurrings()).findOneAndDelete(idFilter<RecurringDocument>(id));
+    if (!doc) throw new NotFoundException('Recurring not found');
+    return toRecurring(doc);
+  }
+
+  async createTransaction(data: { amount: number; type: TransactionType; description?: string; categoryId: string; userId: string }): Promise<Transaction> {
+    const now = new Date();
+    const doc: TransactionDocument = {
+      _id: new ObjectId(),
+      ...data,
+      description: data.description ?? null,
+      source: TransactionSource.RECURRING,
+      transactionDate: now,
+      createdAt: now,
+      updatedAt: now,
+    };
+    await (await this.mongo.db()).collection<TransactionDocument>('transactions').insertOne(doc);
+    return toTransaction(doc);
+  }
+
+  async hasRecurringTransactionToday(userId: string, categoryId: string, amount: number): Promise<boolean> {
     const startOfToday = new Date();
     startOfToday.setHours(0, 0, 0, 0);
-    const count = await this.prisma.transaction.count({
-      where: {
-        userId,
-        categoryId,
-        amount,
-        source: TransactionSource.RECURRING,
-        createdAt: { gte: startOfToday },
-      },
-    });
+    const count = await (await this.mongo.db()).collection<TransactionDocument>('transactions').countDocuments({
+      userId,
+      categoryId,
+      amount,
+      source: { $in: [TransactionSource.RECURRING, 'recurring'] },
+      $or: [
+        { transactionDate: { $gte: startOfToday } },
+        { transactionDate: { $exists: false }, createdAt: { $gte: startOfToday } },
+      ],
+    }, { limit: 1 });
     return count > 0;
   }
 }

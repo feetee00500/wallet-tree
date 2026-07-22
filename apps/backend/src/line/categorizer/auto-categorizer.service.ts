@@ -11,13 +11,12 @@ const MAX_CACHE_SIZE = 1000;
 @Injectable()
 export class AutoCategorizerService {
   private readonly logger = new Logger(AutoCategorizerService.name);
-  private readonly anthropic: Anthropic;
+  private readonly anthropic: Anthropic | null;
   private readonly cache = new Map<string, string>();
 
   constructor(private readonly config: ConfigService) {
-    this.anthropic = new Anthropic({
-      apiKey: this.config.getOrThrow<string>('ANTHROPIC_API_KEY'),
-    });
+    const apiKey = this.config.get<string>('ANTHROPIC_API_KEY');
+    this.anthropic = apiKey ? new Anthropic({ apiKey }) : null;
   }
 
   async categorize(
@@ -36,10 +35,12 @@ export class AutoCategorizerService {
       if (hit) return hit;
     }
 
-    const pickedId = await this.callHaiku(description, filtered).catch((err: unknown) => {
-      this.logger.error('Haiku categorization failed', err);
-      return null;
-    });
+    const pickedId = this.anthropic
+      ? await this.callHaiku(description, filtered).catch((err: unknown) => {
+          this.logger.error('Haiku categorization failed', err);
+          return null;
+        })
+      : null;
 
     const category =
       (pickedId ? filtered.find((c) => c.id === pickedId) : null) ?? this.fallback(filtered);
@@ -57,6 +58,7 @@ export class AutoCategorizerService {
   }
 
   private async callHaiku(description: string, categories: CategoryResponse[]): Promise<string> {
+    if (!this.anthropic) throw new Error('ANTHROPIC_API_KEY is not configured');
     const response = await this.anthropic.messages.create({
       model: 'claude-haiku-4-5-20251001',
       max_tokens: 64,

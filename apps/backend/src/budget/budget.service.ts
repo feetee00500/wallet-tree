@@ -20,7 +20,7 @@ export class BudgetService {
   private toResponse(budget: Budget): BudgetResponse {
     return {
       id: budget.id,
-      amount: budget.amount.toNumber(),
+      amount: budget.amount,
       categoryId: budget.categoryId,
       userId: budget.userId,
       month: budget.month,
@@ -72,11 +72,11 @@ export class BudgetService {
 
     const spentMap = new Map<string, number>();
     for (const row of spentRows) {
-      spentMap.set(row.categoryId, row._sum.amount?.toNumber() ?? 0);
+      spentMap.set(row.categoryId, row.amount);
     }
 
     return budgets.map((b) => {
-      const budgetAmount = b.amount.toNumber();
+      const budgetAmount = b.amount;
       const spentAmount = spentMap.get(b.categoryId) ?? 0;
       const percentage = budgetAmount > 0 ? Math.round((spentAmount / budgetAmount) * 1000) / 10 : 0;
       return {
@@ -96,7 +96,7 @@ export class BudgetService {
     const budget = await this.budgetRepo.findById(id);
     assertOwnership(budget, userId, 'Budget');
 
-    const updated = await this.budgetRepo.update(id, dto.amount ?? budget.amount.toNumber());
+    const updated = await this.budgetRepo.update(id, dto.amount ?? budget.amount);
     return this.toResponse(updated);
   }
 

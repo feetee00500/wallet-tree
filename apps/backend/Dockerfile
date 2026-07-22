@@ -5,15 +5,11 @@ WORKDIR /app
 RUN apk add --no-cache openssl
 RUN corepack enable && corepack prepare pnpm@11.13.0 --activate
 
-ENV DATABASE_URL=postgresql://placeholder:placeholder@placeholder:5432/placeholder
-
 COPY pnpm-workspace.yaml pnpm-lock.yaml package.json ./
 COPY apps/backend/package.json apps/backend/
 COPY apps/frontend/package.json apps/frontend/
 COPY packages/database/package.json packages/database/
 COPY packages/shared/package.json packages/shared/
-COPY packages/database/prisma packages/database/prisma
-
 RUN pnpm install --frozen-lockfile
 
 COPY tsconfig.json ./
@@ -45,7 +41,6 @@ COPY --from=builder --chown=nestjs:nodejs /app/packages/shared/node_modules ./pa
 
 COPY --from=builder --chown=nestjs:nodejs /app/packages/database/package.json ./packages/database/package.json
 COPY --from=builder --chown=nestjs:nodejs /app/packages/database/dist ./packages/database/dist
-COPY --from=builder --chown=nestjs:nodejs /app/packages/database/prisma ./packages/database/prisma
 COPY --from=builder --chown=nestjs:nodejs /app/packages/database/node_modules ./packages/database/node_modules
 
 COPY --from=builder --chown=nestjs:nodejs /app/apps/backend/package.json ./apps/backend/package.json

@@ -10,7 +10,7 @@ wallet-tree/
 │   ├── backend/        NestJS API (prefix /api)
 │   └── frontend/       Vite + React + Tailwind
 ├── packages/
-│   ├── database/       Prisma schema, migrations, seed
+│   ├── database/       MongoDB types, indexes, seed
 │   └── shared/         DTOs, response types, enums
 ├── .claude/
 │   └── rules/          backend.md, frontend.md
@@ -31,13 +31,12 @@ wallet-tree/
 
 ## Setup
 
-ต้องมี Node.js 22.12+, pnpm 11 และ PostgreSQL
+ต้องมี Node.js 22.12+, pnpm 11 และ MongoDB Atlas
 
 ```bash
 cp .env.example .env
 pnpm install --frozen-lockfile
-pnpm db:generate
-pnpm db:migrate
+pnpm db:indexes
 pnpm db:seed
 ```
 
@@ -77,9 +76,9 @@ GitHub repository เดียวเชื่อมกับ Vercel สองโ
 `VITE_API_BASE_URL` และ backend ต้องมีตัวแปรตาม `.env.example` งาน recurring ใช้ Vercel Cron
 เรียก `/api/cron/recurring` พร้อม `CRON_SECRET` แทน scheduler ที่รันค้างใน process
 
-หลังสร้างหรือเปลี่ยน production PostgreSQL ให้ apply migrations และ seed หนึ่งครั้ง:
+ใส่ `MONGODB_URI` และ `MONGODB_DB_NAME` ที่โปรเจกต์ backend เท่านั้น แล้วสร้าง indexes และ seed หนึ่งครั้ง (คำสั่ง seed เป็น idempotent และไม่ลบข้อมูลเดิม):
 
 ```bash
-DATABASE_URL='<production-postgres-url>' pnpm db:deploy
-DATABASE_URL='<production-postgres-url>' ADMIN_USERNAME='<admin>' ADMIN_PASSWORD='<password>' pnpm db:seed
+MONGODB_URI='<atlas-uri>' MONGODB_DB_NAME='<database>' pnpm db:indexes
+MONGODB_URI='<atlas-uri>' MONGODB_DB_NAME='<database>' ADMIN_USERNAME='<admin>' ADMIN_PASSWORD='<password>' pnpm db:seed
 ```

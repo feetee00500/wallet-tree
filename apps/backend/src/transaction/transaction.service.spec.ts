@@ -17,7 +17,7 @@ describe('TransactionService', () => {
   const userId = 'user1';
   const makeTransaction = (overrides: Record<string, unknown> = {}) => ({
     id: 'tx1',
-    amount: { toNumber: () => 100 },
+    amount: 100,
     type: TransactionType.EXPENSE,
     description: null,
     categoryId: 'cat1',
@@ -121,13 +121,13 @@ describe('TransactionService', () => {
     it('computes totals and daily breakdown correctly', async () => {
       const expenseTx = makeTransaction({
         type: TransactionType.EXPENSE,
-        amount: { toNumber: () => 200 },
+        amount: 200,
         createdAt: new Date('2026-04-10T10:00:00Z'),
         category: { name: 'Food', icon: '🍔' },
       });
       const incomeTx = makeTransaction({
         type: TransactionType.INCOME,
-        amount: { toNumber: () => 500 },
+        amount: 500,
         createdAt: new Date('2026-04-15T10:00:00Z'),
         categoryId: 'cat2',
         category: { name: 'Salary', icon: '💰' },
@@ -191,7 +191,7 @@ describe('TransactionService', () => {
     });
 
     it('updates and returns transaction', async () => {
-      const updated = makeTransaction({ amount: { toNumber: () => 150 } });
+      const updated = makeTransaction({ amount: 150 });
       repo.findById.mockResolvedValue(makeTransaction() as never);
       repo.update.mockResolvedValue(updated as never);
       const result = await service.update(userId, 'tx1', { amount: 150 });

@@ -5,7 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { CategoryModule } from './category/category.module';
-import { PrismaModule } from './prisma/prisma.module';
+import { MongoModule } from './mongo/mongo.module';
 import { BudgetModule } from './budget/budget.module';
 import { RecurringModule } from './recurring/recurring.module';
 import { TransactionModule } from './transaction/transaction.module';
@@ -17,7 +17,7 @@ import { LineModule } from './line/line.module';
       isGlobal: true,
       envFilePath: resolve(__dirname, '../../../.env'),
     }),
-    PrismaModule,
+    MongoModule,
     AuthModule,
     CategoryModule,
     TransactionModule,

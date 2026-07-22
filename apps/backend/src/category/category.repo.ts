@@ -1,40 +1,72 @@
-import { Injectable } from '@nestjs/common';
-import { Category } from '@wallet-tree/database';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Category,
+  CategoryDocument,
+  idFilter,
+  ObjectId,
+  toCategory,
+  TransactionDocument,
+} from '@wallet-tree/database';
 import { TransactionType } from '@wallet-tree/shared';
-import { PrismaService } from '../prisma/prisma.service';
+import { MongoService } from '../mongo/mongo.service';
 
 @Injectable()
 export class CategoryRepo {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly mongo: MongoService) {}
 
-  findAllForUser(userId: string, type?: TransactionType): Promise<Category[]> {
-    return this.prisma.category.findMany({
-      where: {
-        OR: [{ userId: null }, { userId }],
-        ...(type !== undefined ? { type } : {}),
-      },
-      orderBy: { createdAt: 'asc' },
-    });
+  private async categories() {
+    return (await this.mongo.db()).collection<CategoryDocument>('categories');
   }
 
-  findById(id: string): Promise<Category | null> {
-    return this.prisma.category.findUnique({ where: { id } });
+  async findAllForUser(userId: string, type?: TransactionType): Promise<Category[]> {
+    const docs = await (await this.categories()).find({
+      userId: { $in: [null, userId] },
+      ...(type ? { type: { $in: [type, type.toLowerCase()] } } : {}),
+      isArchived: { $ne: true },
+    }).sort({ createdAt: 1, order: 1 }).toArray();
+    return docs.map(toCategory);
   }
 
-  create(data: { name: string; icon: string; type: TransactionType; userId: string }): Promise<Category> {
-    return this.prisma.category.create({ data });
+  async findById(id: string): Promise<Category | null> {
+    const doc = await (await this.categories()).findOne(idFilter<CategoryDocument>(id));
+    return doc ? toCategory(doc) : null;
   }
 
-  update(id: string, data: { name?: string; icon?: string }): Promise<Category> {
-    return this.prisma.category.update({ where: { id }, data });
+  async create(data: { name: string; icon: string; type: TransactionType; userId: string }): Promise<Category> {
+    const now = new Date();
+    const doc: CategoryDocument = {
+      _id: new ObjectId(),
+      name: data.name,
+      nameTh: data.name,
+      nameEn: data.name,
+      icon: data.icon,
+      type: data.type,
+      userId: data.userId,
+      isArchived: false,
+      createdAt: now,
+      updatedAt: now,
+    };
+    await (await this.categories()).insertOne(doc);
+    return toCategory(doc);
   }
 
-  delete(id: string): Promise<Category> {
-    return this.prisma.category.delete({ where: { id } });
+  async update(id: string, data: { name?: string; icon?: string }): Promise<Category> {
+    const doc = await (await this.categories()).findOneAndUpdate(
+      idFilter<CategoryDocument>(id),
+      { $set: { ...data, ...(data.name ? { nameTh: data.name, nameEn: data.name } : {}), updatedAt: new Date() } },
+      { returnDocument: 'after' },
+    );
+    if (!doc) throw new NotFoundException('Category not found');
+    return toCategory(doc);
+  }
+
+  async delete(id: string): Promise<Category> {
+    const doc = await (await this.categories()).findOneAndDelete(idFilter<CategoryDocument>(id));
+    if (!doc) throw new NotFoundException('Category not found');
+    return toCategory(doc);
   }
 
   async hasTransactions(categoryId: string): Promise<boolean> {
-    const count = await this.prisma.transaction.count({ where: { categoryId } });
-    return count > 0;
+    return (await this.mongo.db()).collection<TransactionDocument>('transactions').countDocuments({ categoryId }, { limit: 1 }).then((count) => count > 0);
   }
 }

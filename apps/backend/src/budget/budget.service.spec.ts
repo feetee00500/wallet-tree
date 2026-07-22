@@ -4,11 +4,9 @@ import { CategoryAccessService } from '../category/category-access.service';
 import { BudgetRepo } from './budget.repo';
 import { BudgetService } from './budget.service';
 
-const decimal = (n: number) => ({ toNumber: () => n }) as never;
-
 const mockBudget = {
   id: 'b1',
-  amount: decimal(1000),
+  amount: 1000,
   categoryId: 'cat1',
   userId: 'user1',
   month: 4,
@@ -104,7 +102,7 @@ describe('BudgetService', () => {
       ] as never;
       repo.findBudgetsWithCategory.mockResolvedValue(budgetsWithCat);
       repo.findSpentByCategory.mockResolvedValue([
-        { categoryId: 'cat1', _sum: { amount: decimal(400) } },
+        { categoryId: 'cat1', amount: 400 },
       ] as never);
 
       const result = await service.getStatus('user1', 4, 2026);
@@ -129,7 +127,7 @@ describe('BudgetService', () => {
       ] as never;
       repo.findBudgetsWithCategory.mockResolvedValue(budgetsWithCat);
       repo.findSpentByCategory.mockResolvedValue([
-        { categoryId: 'cat1', _sum: { amount: decimal(1200) } },
+        { categoryId: 'cat1', amount: 1200 },
       ] as never);
 
       const result = await service.getStatus('user1', 4, 2026);
@@ -156,7 +154,7 @@ describe('BudgetService', () => {
 
   describe('update', () => {
     it('updates amount and returns response', async () => {
-      const updated = { ...mockBudget, amount: decimal(2000) };
+      const updated = { ...mockBudget, amount: 2000 };
       repo.findById.mockResolvedValue(mockBudget);
       repo.update.mockResolvedValue(updated);
 
