@@ -1,54 +1,33 @@
 # Architecture
 
-## Current deployment boundary
+## Boundaries
 
-`apps/web` is a full-stack Next.js application. User-facing App Router pages and backend route handlers share one runtime and origin. This boundary is intentional:
+- `apps/frontend`: React Router pages, UI components, auth context และ API client เท่านั้น
+- `apps/backend`: NestJS controllers/services/repos, JWT guards, LINE Login และ webhook
+- `packages/database`: Prisma Client adapter, PostgreSQL schema, migrations และ seed
+- `packages/shared`: DTO classes, response interfaces และ enums ที่ใช้ข้าม wire
 
-- Session cookies are created and read by same-origin route handlers.
-- Middleware applies CORS behavior to `/api/*`.
-- LINE Login redirects to `/api/auth/line/callback`.
-- The browser client defaults to same-origin API requests.
-- LIFF initializes in the browser while authenticated API calls use the same deployment.
-- Vercel deploys one atomic application.
+Backend ใช้ลำดับ `Module → Controller → Service → Repo → Prisma` โดย controller ตรวจ request, service ถือ business logic และ repo เป็นขอบเขตเดียวที่เข้าถึง Prisma
 
-Splitting the route handlers into `apps/api` now would require explicit cross-origin cookie, callback, CORS, CSRF, and deployment changes. That would be a behavior change, so this refactor does not create a second application.
+## Authentication flows
 
-## Responsibilities
+### Regular user
 
-- `apps/web/src/app`: UI routes, layouts, and Next.js API route handlers.
-- `apps/web/src/lib/client`: browser-only API, authentication, and LIFF integration.
-- `apps/web/src/lib/auth`: server authentication, session, and CORS helpers.
-- `apps/web/src/lib/db`: MongoDB connection and persistence models.
-- `apps/web/src/lib/validation`: server environment validation.
-- `packages/shared`: runtime-safe schemas, domain types, and constants shared across application boundaries.
-- `packages/eslint-config`: workspace lint configuration.
-- `packages/tsconfig`: workspace TypeScript presets.
+1. Frontend ส่ง browser ไป `GET /api/auth/line`
+2. Backend สร้าง OAuth state แบบสุ่ม เซ็น HMAC และเก็บใน HttpOnly cookie
+3. LINE redirect กลับ `GET /api/auth/line/callback`
+4. Backend ตรวจ state, แลก authorization code และ upsert ผู้ใช้เป็น `LINE/USER`
+5. JWT ถูกส่งกลับ frontend ผ่าน URL fragment และ fragment ถูกลบทันทีหลังอ่าน
+6. `LineUserGuard` ตรวจ JWT, database status, session version, provider และ role
 
-## Future API extraction
+### Administrator
 
-Extract an `apps/api` workspace only when independent deployment or scaling is required. Before extraction:
+1. Frontend ส่ง username/password ไป `POST /api/auth/admin/login`
+2. Backend ค้นเฉพาะ record `LOCAL_ADMIN/ADMIN`, ตรวจ bcrypt hash และ lockout
+3. JWT ของ admin เปิดได้เฉพาะ admin surface; API การเงินปฏิเสธ token นี้
 
-1. Define the API origin and versioning strategy without changing existing contracts.
-2. Decide whether sessions remain cookies or move to a token exchange.
-3. Add signed, integrity-protected sessions and enforce CSRF state validation.
-4. Test `SameSite`, `Secure`, cookie domain, credentials, and CORS behavior across origins.
-5. Move LINE callback and webhook URLs in the LINE console during a coordinated deployment.
-6. Update `NEXT_PUBLIC_API_BASE_URL` and verify LIFF inside and outside the LINE client.
-7. Add end-to-end tests for login, callback, session, logout, webhook verification, and all API routes.
+ระบบไม่มี register/email-password flow สำหรับผู้ใช้ทั่วไป
 
-## Security review findings
+## Persistence migration
 
-The refactor preserves existing business and authentication behavior, so the following pre-existing risks require a separate security change:
-
-- Session payloads are base64 encoded but are not signed or encrypted.
-- The LINE Login `state` value is static and is not validated, leaving login CSRF protection incomplete.
-- `CSRF_SECRET` is validated but is not currently used.
-- The LINE webhook handler does not currently verify `x-line-signature`.
-- The webhook logs user identifiers and message text.
-- API rate limiting is not implemented.
-
-Local maintenance authentication and its narrowly scoped durable login limiter are
-documented in [admin-maintenance.md](admin-maintenance.md). That feature does not
-change the existing LINE OAuth flow or global API security behavior.
-
-Do not expose MongoDB credentials, LINE secrets or access tokens, session secrets, or CSRF secrets to browser bundles.
+โครงสร้างใหม่ใช้ PostgreSQL/Prisma แทน MongoDB เดิม การย้ายข้อมูล production ต้องทำเป็นงาน migration แยก: export MongoDB, map identifiers/amount/date/category แล้ว import หลัง `pnpm db:migrate` ห้ามชี้ deployment ใหม่ไปฐาน production ก่อนตรวจจำนวน record และยอดรวม

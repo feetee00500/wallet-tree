@@ -1,0 +1,110 @@
+import { Injectable, Logger } from '@nestjs/common';
+import { Recurring } from '@wallet-tree/database';
+import {
+  CreateRecurringDto,
+  RecurringResponse,
+  TransactionType,
+  UpdateRecurringDto,
+} from '@wallet-tree/shared';
+import { CategoryAccessService } from '../category/category-access.service';
+import { assertOwnership } from '../common/assert-ownership';
+import { RecurringRepo } from './recurring.repo';
+
+type RecurringWithCategory = Recurring & { category: { name: string; icon: string } };
+
+@Injectable()
+export class RecurringService {
+  private readonly logger = new Logger(RecurringService.name);
+
+  constructor(
+    private readonly recurringRepo: RecurringRepo,
+    private readonly categoryAccess: CategoryAccessService,
+  ) {}
+
+  private toResponse(r: RecurringWithCategory): RecurringResponse {
+    return {
+      id: r.id,
+      amount: r.amount.toNumber(),
+      type: r.type as TransactionType,
+      description: r.description,
+      categoryId: r.categoryId,
+      categoryName: r.category.name,
+      categoryIcon: r.category.icon,
+      userId: r.userId,
+      dayOfMonth: r.dayOfMonth,
+      active: r.active,
+      createdAt: r.createdAt,
+    };
+  }
+
+  async findAll(userId: string): Promise<RecurringResponse[]> {
+    const items = await this.recurringRepo.findAll(userId);
+    return items.map((r) => this.toResponse(r));
+  }
+
+  async create(userId: string, dto: CreateRecurringDto): Promise<RecurringResponse> {
+    await this.categoryAccess.ensureAccess(dto.categoryId, userId, dto.type);
+    const recurring = await this.recurringRepo.create({
+      amount: dto.amount,
+      type: dto.type,
+      description: dto.description,
+      categoryId: dto.categoryId,
+      userId,
+      dayOfMonth: dto.dayOfMonth,
+    });
+    return this.toResponse(recurring);
+  }
+
+  async update(userId: string, id: string, dto: UpdateRecurringDto): Promise<RecurringResponse> {
+    const existing = await this.recurringRepo.findById(id);
+    assertOwnership(existing, userId, 'Recurring');
+
+    if (dto.categoryId !== undefined || dto.type !== undefined) {
+      const newCategoryId = dto.categoryId ?? existing.categoryId;
+      const newType = (dto.type ?? existing.type) as TransactionType;
+      await this.categoryAccess.ensureAccess(newCategoryId, userId, newType);
+    }
+
+    const updated = await this.recurringRepo.update(id, dto);
+    return this.toResponse(updated);
+  }
+
+  async delete(userId: string, id: string): Promise<void> {
+    const existing = await this.recurringRepo.findById(id);
+    assertOwnership(existing, userId, 'Recurring');
+    await this.recurringRepo.delete(id);
+  }
+
+  async processRecurring(): Promise<void> {
+    const dayOfMonth = new Date().getDate();
+    const items = await this.recurringRepo.findActiveByDayOfMonth(dayOfMonth);
+
+    const results = await Promise.allSettled(
+      items.map((item) => this.processOne(item)),
+    );
+
+    for (const result of results) {
+      if (result.status === 'rejected') {
+        this.logger.error('Failed to process recurring transaction', result.reason);
+      }
+    }
+  }
+
+  private async processOne(item: Recurring): Promise<void> {
+    const amount = item.amount.toNumber();
+    const alreadyCreated = await this.recurringRepo.hasRecurringTransactionToday(
+      item.userId,
+      item.categoryId,
+      amount,
+    );
+    if (alreadyCreated) return;
+
+    await this.recurringRepo.createTransaction({
+      amount,
+      type: item.type as TransactionType,
+      description: item.description ?? undefined,
+      categoryId: item.categoryId,
+      userId: item.userId,
+    });
+  }
+}
