@@ -1,5 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "cd ../.. && pnpm --filter @wallet-tree/shared build && pnpm --filter @wallet-tree/database build && pnpm --filter backend build",
   "crons": [
     {
       "path": "/api/cron/recurring",
