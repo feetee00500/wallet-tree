@@ -2,6 +2,7 @@ import 'reflect-metadata';
 
 export { AdminLoginDto } from './auth/admin-login.dto';
 export type { AuthResponse, UserProfile } from './auth/auth.types';
+export type { AdminOverviewResponse, AdminUserResponse } from './admin/admin.types';
 
 export { TransactionType } from './common/transaction-type.enum';
 

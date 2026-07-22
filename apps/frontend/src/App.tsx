@@ -11,6 +11,9 @@ const Recurring = lazy(() => import('./pages/Recurring').then((module) => ({ def
 const AuthCallback = lazy(() => import('./pages/AuthCallback').then((module) => ({ default: module.AuthCallback })));
 const AdminLogin = lazy(() => import('./pages/AdminLogin').then((module) => ({ default: module.AdminLogin })));
 const AdminDashboard = lazy(() => import('./pages/AdminDashboard').then((module) => ({ default: module.AdminDashboard })));
+const AdminUsers = lazy(() => import('./pages/AdminUsers').then((module) => ({ default: module.AdminUsers })));
+const AdminAccount = lazy(() => import('./pages/AdminAccount').then((module) => ({ default: module.AdminAccount })));
+const AdminLayout = lazy(() => import('./layouts/AdminLayout').then((module) => ({ default: module.AdminLayout })));
 const Settings = lazy(() => import('./pages/Settings').then((module) => ({ default: module.Settings })));
 const Transactions = lazy(() => import('./pages/Transactions').then((module) => ({ default: module.Transactions })));
 
@@ -27,7 +30,11 @@ export function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/auth/callback" element={<AuthCallback />} />
       <Route path="/admin/login" element={<AdminLogin />} />
-      <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
+      <Route path="/admin" element={<AdminRoute><AdminLayout /></AdminRoute>}>
+        <Route index element={<AdminDashboard />} />
+        <Route path="users" element={<AdminUsers />} />
+        <Route path="account" element={<AdminAccount />} />
+      </Route>
       <Route
         element={
           <LineUserRoute>
