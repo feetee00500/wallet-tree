@@ -29,8 +29,8 @@ const palettes: Record<Palette, PaletteEntry[]> = {
     { hex: '#8b949e', dotClass: 'bg-zinc-500' },
   ],
   income: [
-    { hex: '#10b981', dotClass: 'bg-emerald-500' },
-    { hex: '#06b6d4', dotClass: 'bg-cyan-500' },
+    { hex: '#3fb950', dotClass: 'bg-emerald-400' },
+    { hex: '#58a6ff', dotClass: 'bg-cyan-400' },
     { hex: '#14b8a6', dotClass: 'bg-teal-500' },
     { hex: '#22c55e', dotClass: 'bg-green-500' },
     { hex: '#0ea5e9', dotClass: 'bg-sky-500' },
@@ -49,7 +49,7 @@ export function CategoryPieChart({ title, data, palette, className = '' }: Categ
 
   return (
     <Card className={`flex flex-col px-4 py-4 ${className}`}>
-      <h3 className="font-heading text-sm font-semibold text-zinc-100">{title}</h3>
+      <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-zinc-500">{title}</p>
       {isEmpty ? (
         <EmptyState
           title="ยังไม่มีข้อมูลเดือนนี้"
@@ -94,11 +94,11 @@ export function CategoryPieChart({ title, data, palette, className = '' }: Categ
               </PieChart>
             </ResponsiveContainer>
           </div>
-          <ul className="mt-4 flex flex-col gap-1.5 text-xs">
+          <ul className="mt-4 flex flex-col gap-1.5 text-[11px]">
             {data.map((item, idx) => (
               <li key={item.name} className="flex items-center justify-between gap-3">
                 <span className="flex min-w-0 items-center gap-2">
-                  <span className={`h-2.5 w-2.5 shrink-0 rounded-full ${paletteEntry(palette, idx).dotClass}`} />
+                  <span className={`h-2 w-2 shrink-0 rounded-full ${paletteEntry(palette, idx).dotClass}`} />
                   <span className="truncate text-zinc-300">{item.name}</span>
                 </span>
                 <span className="shrink-0 tabular-nums text-zinc-400">

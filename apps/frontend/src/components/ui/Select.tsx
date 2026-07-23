@@ -187,21 +187,21 @@ export function Select({
   };
 
   const triggerClass = [
-    'group flex min-h-[44px] w-full items-center justify-between gap-3 rounded-md border bg-zinc-800 px-3 text-left text-sm transition outline-none',
+    'group flex min-h-[36px] w-full items-center justify-between gap-3 rounded-[6px] border bg-void-black px-3 text-left text-body-sm transition outline-none',
     error
-      ? 'border-rose-500/60'
+      ? 'border-alarm-red/60'
       : open
-        ? 'border-cyan-400/70 ring-2 ring-cyan-400/30'
-        : 'border-zinc-800 hover:border-zinc-700',
+        ? 'border-iris-violet/70 ring-2 ring-iris-violet/20'
+        : 'border-graphite-hairline hover:border-white',
     disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer',
-    'focus-visible:ring-2 focus-visible:ring-cyan-400/40 focus-visible:border-cyan-400/70',
+    'focus-visible:ring-2 focus-visible:ring-iris-violet/40 focus-visible:border-iris-violet/70',
     className,
   ].join(' ');
 
   return (
     <div className="flex flex-col gap-1.5">
       {label ? (
-        <label htmlFor={triggerId} className="text-sm font-medium text-zinc-300">
+        <label htmlFor={triggerId} className="text-body-sm font-medium text-bone-white">
           {label}
         </label>
       ) : null}
@@ -223,28 +223,28 @@ export function Select({
       >
         <span className="flex min-w-0 items-center gap-2.5">
           {selected?.icon !== undefined ? (
-            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-zinc-800 text-sm">
+            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-[6px] bg-charcoal/30 text-sm">
               {selected.icon}
             </span>
           ) : null}
-          <span className={`truncate ${selected ? 'text-zinc-100' : 'text-zinc-500'}`}>
+          <span className={`truncate ${selected ? 'text-white' : 'text-iron'}`}>
             {selected ? selected.label : placeholder}
           </span>
         </span>
         <ChevronDownIcon
           className={`h-4 w-4 shrink-0 transition-all duration-200 ${
-            open ? 'rotate-180 text-cyan-400' : 'text-zinc-400 group-hover:text-zinc-200'
+            open ? 'rotate-180 text-iris-violet' : 'text-ash-gray group-hover:text-bone-white'
           }`}
         />
       </button>
-      {error ? <span className="text-xs text-rose-400">{error}</span> : null}
+      {error ? <span className="text-caption text-alarm-red">{error}</span> : null}
       {open && position
         ? createPortal(
             <div
               ref={popoverRef}
               id={listboxId}
               role="listbox"
-              className="fixed z-[60] overflow-hidden rounded-md border border-zinc-700 bg-zinc-900 shadow-2xl shadow-black/60 ring-1 ring-black/40"
+              className="fixed z-[60] overflow-hidden rounded-[16px] border border-graphite-hairline bg-void-black ring-1 ring-black/40"
               style={{
                 top: position.top,
                 left: position.left,
@@ -260,7 +260,7 @@ export function Select({
                 style={{ maxHeight: position.maxHeight - 2 }}
               >
                 {options.length === 0 ? (
-                  <li className="px-3.5 py-3 text-sm text-zinc-500">ไม่มีตัวเลือก</li>
+                  <li className="px-3 py-3 text-body-sm text-ash-gray">ไม่มีตัวเลือก</li>
                 ) : null}
                 {options.map((option, idx) => {
                   const isSelected = option.value === value;
@@ -276,20 +276,20 @@ export function Select({
                       onMouseDown={(event) => event.preventDefault()}
                       onClick={() => handleSelect(idx)}
                       className={[
-                        'mx-1 flex items-center justify-between gap-3 rounded-lg px-2.5 py-2 text-sm transition select-none',
+                        'mx-1 flex items-center justify-between gap-3 rounded-[6px] px-2.5 py-2 text-body-sm transition select-none',
                         option.disabled
-                          ? 'cursor-not-allowed text-zinc-600'
+                          ? 'cursor-not-allowed text-iron'
                           : 'cursor-pointer',
-                        !option.disabled && isHighlighted ? 'bg-zinc-800 text-zinc-100' : '',
+                        !option.disabled && isHighlighted ? 'bg-charcoal/30 text-bone-white' : '',
                         !option.disabled && !isHighlighted && isSelected
-                          ? 'text-cyan-400'
+                          ? 'text-iris-violet'
                           : '',
-                        !option.disabled && !isHighlighted && !isSelected ? 'text-zinc-200' : '',
+                        !option.disabled && !isHighlighted && !isSelected ? 'text-bone-white' : '',
                       ].join(' ')}
                     >
                       <span className="flex min-w-0 items-center gap-2.5">
                         {option.icon !== undefined ? (
-                          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-zinc-800/90 text-sm">
+                          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-[6px] bg-charcoal/30 text-sm">
                             {option.icon}
                           </span>
                         ) : null}
@@ -297,10 +297,10 @@ export function Select({
                       </span>
                       <span className="flex shrink-0 items-center gap-2">
                         {option.hint ? (
-                          <span className="text-xs text-zinc-500">{option.hint}</span>
+                          <span className="text-caption text-iron">{option.hint}</span>
                         ) : null}
                         {isSelected ? (
-                          <CheckIcon className="h-4 w-4 text-cyan-400" />
+                          <CheckIcon className="h-4 w-4 text-iris-violet" />
                         ) : null}
                       </span>
                     </li>

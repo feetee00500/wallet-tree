@@ -19,14 +19,14 @@ interface SegmentedControlProps<T extends string> {
 }
 
 const sizeClass = {
-  sm: 'min-h-[36px] text-xs',
-  md: 'min-h-[44px] text-sm',
+  sm: 'min-h-[32px] text-caption',
+  md: 'min-h-[36px] text-body-sm',
 };
 
 const toneActive = {
-  income: 'bg-emerald-500/15 text-emerald-300 ring-emerald-500/40',
-  expense: 'bg-orange-500/15 text-orange-400 ring-orange-500/40',
-  neutral: 'bg-cyan-500/10 text-cyan-400 ring-cyan-400/30',
+  income: 'text-pulse-green',
+  expense: 'text-alarm-red',
+  neutral: 'text-iris-violet',
 };
 
 export function SegmentedControl<T extends string>({
@@ -41,11 +41,11 @@ export function SegmentedControl<T extends string>({
 }: SegmentedControlProps<T>) {
   return (
     <div className="flex flex-col gap-1.5">
-      {label ? <span className="text-sm font-medium text-zinc-300">{label}</span> : null}
+      {label ? <span className="text-body-sm font-medium text-bone-white">{label}</span> : null}
       <div
         role="tablist"
         aria-label={ariaLabel ?? label}
-        className={`inline-flex items-center gap-1 rounded-md border border-zinc-700 bg-zinc-900 p-1 ${
+        className={`inline-flex items-center gap-0 rounded-[6px] border border-graphite-hairline bg-void-black p-0 ${
           fullWidth ? 'w-full' : ''
         }`}
       >
@@ -60,12 +60,12 @@ export function SegmentedControl<T extends string>({
               aria-selected={isActive}
               disabled={disabled}
               onClick={() => onChange(option.value)}
-              className={`inline-flex flex-1 items-center justify-center gap-1.5 rounded-sm px-3 font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/40 disabled:cursor-not-allowed disabled:opacity-60 ${
+              className={`inline-flex flex-1 items-center justify-center gap-1.5 rounded-[6px] px-3 font-medium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-iris-violet/40 disabled:cursor-not-allowed disabled:opacity-60 ${
                 sizeClass[size]
               } ${
                 isActive
-                  ? `ring-1 ${toneActive[tone]}`
-                  : 'text-zinc-400 hover:text-zinc-100'
+                  ? `bg-charcoal/30 text-white ring-1 ring-inset ring-graphite-hairline ${toneActive[tone]}`
+                  : 'text-ash-gray hover:text-bone-white'
               }`}
             >
               {option.icon ? <span className="flex shrink-0 items-center">{option.icon}</span> : null}

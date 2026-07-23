@@ -150,7 +150,7 @@ export function TransactionFilters({
       </div>
 
       <div className="flex flex-col gap-2">
-        <span className="text-sm font-medium text-zinc-300">ช่วงเวลา</span>
+        <span className="text-[13px] font-medium text-zinc-300">ช่วงเวลา</span>
         <div className="flex flex-wrap items-center gap-2">
           {datePresets.map((preset) => {
             const isActive = activePreset === preset.key;
@@ -159,9 +159,9 @@ export function TransactionFilters({
                 key={preset.key}
                 type="button"
                 onClick={() => handlePresetClick(preset)}
-                className={`inline-flex min-h-[36px] items-center rounded-full border px-3.5 text-xs font-medium transition ${
+                className={`inline-flex min-h-[32px] items-center rounded-full border px-3 text-xs font-medium transition ${
                   isActive
-                    ? 'border-emerald-500/40 bg-emerald-500/15 text-emerald-300'
+                    ? 'border-cyan-400/40 bg-cyan-500/10 text-cyan-400'
                     : 'border-zinc-700 bg-zinc-900 text-zinc-400 hover:border-zinc-600 hover:text-zinc-100'
                 }`}
               >
@@ -172,9 +172,9 @@ export function TransactionFilters({
           <button
             type="button"
             onClick={() => setShowCustom((prev) => !prev)}
-            className={`inline-flex min-h-[36px] items-center gap-1 rounded-full border px-3.5 text-xs font-medium transition ${
+            className={`inline-flex min-h-[32px] items-center gap-1 rounded-full border px-3 text-xs font-medium transition ${
               activePreset === 'custom' || showCustom
-                ? 'border-emerald-500/40 bg-emerald-500/15 text-emerald-300'
+                ? 'border-cyan-400/40 bg-cyan-500/10 text-cyan-400'
                 : 'border-zinc-700 bg-zinc-900 text-zinc-400 hover:border-zinc-600 hover:text-zinc-100'
             }`}
           >
@@ -206,7 +206,7 @@ export function TransactionFilters({
           <button
             type="button"
             onClick={onReset}
-            className="text-sm font-medium text-emerald-400 transition hover:text-emerald-300"
+            className="text-[13px] font-medium text-cyan-400 transition hover:text-cyan-300"
           >
             ล้างตัวกรองทั้งหมด
           </button>

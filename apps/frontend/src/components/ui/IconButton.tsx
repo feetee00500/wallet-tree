@@ -11,14 +11,14 @@ interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const sizeClass: Record<IconButtonSize, string> = {
-  sm: 'h-8 w-8',
-  md: 'h-9 w-9',
+  sm: 'h-7 w-7',
+  md: 'h-8 w-8',
 };
 
 const toneClass: Record<IconButtonTone, string> = {
-  neutral: 'text-zinc-400 hover:bg-zinc-800 hover:text-zinc-100',
-  danger: 'text-zinc-400 hover:bg-rose-500/10 hover:text-rose-400',
-  accent: 'text-zinc-400 hover:bg-cyan-500/10 hover:text-cyan-400',
+  neutral: 'text-ash-gray hover:bg-charcoal/30 hover:text-bone-white',
+  danger: 'text-ash-gray hover:bg-alarm-red/10 hover:text-alarm-red',
+  accent: 'text-ash-gray hover:bg-iris-violet/10 hover:text-iris-violet',
 };
 
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
@@ -32,7 +32,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
         type={type}
         aria-label={label}
         title={label}
-        className={`inline-flex shrink-0 items-center justify-center rounded-sm transition focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/40 disabled:cursor-not-allowed disabled:opacity-50 ${sizeClass[size]} ${toneClass[tone]} ${className}`}
+        className={`inline-flex shrink-0 items-center justify-center rounded-[6px] transition focus:outline-none focus-visible:ring-2 focus-visible:ring-iris-violet/40 disabled:cursor-not-allowed disabled:opacity-50 ${sizeClass[size]} ${toneClass[tone]} ${className}`}
         {...rest}
       >
         {children}

@@ -45,9 +45,9 @@ function barColorClass(status: RowStatus): string {
     case 'overBudget':
       return 'bg-rose-500';
     case 'critical':
-      return 'bg-orange-400';
+      return 'bg-orange-500';
     case 'warn':
-      return 'bg-amber-400';
+      return 'bg-amber-500';
     default:
       return 'bg-emerald-500';
   }
@@ -264,10 +264,10 @@ function BudgetOverviewCard({ totals }: BudgetOverviewCardProps) {
     return (
       <Card className="flex items-start justify-between gap-4 px-5 py-5">
         <div>
-          <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
+          <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-zinc-500">
             ภาพรวมงบประมาณเดือนนี้
           </p>
-          <p className="mt-1 text-sm text-zinc-400">ยังไม่ได้ตั้งงบ — เริ่มจากหมวดที่จ่ายบ่อยที่สุด</p>
+          <p className="mt-1 text-[13px] text-zinc-400">ยังไม่ได้ตั้งงบ — เริ่มจากหมวดที่จ่ายบ่อยที่สุด</p>
         </div>
       </Card>
     );
@@ -282,16 +282,16 @@ function BudgetOverviewCard({ totals }: BudgetOverviewCardProps) {
     <Card className="flex flex-col gap-4 px-5 py-5">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
+          <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-zinc-500">
             ภาพรวมงบประมาณเดือนนี้
           </p>
-          <p className="mt-1 font-heading text-2xl font-bold tabular-nums text-zinc-100 sm:text-3xl">
+          <p className="mt-1 text-[22px] font-bold tabular-nums text-zinc-100 sm:text-[24px]">
             {formatCurrency(totalSpent)}{' '}
             <span className="text-base font-medium text-zinc-500">
               / {formatCurrency(totalBudget)}
             </span>
           </p>
-          <p className={`mt-1 text-sm font-semibold tabular-nums ${textColorClass(status)}`}>
+          <p className={`mt-1 text-[13px] font-semibold tabular-nums ${textColorClass(status)}`}>
             ใช้ไป {percentage.toFixed(1)}%
             {remaining >= 0
               ? ` · เหลือ ${formatCurrency(remaining)}`
@@ -304,7 +304,7 @@ function BudgetOverviewCard({ totals }: BudgetOverviewCardProps) {
         </div>
       </div>
 
-      <div className="h-3 overflow-hidden rounded-full bg-zinc-800">
+      <div className="h-2.5 overflow-hidden rounded-full bg-zinc-800">
         <div
           className={`h-full rounded-full transition-all duration-500 ${barColorClass(status)}`}
           style={{ width: `${barWidth}%` }}
@@ -326,14 +326,14 @@ function BudgetItemRow({ row, onSet, onEdit }: BudgetItemRowProps) {
   const barWidth = Math.min(row.percentage, 100);
 
   return (
-    <li className="rounded-md border border-zinc-700 bg-zinc-900 px-4 py-4 shadow-[0_1px_4px_rgba(0,0,0,0.4)] transition hover:bg-zinc-800/40">
+    <li className="rounded-[6px] border border-zinc-700 bg-zinc-900 px-4 py-4 shadow-[0_1px_4px_rgba(0,0,0,0.4)] transition hover:bg-zinc-800/40">
       <div className="flex items-center justify-between gap-4">
         <div className="flex min-w-0 items-center gap-3">
-          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-zinc-800 text-xl">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-zinc-800 text-lg">
             {row.categoryIcon}
           </span>
           <div className="min-w-0">
-            <p className="truncate text-sm font-medium text-zinc-100">{row.categoryName}</p>
+            <p className="truncate text-[13px] font-medium text-zinc-100">{row.categoryName}</p>
             {hasBudget ? (
               <p className={`text-xs font-semibold tabular-nums ${textColorClass(status)}`}>
                 {row.percentage.toFixed(0)}%
@@ -349,7 +349,7 @@ function BudgetItemRow({ row, onSet, onEdit }: BudgetItemRowProps) {
           {hasBudget ? (
             <>
               <div className="text-right">
-                <p className="whitespace-nowrap text-sm font-semibold text-zinc-100 tabular-nums">
+                <p className="whitespace-nowrap text-[13px] font-semibold text-zinc-100 tabular-nums">
                   {formatCurrency(row.spentAmount)}
                 </p>
                 <p className="whitespace-nowrap text-xs text-zinc-500 tabular-nums">

@@ -187,23 +187,23 @@ function RecurringCard({ item, onEdit, onDelete, onToggleActive }: RecurringCard
 
   return (
     <li
-      className={`flex flex-col gap-4 rounded-md border bg-zinc-900 px-4 py-4 shadow-[0_1px_4px_rgba(0,0,0,0.4)] transition hover:bg-zinc-800/40 ${
-        item.active ? 'border-zinc-800' : 'border-zinc-800/60 opacity-75'
+      className={`flex flex-col gap-4 rounded-[6px] border bg-zinc-900 px-4 py-4 shadow-[0_1px_4px_rgba(0,0,0,0.4)] transition hover:bg-zinc-800/40 ${
+        item.active ? 'border-zinc-700' : 'border-zinc-800/60 opacity-75'
       }`}
     >
       <div className="flex items-start justify-between gap-3">
         <div className="flex min-w-0 items-center gap-3">
-          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-zinc-800 text-xl">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-zinc-800 text-lg">
             {item.categoryIcon}
           </span>
           <div className="min-w-0">
-            <p className="truncate text-sm font-medium text-zinc-100">
+            <p className="truncate text-[13px] font-medium text-zinc-100">
               {item.description?.trim() || item.categoryName}
             </p>
             <p className="truncate text-xs text-zinc-500">{item.categoryName}</p>
           </div>
         </div>
-        <span className={`shrink-0 text-base font-semibold tabular-nums ${amountClass}`}>
+        <span className={`shrink-0 text-sm font-semibold tabular-nums ${amountClass}`}>
           {sign}
           {formatCurrency(item.amount)}
         </span>
@@ -232,10 +232,10 @@ function RecurringCard({ item, onEdit, onDelete, onToggleActive }: RecurringCard
         </div>
         <div className="flex items-center gap-1">
           <IconButton size="sm" tone="accent" label="แก้ไข" onClick={onEdit}>
-            <PencilIcon className="h-4 w-4" />
+            <PencilIcon className="h-3.5 w-3.5" />
           </IconButton>
           <IconButton size="sm" tone="danger" label="ลบ" onClick={onDelete}>
-            <TrashIcon className="h-4 w-4" />
+            <TrashIcon className="h-3.5 w-3.5" />
           </IconButton>
         </div>
       </div>

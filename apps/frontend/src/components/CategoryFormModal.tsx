@@ -119,7 +119,7 @@ export function CategoryFormModal({
         ) : null}
 
         <div className="flex flex-col gap-1.5">
-          <span className="text-sm font-medium text-zinc-300">ไอคอน</span>
+          <span className="text-[13px] font-medium text-zinc-300">ไอคอน</span>
           <EmojiPicker
             value={values.icon}
             onChange={(next) => setValues((prev) => ({ ...prev, icon: next }))}
@@ -140,7 +140,7 @@ export function CategoryFormModal({
         />
 
         {formError ? (
-          <div className="rounded-xl border border-rose-500/40 bg-rose-500/10 px-4 py-3 text-sm text-rose-300">
+          <div className="rounded-[6px] border border-rose-500/40 bg-rose-500/10 px-4 py-3 text-[13px] text-rose-300">
             {formError}
           </div>
         ) : null}

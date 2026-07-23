@@ -14,15 +14,15 @@ export function Switch({ checked, onChange, label, disabled = false }: SwitchPro
       aria-label={label}
       disabled={disabled}
       onClick={() => onChange(!checked)}
-      className={`flex h-7 w-12 shrink-0 items-center rounded-full border px-0.5 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/40 disabled:cursor-not-allowed disabled:opacity-50 ${
+      className={`flex h-6 w-10 shrink-0 items-center rounded-full border px-[3px] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-iris-violet/40 disabled:cursor-not-allowed disabled:opacity-50 ${
         checked
-          ? 'border-cyan-400/40 bg-cyan-500/15'
-          : 'border-zinc-700 bg-zinc-800'
+          ? 'border-iris-violet/40 bg-iris-violet/20'
+          : 'border-graphite-hairline bg-void-black'
       }`}
     >
       <span
-        className={`h-5 w-5 rounded-full transition-transform duration-200 ${
-          checked ? 'translate-x-5 bg-cyan-400' : 'translate-x-0 bg-zinc-500'
+        className={`h-[14px] w-[14px] rounded-full transition-transform duration-200 ${
+          checked ? 'translate-x-4 bg-iris-violet' : 'translate-x-0 bg-ash-gray'
         }`}
       />
     </button>

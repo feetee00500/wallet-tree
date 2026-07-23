@@ -20,16 +20,16 @@ export function TransactionsTable({
 }: TransactionsTableProps) {
   return (
     <>
-      <div className="hidden overflow-hidden rounded-md border border-zinc-700 bg-zinc-900 shadow-[0_1px_4px_rgba(0,0,0,0.4)] sm:block">
+      <div className="hidden overflow-hidden rounded-[6px] border border-zinc-700 bg-zinc-900 shadow-[0_1px_4px_rgba(0,0,0,0.4)] sm:block">
         <table className="w-full text-[13px]">
-          <thead className="bg-zinc-900/80 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">
+          <thead className="bg-zinc-900/80 text-left text-[11px] font-semibold uppercase tracking-wide text-zinc-500">
             <tr>
               <th className="px-4 py-2.5 font-medium">วันที่</th>
               <th className="px-4 py-3 font-medium">รายละเอียด</th>
               <th className="px-4 py-3 font-medium">หมวดหมู่</th>
               <th className="px-4 py-3 font-medium">ประเภท</th>
               <th className="px-4 py-3 text-right font-medium">จำนวนเงิน</th>
-              <th className="px-4 py-3 text-right font-medium">จัดการ</th>
+              <th className="px-4 py-3 text-right font-medium" />
             </tr>
           </thead>
           <tbody className="divide-y divide-zinc-800">
@@ -39,13 +39,13 @@ export function TransactionsTable({
               const description = transaction.description?.trim() || category?.name || 'ไม่ระบุ';
               return (
                 <tr key={transaction.id} className="text-zinc-100 transition hover:bg-zinc-800/30">
-                  <td className="whitespace-nowrap px-4 py-3 text-zinc-400">
+                  <td className="whitespace-nowrap px-4 py-3 text-zinc-500">
                     {formatDate(transaction.createdAt)}
                   </td>
                   <td className="px-4 py-3">{description}</td>
                   <td className="px-4 py-3">
                     <span className="inline-flex items-center gap-2 text-zinc-300">
-                      <span className="flex h-7 w-7 items-center justify-center rounded-full bg-zinc-800 text-sm">
+                      <span className="flex h-6 w-6 items-center justify-center rounded-[4px] bg-zinc-800 text-[11px]">
                         {category?.icon ?? '•'}
                       </span>
                       {category?.name ?? 'ไม่ระบุ'}
@@ -72,7 +72,7 @@ export function TransactionsTable({
                         label="แก้ไข"
                         onClick={() => onEdit(transaction)}
                       >
-                        <PencilIcon className="h-4 w-4" />
+                        <PencilIcon className="h-3.5 w-3.5" />
                       </IconButton>
                       <IconButton
                         size="sm"
@@ -80,7 +80,7 @@ export function TransactionsTable({
                         label="ลบ"
                         onClick={() => onDelete(transaction)}
                       >
-                        <TrashIcon className="h-4 w-4" />
+                        <TrashIcon className="h-3.5 w-3.5" />
                       </IconButton>
                     </div>
                   </td>
@@ -99,22 +99,22 @@ export function TransactionsTable({
           return (
             <li
               key={transaction.id}
-              className="rounded-md border border-zinc-700 bg-zinc-900 px-4 py-3 shadow-[0_1px_4px_rgba(0,0,0,0.4)]"
+              className="rounded-[6px] border border-zinc-700 bg-zinc-900 px-4 py-3 shadow-[0_1px_4px_rgba(0,0,0,0.4)]"
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex min-w-0 items-center gap-3">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-zinc-800 text-base">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[4px] bg-zinc-800 text-base">
                     {category?.icon ?? '•'}
                   </span>
                   <div className="min-w-0">
-                    <p className="truncate text-sm font-medium text-zinc-100">{description}</p>
-                    <p className="truncate text-xs text-zinc-500">
+                    <p className="truncate text-[13px] font-medium text-zinc-100">{description}</p>
+                    <p className="truncate text-[11px] text-zinc-500">
                       {(category?.name ?? 'ไม่ระบุ')} · {formatDate(transaction.createdAt)}
                     </p>
                   </div>
                 </div>
                 <span
-                  className={`shrink-0 text-sm font-semibold tabular-nums ${
+                  className={`shrink-0 text-[13px] font-semibold tabular-nums ${
                     isIncome ? 'text-emerald-400' : 'text-orange-400'
                   }`}
                 >
@@ -133,7 +133,7 @@ export function TransactionsTable({
                     label="แก้ไข"
                     onClick={() => onEdit(transaction)}
                   >
-                    <PencilIcon className="h-4 w-4" />
+                    <PencilIcon className="h-3.5 w-3.5" />
                   </IconButton>
                   <IconButton
                     size="sm"
@@ -141,7 +141,7 @@ export function TransactionsTable({
                     label="ลบ"
                     onClick={() => onDelete(transaction)}
                   >
-                    <TrashIcon className="h-4 w-4" />
+                    <TrashIcon className="h-3.5 w-3.5" />
                   </IconButton>
                 </div>
               </div>

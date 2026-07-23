@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-type BadgeTone = 'income' | 'expense' | 'neutral' | 'info' | 'warning' | 'danger';
+type BadgeTone = 'income' | 'expense' | 'neutral' | 'info' | 'warning' | 'danger' | 'success';
 
 interface BadgeProps {
   tone?: BadgeTone;
@@ -9,18 +9,19 @@ interface BadgeProps {
 }
 
 const toneClass: Record<BadgeTone, string> = {
-  income: 'bg-emerald-500/10 text-emerald-400 ring-emerald-500/20',
-  expense: 'bg-orange-500/10 text-orange-400 ring-orange-500/30',
-  neutral: 'bg-zinc-800 text-zinc-300 ring-zinc-700',
-  info: 'bg-cyan-500/10 text-cyan-400 ring-cyan-500/20',
-  warning: 'bg-amber-500/10 text-amber-400 ring-amber-500/20',
-  danger: 'bg-rose-500/15 text-rose-300 ring-rose-500/30',
+  income: 'text-pulse-green bg-pulse-green/10 ring-1 ring-inset ring-pulse-green/20',
+  expense: 'text-alarm-red bg-alarm-red/10 ring-1 ring-inset ring-alarm-red/20',
+  neutral: 'text-ash-gray bg-charcoal/30 ring-1 ring-inset ring-graphite-hairline',
+  info: 'text-sky-blue bg-sky-blue/10 ring-1 ring-inset ring-sky-blue/20',
+  warning: 'text-amber bg-amber/10 ring-1 ring-inset ring-amber/20',
+  danger: 'text-alarm-red bg-alarm-red/10 ring-1 ring-inset ring-alarm-red/20',
+  success: 'text-pulse-green bg-pulse-green/10 ring-1 ring-inset ring-pulse-green/20',
 };
 
 export function Badge({ tone = 'neutral', children, className = '' }: BadgeProps) {
   return (
     <span
-      className={`inline-flex items-center rounded-full px-2 py-0.5 text-[11px] font-semibold ring-1 ${toneClass[tone]} ${className}`}
+      className={`inline-flex items-center rounded-[6px] px-[6px] py-[2px] text-caption font-mono font-medium leading-[18px] ${toneClass[tone]} ${className}`}
     >
       {children}
     </span>

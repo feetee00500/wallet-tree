@@ -1,85 +1,30 @@
-import { useId, useRef } from 'react';
-import { CalendarIcon } from '../icons';
-
 interface DateFieldProps {
-  label?: string;
+  label: string;
   value: string;
-  onChange: (value: string) => void;
+  onChange: (next: string) => void;
   error?: string;
-  name?: string;
   id?: string;
-  min?: string;
-  max?: string;
-  ariaLabel?: string;
+  name?: string;
 }
 
-export function DateField({
-  label,
-  value,
-  onChange,
-  error,
-  name,
-  id,
-  min,
-  max,
-  ariaLabel,
-}: DateFieldProps) {
-  const reactId = useId();
-  const inputId = id ?? `date-${reactId}`;
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const handleIconClick = () => {
-    const input = inputRef.current;
-    if (!input) return;
-    if (typeof input.showPicker === 'function') {
-      try {
-        input.showPicker();
-        return;
-      } catch {
-        // fall through to focus
-      }
-    }
-    input.focus();
-  };
-
-  const wrapperClass = [
-    'relative flex min-h-[44px] items-center rounded-md border bg-zinc-800 transition',
-    error
-      ? 'border-rose-500/60'
-      : 'border-zinc-700 hover:border-zinc-600 focus-within:border-cyan-400/70 focus-within:ring-2 focus-within:ring-cyan-400/30',
-  ].join(' ');
-
+export function DateField({ label, value, onChange, error, id, name }: DateFieldProps) {
+  const inputId = id ?? name;
   return (
     <div className="flex flex-col gap-1.5">
-      {label ? (
-        <label htmlFor={inputId} className="text-sm font-medium text-zinc-300">
-          {label}
-        </label>
-      ) : null}
-      <div className={wrapperClass}>
-        <input
-          ref={inputRef}
-          id={inputId}
-          name={name}
-          type="date"
-          value={value}
-          onChange={(event) => onChange(event.target.value)}
-          min={min}
-          max={max}
-          aria-label={ariaLabel}
-          className="w-full bg-transparent px-3.5 pr-11 text-sm text-zinc-100 outline-none placeholder:text-zinc-500"
-        />
-        <button
-          type="button"
-          onClick={handleIconClick}
-          tabIndex={-1}
-          aria-label="เปิดปฏิทิน"
-          className="absolute right-1.5 flex h-9 w-9 items-center justify-center rounded-sm text-zinc-400 transition hover:bg-zinc-700 hover:text-cyan-400"
-        >
-          <CalendarIcon className="h-5 w-5" />
-        </button>
-      </div>
-      {error ? <span className="text-xs text-rose-400">{error}</span> : null}
+      <label htmlFor={inputId} className="text-body-sm font-medium text-bone-white">
+        {label}
+      </label>
+      <input
+        id={inputId}
+        type="date"
+        name={name}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className={`min-h-[36px] w-full rounded-[6px] border bg-void-black px-3 text-body-sm text-white transition outline-none focus:ring-2 focus:ring-iris-violet/20 ${
+          error ? 'border-alarm-red/60' : 'border-graphite-hairline focus:border-iris-violet'
+        }`}
+      />
+      {error ? <span className="text-caption text-alarm-red">{error}</span> : null}
     </div>
   );
 }

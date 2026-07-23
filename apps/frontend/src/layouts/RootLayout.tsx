@@ -9,8 +9,8 @@ import {
   RepeatIcon,
   SettingsIcon,
   TagIcon,
-  WalletIcon,
 } from '../components/icons';
+import { Logo } from '../components/Logo';
 import { Button } from '../components/ui/Button';
 import { useAuth } from '../contexts/AuthContext';
 import { useQuickAdd } from '../contexts/QuickAddContext';
@@ -32,16 +32,16 @@ const navItems: NavItem[] = [
 
 const sidebarLinkClass = ({ isActive }: { isActive: boolean }) =>
   [
-    'group relative flex min-h-10 items-center gap-3 rounded-sm border border-transparent px-3 py-2 text-[13px] font-medium transition',
+    'group relative flex min-h-[36px] items-center gap-3 rounded-[6px] px-3 py-2 text-[13px] font-medium transition',
     isActive
-      ? 'border-zinc-700 bg-zinc-800 text-cyan-400'
-      : 'text-zinc-400 hover:border-zinc-700 hover:bg-zinc-800/60 hover:text-zinc-100',
+      ? 'bg-charcoal text-iris-violet'
+      : 'text-iron hover:bg-charcoal/40 hover:text-bone-white',
   ].join(' ');
 
 const mobileLinkClass = ({ isActive }: { isActive: boolean }) =>
   [
     'group relative flex flex-1 flex-col items-center gap-0.5 px-1 py-2 text-[10px] font-medium transition-colors',
-    isActive ? 'text-cyan-400' : 'text-zinc-500 hover:text-zinc-200',
+    isActive ? 'text-iris-violet' : 'text-ash-gray hover:text-bone-white',
   ].join(' ');
 
 export function RootLayout() {
@@ -49,18 +49,10 @@ export function RootLayout() {
   const { open: openQuickAdd } = useQuickAdd();
 
   return (
-    <div className="flex min-h-screen bg-zinc-950 text-zinc-100">
-      <aside className="hidden w-[220px] shrink-0 flex-col border-r border-zinc-700 bg-zinc-900 sm:flex">
-        <div className="flex h-16 items-center gap-3 border-b border-zinc-700 px-4">
-          <span className="flex h-9 w-9 items-center justify-center rounded-md border border-cyan-400/30 bg-cyan-500/10 text-cyan-400">
-            <WalletIcon className="h-5 w-5" strokeWidth={2.2} />
-          </span>
-          <div className="min-w-0">
-            <p className="font-heading text-base font-bold tracking-tight text-zinc-100">
-              Wallet Tree
-            </p>
-            <p className="truncate font-mono text-[10px] uppercase tracking-[0.14em] text-zinc-500">Finance console</p>
-          </div>
+    <div className="flex min-h-screen bg-void-black text-bone-white">
+      <aside className="hidden w-[220px] shrink-0 flex-col border-r border-graphite-hairline sm:flex">
+        <div className="flex h-14 items-center justify-center border-b border-graphite-hairline px-4">
+          <Logo subtitle="Finance console" />
         </div>
 
         <div className="px-3 pt-3">
@@ -70,19 +62,19 @@ export function RootLayout() {
           </Button>
         </div>
 
-        <p className="px-4 pb-2 pt-5 font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-zinc-500">Workspace</p>
-        <nav className="flex-1 space-y-1 px-3">
+        <p className="px-4 pb-2 pt-5 font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-iron">Navigation</p>
+        <nav className="flex-1 space-y-[2px] px-3">
           {navItems.map((item) => (
             <NavLink key={item.to} to={item.to} className={sidebarLinkClass}>
               {({ isActive }) => (
                 <>
                   <span
                     aria-hidden
-                    className={`absolute left-0 top-1/2 h-5 w-0.5 -translate-y-1/2 rounded-full transition-all ${
-                      isActive ? 'bg-cyan-400 opacity-100' : 'opacity-0'
+                    className={`absolute left-0 top-1/2 h-4 w-[3px] -translate-y-1/2 rounded-r-full transition-all ${
+                      isActive ? 'bg-iris-violet opacity-100' : 'opacity-0'
                     }`}
                   />
-                  <item.icon className="h-5 w-5" />
+                  <item.icon className="h-[18px] w-[18px]" />
                   <span>{item.label}</span>
                 </>
               )}
@@ -91,19 +83,22 @@ export function RootLayout() {
         </nav>
 
         {user ? (
-          <div className="m-3 flex items-center gap-3 rounded-md border border-zinc-700 bg-zinc-950/50 px-3 py-3">
-            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-sm bg-cyan-500/10 text-xs font-semibold text-cyan-400 ring-1 ring-cyan-400/30">
+          <div className="m-3 flex items-center gap-3 rounded-[16px] border border-graphite-hairline bg-void-black px-3 py-2.5">
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[6px] border border-graphite-hairline bg-charcoal/30 text-xs font-semibold text-iris-violet">
               {user.name.slice(0, 1).toUpperCase()}
             </span>
             <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-medium text-zinc-100">{user.name}</p>
-              <p className="flex items-center gap-1.5 truncate text-[10px] text-zinc-500"><span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />LINE connected</p>
+              <p className="truncate text-[13px] font-medium text-bone-white">{user.name}</p>
+              <p className="flex items-center gap-1.5 truncate text-[10px] text-iron">
+                <span className="h-1.5 w-1.5 rounded-full bg-pulse-green" />
+                LINE connected
+              </p>
             </div>
             <button
               type="button"
               onClick={logout}
               aria-label="ออกจากระบบ"
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-zinc-400 transition hover:bg-zinc-800 hover:text-rose-400"
+              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[6px] text-ash-gray transition hover:bg-charcoal/30 hover:text-alarm-red"
             >
               <LogOutIcon className="h-4 w-4" />
             </button>
@@ -112,60 +107,32 @@ export function RootLayout() {
       </aside>
 
       <div className="flex min-h-screen flex-1 flex-col">
-        <header className="flex h-12 items-center justify-between border-b border-zinc-700 bg-zinc-900/95 px-4 backdrop-blur sm:hidden">
-          <div className="flex items-center gap-2.5">
-            <span className="flex h-8 w-8 items-center justify-center rounded-md border border-cyan-400/30 bg-cyan-500/10 text-cyan-400">
-              <WalletIcon className="h-4 w-4" strokeWidth={2.2} />
-            </span>
-            <span className="font-heading text-base font-bold tracking-tight">Wallet Tree</span>
-          </div>
+        <header className="flex h-11 items-center justify-between border-b border-graphite-hairline bg-void-black/95 px-4 backdrop-blur sm:hidden">
+          <Logo subtitle="Finance console" />
           {user ? (
             <button
               type="button"
               onClick={logout}
               aria-label="ออกจากระบบ"
-              className="flex h-9 w-9 items-center justify-center rounded-lg text-zinc-400 transition hover:bg-zinc-800 hover:text-rose-400"
+              className="flex h-7 w-7 items-center justify-center rounded-[6px] text-ash-gray transition hover:bg-charcoal/30 hover:text-alarm-red"
             >
               <LogOutIcon className="h-4 w-4" />
             </button>
           ) : null}
         </header>
 
-        <div className="hidden h-12 items-center justify-between border-b border-zinc-700 bg-zinc-900/80 px-5 sm:flex">
-          <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-zinc-500">Wallet Tree / Finance Operations</p>
-          <div className="flex items-center gap-4 font-mono text-[10px] uppercase tracking-[0.12em] text-zinc-500">
-            <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />System online</span>
-            <span>Asia/Bangkok</span>
-          </div>
-        </div>
-
-        <main className="flex-1 p-4 pb-28 sm:p-5 sm:pb-5">
+        <main className="flex-1 px-6 py-6">
           <Outlet />
         </main>
       </div>
 
-      <button
-        type="button"
-        onClick={openQuickAdd}
-        aria-label="บันทึกรายการ"
-        className="fixed bottom-20 right-5 z-40 flex h-12 w-12 items-center justify-center rounded-md border border-cyan-400/40 bg-cyan-500 text-white shadow-lg shadow-black/40 transition active:bg-cyan-400 sm:hidden"
-      >
-        <PlusIcon className="h-6 w-6" strokeWidth={2.4} />
-      </button>
-
-      <nav className="fixed inset-x-0 bottom-0 z-30 flex border-t border-zinc-800 bg-zinc-900/95 pb-[env(safe-area-inset-bottom)] backdrop-blur sm:hidden">
-        {navItems.map((item) => (
+      <nav className="fixed inset-x-0 bottom-0 z-50 flex h-14 items-center justify-around border-t border-graphite-hairline bg-void-black sm:hidden">
+        {navItems.slice(0, 5).map((item) => (
           <NavLink key={item.to} to={item.to} className={mobileLinkClass}>
             {({ isActive }) => (
               <>
-                <span
-                  aria-hidden
-                  className={`absolute inset-x-3 top-0 h-0.5 rounded-full bg-cyan-400 transition-opacity ${
-                    isActive ? 'opacity-100' : 'opacity-0'
-                  }`}
-                />
                 <item.icon className="h-5 w-5" />
-                <span className="leading-none">{item.label}</span>
+                <span>{item.label}</span>
               </>
             )}
           </NavLink>

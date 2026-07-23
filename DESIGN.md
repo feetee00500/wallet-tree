@@ -1,190 +1,471 @@
----
-version: alpha
-name: CrowdStrike Falcon
-description: "Near-black (#0d1117 / #161b22) SOC-optimized dark interface. CrowdStrike Red (#EE3124) appears only for Critical alerts — its rarity preserves signal fidelity. Dense endpoint tables, threat timelines, and 5-tier severity with unambiguous color coding. Mission-critical software for 24/7 security operations."
+# Resend — Style Reference
+> black velvet with violet neon
 
-colors:
-  primary: "#EE3124"
-  on-primary: "#FFFFFF"
-  primary-hover: "#D42A1E"
-  ink: "#E6EDF3"
-  ink-muted: "#8B949E"
-  ink-subdued: "#6E7681"
-  canvas: "#0d1117"
-  surface-1: "#161b22"
-  surface-2: "#21262d"
-  surface-3: "#2D333B"
-  border: "#30363D"
-  border-subtle: "#21262d"
-  severity-critical: "#EE3124"
-  severity-high: "#FF6B00"
-  severity-medium: "#F5A623"
-  severity-low: "#00DC82"
-  severity-info: "#6B7280"
-  interactive: "#58A6FF"
-  interactive-hover: "#79C0FF"
-  success: "#3FB950"
-  monospace-ink: "#A5D6FF"
+**Theme:** dark
 
-typography:
-  display:
-    fontFamily: "Inter, -apple-system, BlinkMacSystemFont, sans-serif"
-    fontSize: 28px
-    fontWeight: 700
-    lineHeight: 1.2
-    letterSpacing: -0.02em
-  body:
-    fontFamily: "Inter, -apple-system, BlinkMacSystemFont, sans-serif"
-    fontSize: 13px
-    fontWeight: 400
-    lineHeight: 1.5
-    letterSpacing: 0em
+Resend lives in a near-total darkness — pure black canvas, hairline graphite borders, and white-on-black typography that feels like reading text printed on matte glass. The hero is anti-decorative: a single large serif headline at 96px Domaine next to a 3D black cube, with no gradient wash and no marketing illustration. The brand mark is a tight violet (#9281f7) that appears in email-address strings, status icons, and code samples — never on buttons. A monospaced font (Commit Mono) carries the developer identity through every code block, badge, and inline label, making the page read like a terminal wrapped in a luxury interface. Components are sharp-cornered or gently rounded (6px / 16px), low-elevation, and rely on 1px borders rather than shadows to separate layers. Motion is restrained but expressive: fade-and-slide hero text, subtle WebGL rotation on the hero cube, and short 150ms ease-out transitions on hover.
 
-spacing:
-  base: 4px
-  scale: [4, 8, 12, 16, 20, 24, 32, 40, 48, 64]
+## Tokens — Colors
 
-radius:
-  sm: 4px
-  md: 6px
-  lg: 8px
-  pill: 9999px
+| Name | Value | Token | Role |
+|------|-------|-------|------|
+| Void Black | `#000000` | `--color-void-black` | Page background, card surfaces, overlay scrims — the entire canvas |
+| Graphite Hairline | `#292d30` | `--color-graphite-hairline` | 1px borders on cards, inputs, buttons, code blocks, dividers — defines every layer separation |
+| White | `#ffffff` | `--color-white` | Primary headings, hero text, button labels, icon fills on dark surfaces |
+| Bone White | `#f0f0f0` | `--color-bone-white` | Body text, secondary headings, stroke outlines on icons — the primary reading color |
+| Ash Gray | `#a1a4a5` | `--color-ash-gray` | Muted body text, badge labels, icon strokes — third-tier text and metadata |
+| Smoke Gray | `#abafb4` | `--color-smoke-gray` | Link color, inactive button text, supporting captions — fourth-tier text |
+| Iron | `#6e727a` | `--color-iron` | Subtle decorative strokes, disabled states, low-emphasis borders |
+| Charcoal | `#464a4d` | `--color-charcoal` | Inline code text, muted labels — text that should disappear into the surface |
+| Iris Violet | `linear-gradient(to right bottom in oklab, rgb(146, 129, 247) 0%, rgb(154, 84, 220) 100%)` | `--color-iris-violet` | Violet text accent for links, tags, and emphasized short phrases; Diagonal violet-to-magenta gradient on icon containers and brand badges |
+| Iris Violet Glow | `#baa7ff` | `--color-iris-violet-glow` | Violet text accent for links, tags, and emphasized short phrases |
+| Signal Blue | `#3b9eff` | `--color-signal-blue` | Blue action color for filled buttons, selected navigation states, and focused conversion moments. |
+| Sky Blue | `#70b8ff` | `--color-sky-blue` | Blue text accent for links, tags, and emphasized short phrases |
+| Pulse Green | `#3ad389` | `--color-pulse-green` | Green text accent for links, tags, and emphasized short phrases. Use as a supporting accent, not as a status color |
+| Alarm Red | `#ff9592` | `--color-alarm-red` | Red text accent for links, tags, and emphasized short phrases. Use as a supporting accent, not as a status color |
+| Crimson | `#ff6465` | `--color-crimson` | Red wash for highlight backgrounds, decorative bands, and soft emphasis behind content. Use as a supporting accent, not as a status color |
+| Amber | `#ffca16` | `--color-amber` | Yellow text accent for links, tags, and emphasized short phrases. Use as a supporting accent, not as a status color |
+| Amber Glow | `#ffd60a` | `--color-amber-glow` | Yellow wash for highlight backgrounds, decorative bands, and soft emphasis behind content. Use as a supporting accent, not as a status color |
+| Surface Gradient | `linear-gradient(rgb(27, 27, 27), rgb(3, 3, 3))` | `--color-surface-gradient` | Subtle card-to-canvas surface lift — used in edge fades and elevated panels |
 
-shadows:
-  card: "0 1px 4px rgba(0,0,0,0.4)"
-  elevated: "0 4px 16px rgba(0,0,0,0.6)"
-  modal: "0 8px 40px rgba(0,0,0,0.8)"
+## Tokens — Typography
 
-motion:
-  duration-fast: 100ms
-  duration-base: 200ms
-  easing: cubic-bezier(0.4, 0, 0.2, 1)
----
+### Inter — Body copy, UI labels, navigation, buttons, links. The workhorse — appears 1280 times across every non-code surface. · `--font-inter`
+- **Substitute:** Inter (Google Fonts), Söhne, system-ui
+- **Weights:** 400, 500, 600
+- **Sizes:** 12px, 14px, 16px, 18px, 24px
+- **Line height:** 1.00, 1.33, 1.43, 1.50, 1.60
+- **Role:** Body copy, UI labels, navigation, buttons, links. The workhorse — appears 1280 times across every non-code surface.
 
-## Rationale
+### Domaine — Hero display type — weight 400 at 96px with -0.01em tracking creates an editorial, almost-printed feel. Only used twice on the entire page for the largest hero statement. · `--font-domaine`
+- **Substitute:** GT Sectra, Tiempos Headline, Playfair Display
+- **Weights:** 400
+- **Sizes:** 77px, 96px
+- **Line height:** 1.00
+- **Letter spacing:** -0.01em
+- **OpenType features:** `"ss01", "ss04", "ss11"`
+- **Role:** Hero display type — weight 400 at 96px with -0.01em tracking creates an editorial, almost-printed feel. Only used twice on the entire page for the largest hero statement.
 
-**Dark for the ops center, not for aesthetics** — CrowdStrike Falcon runs in Security Operations Centers where analysts work 8–12 hour shifts in low-light environments, staring at threat dashboards through the night. The #0d1117 near-black background is not a design trend — it is a direct response to the operational environment. Reduced screen glare, less eye strain, and lower ambient light emission make sustained 24/7 monitoring possible. This is the same reasoning behind aircraft cockpit displays and hospital monitoring systems being dark-background.
+### aBC Favorit — Section headlines and sub-headlines. The 56px weight-400 with -0.05em tracking is the signature — extreme negative tracking on a geometric sans creates a compressed, confident display feel that contrasts the editorial Domaine hero. · `--font-abc-favorit`
+- **Substitute:** Inter Display, Söhne Breit, GT America
+- **Weights:** 400, 500
+- **Sizes:** 14px, 16px, 20px, 56px
+- **Line height:** 1.00, 1.20, 1.30, 1.50
+- **Letter spacing:** -0.05em at 56px, +0.025em at 14px
+- **OpenType features:** `"ss01", "ss04", "ss11"; "ss01", "ss03", "ss04"`
+- **Role:** Section headlines and sub-headlines. The 56px weight-400 with -0.05em tracking is the signature — extreme negative tracking on a geometric sans creates a compressed, confident display feel that contrasts the editorial Domaine hero.
 
-**Critical red must earn every appearance** — CrowdStrike Red (#EE3124) is the company's brand color, but in the Falcon interface it appears in exactly one semantic context: Critical severity alerts. This is the most consequential design decision in the system. When a SOC analyst glances at their screen and sees red, they know — without reading — that something critical requires immediate attention. If red were diluted into navigation, headings, or decorative elements, the critical alert signal would be destroyed. The restraint is not brand timidity — it is signal fidelity as a security function.
+### Commit Mono — Code blocks, inline code, terminal-style badges, API labels. Monospaced presence is the developer's identity signal — appears 814 times, rivaling Inter. · `--font-commit-mono`
+- **Substitute:** JetBrains Mono, Berkeley Mono, IBM Plex Mono
+- **Weights:** 400
+- **Sizes:** 12px, 14px, 16px
+- **Line height:** 1.33, 1.43, 1.50
+- **Role:** Code blocks, inline code, terminal-style badges, API labels. Monospaced presence is the developer's identity signal — appears 814 times, rivaling Inter.
 
-**5-tier severity as operational vocabulary** — Security events are not binary. A misconfigured firewall is not the same priority as an active ransomware execution. Falcon's 5-tier severity system (Critical / High / Medium / Low / Informational) maps to a precisely calibrated color scale: red / orange / amber / green / gray. These colors are the operational language of the SOC — analysts, incident responders, and threat hunters all work in this vocabulary daily. The design system exists to make that vocabulary instantly parseable under pressure.
+### Helvetica — Helvetica — detected in extracted data but not described by AI · `--font-helvetica`
+- **Weights:** 400, 600, 700
+- **Sizes:** 14px
+- **Line height:** 1, 1.71
+- **Role:** Helvetica — detected in extracted data but not described by AI
 
-**Dense data for professionals under pressure** — A threat hunter investigating an active incident needs to see endpoint telemetry, process trees, network connections, and registry changes simultaneously. A detection engineer needs to scan 500 detection events in 30 seconds to triage what requires human response. Falcon's UI must pack extraordinary amounts of structured information into limited screen space without sacrificing readability. Small type (13px), compact row heights, and information-dense layouts are not aesthetic failures — they are tools for people who use them under operational pressure.
+### -apple-system — -apple-system — detected in extracted data but not described by AI · `--font-apple-system`
+- **Weights:** 400
+- **Sizes:** 14px
+- **Line height:** 1.5, 1.55
+- **OpenType features:** `"liga" 0`
+- **Role:** -apple-system — detected in extracted data but not described by AI
 
-## 1. Visual Theme & Atmosphere
-Falcon presents a deep, layered darkness that communicates operational seriousness. The three-level surface hierarchy (#0d1117 canvas, #161b22 primary surface, #21262d elevated surface) creates depth and spatial organization without any light or color. The experience is that of looking at a sophisticated instrument panel — every visual element is purposeful.
+### Type Scale
 
-The navigation is a left sidebar in #161b22, approximately 220px wide. Main content areas are #0d1117. Modals and elevated panels use #21262d. This creates a consistent depth model where surfaces that are more "above" the canvas are slightly lighter — the inverse of the material world, but consistent and learnable.
+| Role | Size | Line Height | Letter Spacing | Token |
+|------|------|-------------|----------------|-------|
+| caption | 12px | 1.33 | — | `--text-caption` |
+| body-sm | 14px | 1.43 | — | `--text-body-sm` |
+| body | 16px | 1.5 | — | `--text-body` |
+| subheading | 20px | 1 | — | `--text-subheading` |
+| heading-sm | 24px | 1.5 | — | `--text-heading-sm` |
+| heading | 56px | 1.2 | -2.8px | `--text-heading` |
+| heading-lg | 77px | 1 | -0.77px | `--text-heading-lg` |
+| display | 96px | 1 | -0.96px | `--text-display` |
 
-## 2. Color System
-**Dark surface system**:
-- Canvas: #0d1117 — deepest layer, page background
-- Surface 1: #161b22 — primary cards, sidebar navigation, panel backgrounds
-- Surface 2: #21262d — elevated elements, dropdown menus, secondary panels
-- Surface 3: #2D333B — hover states, tertiary surfaces
-- Border: #30363D — card edges, table row dividers
-- Border subtle: #21262d — internal section dividers
+## Tokens — Spacing & Shapes
 
-**Text**:
-- Primary ink: #E6EDF3 — near-white, the primary reading color on all dark surfaces
-- Muted: #8B949E — secondary metadata, column headers, timestamps
-- Subdued: #6E7681 — tertiary information, disabled states
+**Base unit:** 4px
 
-**Interactive (non-alert)**:
-- Interactive blue: #58A6FF — links, clickable identifiers, interactive labels
-- Hover: #79C0FF — on interaction
+**Density:** comfortable
 
-**Severity scale** (the most critical design tokens in the system):
-- Critical (5): #EE3124 — active intrusions, ransomware, credential theft in progress
-- High (4): #FF6B00 — significant threats requiring same-shift response
-- Medium (3): #F5A623 — threats requiring investigation, elevated risk
-- Low (2): #00DC82 — informational detections, policy violations, low-risk anomalies
-- Informational (1): #6B7280 — telemetry events, audit logs, expected behaviors
+### Spacing Scale
 
-**System status**:
-- Agent active / host online: #3FB950 green
-- Alert/success confirmation: #3FB950
+| Name | Value | Token |
+|------|-------|-------|
+| 4 | 4px | `--spacing-4` |
+| 8 | 8px | `--spacing-8` |
+| 12 | 12px | `--spacing-12` |
+| 16 | 16px | `--spacing-16` |
+| 20 | 20px | `--spacing-20` |
+| 24 | 24px | `--spacing-24` |
+| 28 | 28px | `--spacing-28` |
+| 32 | 32px | `--spacing-32` |
+| 40 | 40px | `--spacing-40` |
+| 48 | 48px | `--spacing-48` |
+| 64 | 64px | `--spacing-64` |
+| 80 | 80px | `--spacing-80` |
+| 96 | 96px | `--spacing-96` |
+| 104 | 104px | `--spacing-104` |
+| 144 | 144px | `--spacing-144` |
 
-**Monospace data**:
-- #A5D6FF — log output, command lines, file paths, process names in code-style displays
+### Border Radius
 
-## 3. Typography
-Falcon uses Inter for the UI layer. At 13px body — the density that security tooling requires — Inter's consistent character widths and open forms prevent the visual fatigue that comes from reading degraded or compressed typefaces at small sizes.
+| Element | Value |
+|---------|-------|
+| cards | 16px |
+| badges | 6px |
+| inputs | 6px |
+| buttons | 6px |
+| large-panels | 24px |
 
-Monospace is a first-class font in Falcon: process command lines, registry paths, file system paths, network connection strings, and log event text all render in a code font (typically JetBrains Mono or system monospace fallback). Monospace is not cosmetic — it is semantically meaningful. When text renders in monospace, the analyst knows they are reading machine-generated data, not human-authored labels. This distinction matters during incident response.
+### Shadows
 
-Display headings (dashboard titles, module headers): 28px weight 700. Section headers within dashboards: 18px weight 600. Panel section labels: 13px weight 600 in muted ink.
+| Name | Value | Token |
+|------|-------|-------|
+| subtle | `rgba(176, 199, 217, 0.145) 0px 0px 0px 1px` | `--shadow-subtle` |
+| subtle-2 | `rgb(0, 0, 0) 0px 0px 0px 8px` | `--shadow-subtle-2` |
+| subtle-3 | `rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0p...` | `--shadow-subtle-3` |
 
-## 4. Components & Patterns
-**Detection event card**:
-- Severity badge (color-coded pill): Critical / High / Medium / Low / Info
-- Event name (bold, 14px), timestamp, affected endpoint hostname
-- Tactic and technique tags (MITRE ATT&CK framework tags as small pills)
-- "Investigate" button (blue interactive)
+### Layout
 
-**Endpoint table**:
-- Columns: Hostname, IP, OS, Agent Version, Prevention Policy, Last Seen, Status
-- Status column: green dot "Online" / gray dot "Offline" / orange dot "Reduced Functionality"
-- Sortable headers; bulk action checkboxes
-- Row hover reveals inline quick-action buttons
+- **Page max-width:** 1200px
+- **Section gap:** 96px
+- **Card padding:** 32px
+- **Element gap:** 16px
 
-**Threat event timeline**:
-- Vertical chronological sequence of events for a detection
-- Each event: timestamp, event type icon, process name, event description
-- Color-coded event type icons: process (blue), network (green), registry (amber), file (purple)
-- Expandable event rows with full telemetry JSON
+## Components
 
-**Process tree visualization**:
-- Hierarchical tree showing parent→child process relationships
-- Suspicious or malicious nodes highlighted in severity colors
-- Click a node to see command line, file path, hash, network connections in a right panel
+### Primary Button (Ghost on Black)
+**Role:** Default CTA — 'Get started', 'Log in'
 
-**Threat intelligence graph** (Threat Intelligence module):
-- Force-directed graph showing relationship between actors, malware families, CVEs, and campaigns
-- Node types: actor (red), malware (orange), CVE (amber), campaign (blue), victim industry (gray)
-- Zoom, pan, and click to expand relationships
+Transparent background, 1px border in #292d30, white text (#ffffff), 6px radius, 12px 16px padding. Hover increases border opacity to white. This is the signature button — never filled, never colorful.
 
-**Alert severity badge**:
-- Pill shape, severity color fill, white text, 12px font, 4px 8px padding
-- Used consistently in all detection views, email notifications, and API responses
+### Nav Link Button
+**Role:** Top navigation items — 'Features', 'Company', 'Resources'
 
-## 5. Spacing & Layout
-Falcon uses a 4px base grid. The main sidebar nav is 220px wide (collapsible to 48px icon-only mode for more screen real estate during incident response). Top app bar: 48px. Content area padding: 20px.
+Transparent background, no border, text color #f0f0f0 at 14px Inter weight 400, 0px padding. Underline or color shift on hover to #ffffff.
 
-Detection table row height: 40px — compact but click-safe. Panel padding: 16px. Between dashboard cards: 12px. Full-page investigation layouts collapse the left nav to maximize the content area for complex visualizations.
+### Text Link with Chevron
+**Role:** Inline CTAs — 'Documentation', 'Get started >'
 
-## 6. Motion & Interaction
-Motion is minimal and purposeful. New detection events added to a table use a brief 200ms highlight flash in the severity color to draw attention before settling to the normal row appearance — critical for SOC analysts who need to notice newly arriving events without constantly watching the top of the list.
+No background, no border, white or #f0f0f0 text at 16px Inter, trailing chevron icon in same color. Restrained, terminal-like.
 
-Critical and High severity alerts trigger a notification badge animation on the nav item — a pulsing red/orange dot that persists until viewed. This persistent indicator is intentional: in high-noise environments, analysts need a reliable visual cue that high-priority items are waiting.
+### Hero Announcement Pill
+**Role:** 'Announcing Resend Forward >' badge above hero headline
 
-All other motion: 100–200ms transitions, no decorative animations. Modals appear at 150ms fade. No page-level transitions — speed is essential when navigating an active incident.
+Transparent fill, 1px border in #292d30, #f0f0f0 text at 14px Inter, 9999px (pill) radius, 6px 12px padding. Small chromatic accent chevron.
 
-## Accessibility
+### Section Card
+**Role:** Content cards in feature sections and testimonial grid
 
-### Contrast Ratios
-- **#E6EDF3 on #0d1117 canvas**: 15.3:1 — passes AAA
-- **#8B949E muted on #0d1117**: 5.4:1 — passes AA
-- **#6E7681 subdued on #0d1117**: 3.8:1 — fails AA; use only for non-essential decorative text
-- **#FFFFFF on #EE3124 critical**: 4.5:1 — passes AA (borderline)
-- **#FFFFFF on #FF6B00 high**: 3.1:1 — fails AA; severity badges should use larger text (14px+, bold)
-- **#FFFFFF on #F5A623 medium**: 2.6:1 — fails AA; same — use larger bold text or pair with text label
-- **#1F1F1F on #00DC82 low**: 9.8:1 — passes AAA
-- **#E6EDF3 on #161b22 surface-1**: 13.4:1 — passes AAA
-- **#58A6FF interactive on #0d1117**: 7.0:1 — passes AAA
+Black background (#000000), 1px border in #292d30, 16px radius, 32px padding, no shadow. Cards rely on the border to separate from the black canvas.
 
-### Minimum Requirements
-- **Severity indication**: always color + text label + (where space permits) icon — never color-only; essential for colorblind analysts
-- **Focus indicator**: 2px solid #58A6FF outline on interactive elements; 2px solid #EE3124 on destructive actions
-- **Alert notifications**: persistent badges (not just flashes) for critical alerts — screen reader announcements via aria-live="assertive" for new Critical/High events
-- **Touch targets**: 44×44px minimum; Falcon mobile requires careful attention to action target sizes
+### Testimonial Card
+**Role:** Customer quote cards in 'Beyond expectations' section
 
-### Motion
-- Respects `prefers-reduced-motion`: yes — new event highlight flash, pulse animation on alert badges both suppressed
-- Under reduced-motion, new events still appear (no animation) but use a persistent bold indicator rather than fading in
+Black background, 1px #292d30 border, 16px radius, 24px padding. Contains quoted text at 16px Inter, avatar (32px circle), name at 14px weight 500 in #f0f0f0, role/title in #a1a4a5.
 
-### Notes
-- #FF6B00 (High) and #F5A623 (Medium) fail AA against white (3.1:1 and 2.6:1 respectively) — these colors should only be used in severity badges at 14px+ bold or as background fills for larger UI regions, never as body text
-- The 5-tier severity system must be tested with colorblind simulation (deuteranopia, protanopia) — red/orange/amber distinctions can collapse; always pair with text label and numeric tier
-- SOC environments often use color calibration profiles that flatten colors; severity color selection should be tested on standard office monitors, not design-calibrated displays
-- The monospace ink (#A5D6FF) on #0d1117 achieves 11.2:1 — AAA compliant, appropriate for the dense log data it presents
+### Code Block / Terminal Window
+**Role:** Developer-facing code snippets and API examples
+
+Black background, 1px #292d30 border, 16px radius, Commit Mono at 12-14px. Syntax highlighting uses #9281f7 for strings/keywords, #3b9eff for filenames, #3ad389 for success values, #ff9592 for errors. Optional traffic-light dots in top-left for terminal aesthetic.
+
+### Logo Grid
+**Role:** Customer logos — Warner Bros, Max, Raycast, etc.
+
+Inline-display logos at their native colors on black canvas, centered in a 4-column grid with 60px row gap. No card wrappers, no labels — just the marks breathing against black.
+
+### Status Indicator Dot
+**Role:** Email event status — delivered, opened, clicked, bounced, complained
+
+2-3px diameter filled dot, no border, paired with label text in Commit Mono. Colors map to semantics: #3ad389 delivered, #70b8ff opened, #baa7ff clicked, #ff9592 bounced, #ffca16 complained.
+
+### Email Address Badge
+**Role:** 'from:' addresses in code samples and UI
+
+No background, Commit Mono at 12-14px, text color #9281f7 (Iris Violet). The violet-on-black makes email identifiers the most readable code element — a deliberate developer-UX choice.
+
+### Icon Container
+**Role:** Rounded-square containers for app icons in integrations grid
+
+32x32 or 48x48 rounded square (16px radius), subtle gradient fill (oklab violet→magenta), white or violet stroke icon inside. Creates the only chromatic surface on the page.
+
+### 3D Hero Cube
+**Role:** WebGL-rendered black geometric cube in hero
+
+Full-opacity black cube with subtle edge highlights in #292d30, rotating slowly. No glow, no color — a sculptural object that anchors the right side of the hero against the black canvas.
+
+### Footer Link Row
+**Role:** Minimal footer with two text links
+
+Two text links ('Privacy', 'Terms') at 14px Inter in #a1a4a5, separated by space, no decorative elements. Footer is intentionally minimal — no logo, no columns.
+
+## Do's and Don'ts
+
+### Do
+- Use pure #000000 as the page canvas — never off-black or tinted dark grays for the background.
+- Separate all UI layers with 1px borders in #292d30, not shadows. Cards, inputs, code blocks all rely on hairline borders against the black canvas.
+- Use Commit Mono for any code, email address, or developer-facing string. Keep Inter for prose and UI chrome.
+- Keep buttons ghost/outlined: transparent fill, 1px border, white text. Never use a filled colorful button as the primary CTA.
+- Use 6px radius for buttons, badges, inputs. Use 16px radius for cards and code windows. Never mix — the radius scale is two values.
+- Let Iris Violet (#9281f7) mark code strings and developer identifiers. It is the only brand color and should feel like syntax highlighting, not decoration.
+- Apply tight -0.05em letter-spacing at 56px display sizes and -0.01em at 96px hero sizes. The compressed tracking is what makes the headlines feel confident.
+
+### Don't
+- Don't add gradients, glows, or chromatic washes to the hero or section backgrounds. The canvas is flat black.
+- Don't use filled accent-color buttons (blue, violet, green) as primary actions. Buttons stay ghost or white-text-on-black.
+- Don't use multiple border radii on a single surface. Cards are 16px, buttons/badges/inputs are 6px — pick one per component.
+- Don't introduce colored card backgrounds. Cards sit on black with hairline borders; no #292d30 fills.
+- Don't use shadows for elevation. The design relies on 1px borders and subtle backdrop blurs, not drop shadows.
+- Don't pair Iris Violet with large type as a decorative heading color. It belongs to code and developer identifiers only.
+- Don't break the monochrome-with-one-violet discipline by adding multiple accent hues to UI chrome. The status colors (green, blue, red, amber) are reserved for data/status indicators.
+
+## Surfaces
+
+| Level | Name | Value | Purpose |
+|-------|------|-------|---------|
+| 0 | Void | `#000000` | Primary page canvas, full-bleed black |
+| 1 | Graphite | `#292d30` | Hairline borders defining card and input surfaces against the void |
+| 2 | Surface Lift | `#0b0e14` | Elevated panels and overlay scrims via subtle gradient |
+| 3 | Backdrop Blur | `#000000f2` | Modal and navigation overlays with blur(25px) |
+
+## Elevation
+
+Elevation is achieved through 1px hairline borders (#292d30) against a flat black canvas, never through drop shadows. The only shadow token in active use is a faint 1px ring (rgba(176, 199, 217, 0.145)) on icon containers, used sparingly to suggest a subtle light source rather than depth.
+
+## Imagery
+
+Imagery is almost entirely WebGL-rendered 3D objects (black cube in hero, rotating geometric forms) and inline product UI screenshots shown inside dark code windows. No photography, no illustrations, no lifestyle imagery. Logos in the trust bar are inline SVGs at native colors. Icons are 1px-1.5px stroke outlines in #f0f0f0 or #a1a4a5. The visual language is: black canvas, 3D object as hero anchor, dark code windows as product proof, white SVG logos as social proof. Nothing decorative — every visual element is either structural (cube) or demonstrative (code window, logo).
+
+## Agent Prompt Guide
+
+Quick Color Reference:
+- text/heading: #ffffff
+- text/body: #f0f0f0
+- text/muted: #a1a4a5
+- background/canvas: #000000
+- border/hairline: #292d30
+- accent/code: #9281f7
+- primary action: #3b9eff (filled action)
+
+3-5 Example Component Prompts:
+
+1. Create a section headline: 'Integrate tonight' at 56px aBCFavorit weight 400, color #ffffff, letter-spacing -2.8px, line-height 1.2. Below it, body copy at 18px Inter weight 400, color #a1a4a5. Section sits on a #000000 canvas with no border.
+
+2. Create a code terminal window: #000000 background, 1px border in #292d30, 16px radius, padding 24px. Content in Commit Mono at 14px. Email address strings colored #9281f7, keywords colored #f0f0f0, success values colored #3ad389. Optional 3 traffic-light dots (8px circles) in top-left.
+
+3. Create a navigation bar: transparent background, Resend wordmark logo on left (white), nav items ('Features', 'Company', 'Resources') in Inter 14px weight 400, color #f0f0f0. On the right, a 'Get started' button — transparent fill, 1px border in #292d30, white text, 6px radius, 8px 16px padding. The bar sits on #000000 with no separator.
+
+4. Create a testimonial card: #000000 background, 1px border in #292d30, 16px radius, 32px padding. Quote text in Inter 16px weight 400, color #f0f0f0. Below: 32px circular avatar, name in Inter 14px weight 500 #f0f0f0, role/title in #a1a4a5. No shadow.
+
+5. Create a status indicator row: inline pill with a 2px circle dot in #3ad389 followed by 'Delivered' label in Commit Mono 12px, color #a1a4a5. Dot indicates email event status. No background, no border, sits inline within a dark code window.
+
+## Similar Brands
+
+- **Linear** — Same black-canvas, hairline-border aesthetic with restrained chromatic accents and sharp typography
+- **Vercel** — Near-identical pure-black backgrounds with white typography and minimal border-based elevation
+- **Plaid** — Dark-mode developer-tool identity with monospaced code emphasis and single-accent palette
+- **Railway** — Black canvas with terminal-style code windows as the primary product showcase
+- **Stripe (dark mode)** — Editorially confident display type on black with hairline borders and ghost buttons
+
+## Quick Start
+
+### CSS Custom Properties
+
+```css
+:root {
+  /* Colors */
+  --color-void-black: #000000;
+  --color-graphite-hairline: #292d30;
+  --color-white: #ffffff;
+  --color-bone-white: #f0f0f0;
+  --color-ash-gray: #a1a4a5;
+  --color-smoke-gray: #abafb4;
+  --color-iron: #6e727a;
+  --color-charcoal: #464a4d;
+  --color-iris-violet: #9281f7;
+  --gradient-iris-violet: linear-gradient(to right bottom in oklab, rgb(146, 129, 247) 0%, rgb(154, 84, 220) 100%);
+  --color-iris-violet-glow: #baa7ff;
+  --color-signal-blue: #3b9eff;
+  --color-sky-blue: #70b8ff;
+  --color-pulse-green: #3ad389;
+  --color-alarm-red: #ff9592;
+  --color-crimson: #ff6465;
+  --color-amber: #ffca16;
+  --color-amber-glow: #ffd60a;
+  --color-surface-gradient: #0b0e14;
+  --gradient-surface-gradient: linear-gradient(rgb(27, 27, 27), rgb(3, 3, 3));
+
+  /* Typography — Font Families */
+  --font-inter: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-domaine: 'Domaine', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-abc-favorit: 'aBC Favorit', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-commit-mono: 'Commit Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-helvetica: 'Helvetica', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-apple-system: '-apple-system', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* Typography — Scale */
+  --text-caption: 12px;
+  --leading-caption: 1.33;
+  --text-body-sm: 14px;
+  --leading-body-sm: 1.43;
+  --text-body: 16px;
+  --leading-body: 1.5;
+  --text-subheading: 20px;
+  --leading-subheading: 1;
+  --text-heading-sm: 24px;
+  --leading-heading-sm: 1.5;
+  --text-heading: 56px;
+  --leading-heading: 1.2;
+  --tracking-heading: -2.8px;
+  --text-heading-lg: 77px;
+  --leading-heading-lg: 1;
+  --tracking-heading-lg: -0.77px;
+  --text-display: 96px;
+  --leading-display: 1;
+  --tracking-display: -0.96px;
+
+  /* Typography — Weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Spacing */
+  --spacing-unit: 4px;
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-20: 20px;
+  --spacing-24: 24px;
+  --spacing-28: 28px;
+  --spacing-32: 32px;
+  --spacing-40: 40px;
+  --spacing-48: 48px;
+  --spacing-64: 64px;
+  --spacing-80: 80px;
+  --spacing-96: 96px;
+  --spacing-104: 104px;
+  --spacing-144: 144px;
+
+  /* Layout */
+  --page-max-width: 1200px;
+  --section-gap: 96px;
+  --card-padding: 32px;
+  --element-gap: 16px;
+
+  /* Border Radius */
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-2xl: 16px;
+  --radius-3xl: 24px;
+
+  /* Named Radii */
+  --radius-cards: 16px;
+  --radius-badges: 6px;
+  --radius-inputs: 6px;
+  --radius-buttons: 6px;
+  --radius-large-panels: 24px;
+
+  /* Shadows */
+  --shadow-subtle: rgba(176, 199, 217, 0.145) 0px 0px 0px 1px;
+  --shadow-subtle-2: rgb(0, 0, 0) 0px 0px 0px 8px;
+  --shadow-subtle-3: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px -1px;
+
+  /* Surfaces */
+  --surface-void: #000000;
+  --surface-graphite: #292d30;
+  --surface-surface-lift: #0b0e14;
+  --surface-backdrop-blur: #000000f2;
+}
+```
+
+### Tailwind v4
+
+```css
+@theme {
+  /* Colors */
+  --color-void-black: #000000;
+  --color-graphite-hairline: #292d30;
+  --color-white: #ffffff;
+  --color-bone-white: #f0f0f0;
+  --color-ash-gray: #a1a4a5;
+  --color-smoke-gray: #abafb4;
+  --color-iron: #6e727a;
+  --color-charcoal: #464a4d;
+  --color-iris-violet: #9281f7;
+  --color-iris-violet-glow: #baa7ff;
+  --color-signal-blue: #3b9eff;
+  --color-sky-blue: #70b8ff;
+  --color-pulse-green: #3ad389;
+  --color-alarm-red: #ff9592;
+  --color-crimson: #ff6465;
+  --color-amber: #ffca16;
+  --color-amber-glow: #ffd60a;
+  --color-surface-gradient: #0b0e14;
+
+  /* Typography */
+  --font-inter: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-domaine: 'Domaine', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-abc-favorit: 'aBC Favorit', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-commit-mono: 'Commit Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-helvetica: 'Helvetica', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-apple-system: '-apple-system', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* Typography — Scale */
+  --text-caption: 12px;
+  --leading-caption: 1.33;
+  --text-body-sm: 14px;
+  --leading-body-sm: 1.43;
+  --text-body: 16px;
+  --leading-body: 1.5;
+  --text-subheading: 20px;
+  --leading-subheading: 1;
+  --text-heading-sm: 24px;
+  --leading-heading-sm: 1.5;
+  --text-heading: 56px;
+  --leading-heading: 1.2;
+  --tracking-heading: -2.8px;
+  --text-heading-lg: 77px;
+  --leading-heading-lg: 1;
+  --tracking-heading-lg: -0.77px;
+  --text-display: 96px;
+  --leading-display: 1;
+  --tracking-display: -0.96px;
+
+  /* Spacing */
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-20: 20px;
+  --spacing-24: 24px;
+  --spacing-28: 28px;
+  --spacing-32: 32px;
+  --spacing-40: 40px;
+  --spacing-48: 48px;
+  --spacing-64: 64px;
+  --spacing-80: 80px;
+  --spacing-96: 96px;
+  --spacing-104: 104px;
+  --spacing-144: 144px;
+
+  /* Border Radius */
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-2xl: 16px;
+  --radius-3xl: 24px;
+
+  /* Shadows */
+  --shadow-subtle: rgba(176, 199, 217, 0.145) 0px 0px 0px 1px;
+  --shadow-subtle-2: rgb(0, 0, 0) 0px 0px 0px 8px;
+  --shadow-subtle-3: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px -1px;
+}
+```

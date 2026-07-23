@@ -37,7 +37,7 @@ export function DailyBarChart({ data, className = '' }: DailyBarChartProps) {
 
   return (
     <Card className={`flex flex-col px-4 py-4 ${className}`}>
-      <h3 className="font-heading text-sm font-semibold text-zinc-100">รายรับ/รายจ่ายรายวัน</h3>
+      <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-zinc-500">รายรับ/รายจ่ายรายวัน</p>
       {isEmpty ? (
         <EmptyState
           title="ยังไม่มีข้อมูลเดือนนี้"

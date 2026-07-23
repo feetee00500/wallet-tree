@@ -29,15 +29,15 @@ interface ToastContextValue {
 const ToastContext = createContext<ToastContextValue | null>(null);
 
 const toneClass: Record<ToastTone, string> = {
-  success: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-200',
-  error: 'border-rose-500/30 bg-rose-500/10 text-rose-200',
-  info: 'border-zinc-700 bg-zinc-800 text-zinc-100',
+  success: 'border-pulse-green/30 bg-pulse-green/10 text-pulse-green',
+  error: 'border-alarm-red/30 bg-alarm-red/10 text-alarm-red',
+  info: 'border-graphite-hairline bg-void-black text-bone-white',
 };
 
 const iconToneClass: Record<ToastTone, string> = {
-  success: 'text-emerald-400',
-  error: 'text-rose-400',
-  info: 'text-zinc-400',
+  success: 'text-pulse-green',
+  error: 'text-alarm-red',
+  info: 'text-ash-gray',
 };
 
 export function ToastProvider({ children }: { children: ReactNode }) {
@@ -79,7 +79,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
 function ToastViewport({ toasts, onDismiss }: { toasts: Toast[]; onDismiss: (id: number) => void }) {
   if (typeof document === 'undefined') return null;
   return createPortal(
-    <div className="pointer-events-none fixed inset-x-0 bottom-24 z-[80] flex flex-col items-center gap-2 px-4 sm:bottom-6 sm:right-6 sm:left-auto sm:items-end">
+    <div className="pointer-events-none fixed inset-x-0 bottom-20 z-[80] flex flex-col items-center gap-2 px-4 sm:bottom-6 sm:right-6 sm:left-auto sm:items-end">
       {toasts.map((toast) => (
         <ToastItem key={toast.id} toast={toast} onDismiss={onDismiss} />
       ))}
@@ -100,7 +100,7 @@ function ToastItem({ toast, onDismiss }: { toast: Toast; onDismiss: (id: number)
     <div
       role="status"
       aria-live="polite"
-      className={`pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-md border px-4 py-3 text-sm shadow-[0_4px_16px_rgba(0,0,0,0.6)] transition-all duration-200 ${
+      className={`pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-[16px] border px-4 py-3 text-body-sm transition-all duration-200 ${
         toneClass[toast.tone]
       } ${visible ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'}`}
     >
@@ -112,7 +112,7 @@ function ToastItem({ toast, onDismiss }: { toast: Toast; onDismiss: (id: number)
         type="button"
         aria-label="ปิด"
         onClick={() => onDismiss(toast.id)}
-        className="-mr-1 -mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-zinc-400 transition hover:bg-zinc-800 hover:text-zinc-100"
+        className="-mr-1 -mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-[6px] text-ash-gray transition hover:bg-charcoal/30 hover:text-bone-white"
       >
         <XIcon className="h-4 w-4" />
       </button>

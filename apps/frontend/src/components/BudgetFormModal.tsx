@@ -98,20 +98,18 @@ export function BudgetFormModal({
         </div>
       }
     >
-      <div className="flex flex-col gap-4">
-        <Input
-          label="จำนวนเงินงบประมาณ (บาท)"
-          name="amount"
-          type="number"
-          min="0.01"
-          step="0.01"
-          placeholder="0.00"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          error={fieldErrors.amount}
-        />
-        {formError ? <p className="text-sm text-rose-400">{formError}</p> : null}
-      </div>
+      <Input
+        label="จำนวนเงินงบประมาณ (บาท)"
+        name="amount"
+        type="number"
+        min="0.01"
+        step="0.01"
+        placeholder="0.00"
+        value={amount}
+        onChange={(e) => setAmount(e.target.value)}
+        error={fieldErrors.amount}
+      />
+      {formError ? <p className="text-sm text-rose-400">{formError}</p> : null}
     </Modal>
   );
 }

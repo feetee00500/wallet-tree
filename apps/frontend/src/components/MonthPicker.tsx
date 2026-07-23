@@ -20,7 +20,7 @@ export function MonthPicker({ month, year, onChange }: MonthPickerProps) {
 
   return (
     <div className="grid grid-cols-2 gap-2 sm:flex sm:w-auto">
-      <div className="min-w-[10rem]">
+      <div className="min-w-[9rem]">
         <Select
           ariaLabel="เดือน"
           value={String(month)}
@@ -28,7 +28,7 @@ export function MonthPicker({ month, year, onChange }: MonthPickerProps) {
           onChange={(next) => onChange(Number(next), year)}
         />
       </div>
-      <div className="min-w-[6.5rem]">
+      <div className="min-w-[5.5rem]">
         <Select
           ariaLabel="ปี"
           value={String(year)}

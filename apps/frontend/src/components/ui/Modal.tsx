@@ -29,30 +29,30 @@ export function Modal({ open, onClose, title, children, footer, closeOnBackdrop 
 
   return (
     <div
-      className="fixed inset-0 z-50 flex bg-black/80 backdrop-blur-sm sm:items-center sm:justify-center sm:p-4"
+      className="fixed inset-0 z-50 flex bg-void-black/95 sm:items-center sm:justify-center sm:p-4"
       role="dialog"
       aria-modal="true"
       aria-label={title}
       onClick={closeOnBackdrop ? onClose : undefined}
     >
       <div
-        className="relative flex min-h-screen w-full flex-col bg-zinc-900 text-zinc-100 sm:min-h-0 sm:max-h-[90vh] sm:max-w-lg sm:rounded-md sm:border sm:border-zinc-700 sm:shadow-[0_8px_40px_rgba(0,0,0,0.8)] animate-[fadeIn_150ms_ease-out]"
+        className="relative flex min-h-screen w-full flex-col bg-void-black text-bone-white sm:min-h-0 sm:max-h-[85vh] sm:max-w-lg sm:rounded-[16px] sm:border sm:border-graphite-hairline animate-[fadeIn_150ms_ease-out]"
         onClick={(event) => event.stopPropagation()}
       >
-        <header className="flex items-center justify-between border-b border-zinc-800 px-5 py-4">
-          <h2 className="font-heading text-lg font-semibold">{title}</h2>
+        <header className="flex items-center justify-between border-b border-graphite-hairline px-6 py-4">
+          <h2 className="text-heading-sm font-medium text-white">{title}</h2>
           <button
             type="button"
             aria-label="ปิด"
-            className="flex h-9 w-9 items-center justify-center rounded-sm text-zinc-400 transition hover:bg-zinc-800 hover:text-zinc-100"
+            className="flex h-8 w-8 items-center justify-center rounded-[6px] text-ash-gray transition hover:bg-charcoal/30 hover:text-bone-white"
             onClick={onClose}
           >
-            <XIcon className="h-5 w-5" />
+            <XIcon className="h-4 w-4" />
           </button>
         </header>
-        <div className="flex-1 overflow-y-auto px-5 py-4">{children}</div>
+        <div className="flex-1 overflow-y-auto px-6 py-5">{children}</div>
         {footer ? (
-          <footer className="border-t border-zinc-800 px-5 py-3">{footer}</footer>
+          <footer className="border-t border-graphite-hairline px-6 py-4">{footer}</footer>
         ) : null}
       </div>
     </div>

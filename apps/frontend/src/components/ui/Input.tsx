@@ -10,19 +10,21 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   ref,
 ) {
   const inputId = id ?? rest.name;
-  const borderClass = error ? 'border-rose-500/60' : 'border-zinc-700 focus:border-cyan-400/70';
+  const borderClass = error
+    ? 'border-alarm-red/60 focus:border-alarm-red'
+    : 'border-graphite-hairline focus:border-iris-violet';
   return (
     <div className="flex flex-col gap-1.5">
-      <label htmlFor={inputId} className="text-sm font-medium text-zinc-300">
+      <label htmlFor={inputId} className="text-body-sm font-medium text-bone-white">
         {label}
       </label>
       <input
         ref={ref}
         id={inputId}
-        className={`min-h-[44px] w-full rounded-md border bg-zinc-800 px-3 text-sm text-zinc-100 placeholder:text-zinc-500 transition outline-none focus:ring-2 focus:ring-cyan-400/30 ${borderClass} ${className}`}
+        className={`min-h-[36px] w-full rounded-[6px] border bg-void-black px-3 text-body-sm text-white placeholder:text-iron transition outline-none focus:ring-2 focus:ring-iris-violet/20 ${borderClass} ${className}`}
         {...rest}
       />
-      {error ? <span className="text-xs text-rose-400">{error}</span> : null}
+      {error ? <span className="text-caption text-alarm-red">{error}</span> : null}
     </div>
   );
 });

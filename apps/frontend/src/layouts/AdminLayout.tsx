@@ -1,6 +1,7 @@
 import type { ComponentType, SVGProps } from 'react';
 import { NavLink, Outlet } from 'react-router';
-import { HomeIcon, LogOutIcon, ShieldIcon, UsersIcon, WalletIcon } from '../components/icons';
+import { HomeIcon, LogOutIcon, ShieldIcon, UsersIcon } from '../components/icons';
+import { Logo } from '../components/Logo';
 import { useAuth } from '../contexts/AuthContext';
 
 interface AdminNavItem {
@@ -17,74 +18,100 @@ const navItems: AdminNavItem[] = [
 ];
 
 const desktopLinkClass = ({ isActive }: { isActive: boolean }) =>
-  `relative flex min-h-10 items-center gap-3 rounded-sm border px-3 py-2 text-[13px] font-medium transition ${
+  `group relative flex min-h-[36px] items-center gap-3 rounded-[6px] px-3 py-2 text-[13px] font-medium transition ${
     isActive
-      ? 'border-zinc-700 bg-zinc-800 text-cyan-400'
-      : 'border-transparent text-zinc-400 hover:border-zinc-700 hover:bg-zinc-800/60 hover:text-zinc-100'
+      ? 'bg-charcoal text-iris-violet'
+      : 'text-iron hover:bg-charcoal/40 hover:text-bone-white'
   }`;
 
 const mobileLinkClass = ({ isActive }: { isActive: boolean }) =>
   `relative flex flex-1 flex-col items-center gap-1 px-1 py-2 text-[10px] font-medium ${
-    isActive ? 'text-cyan-400' : 'text-zinc-500'
+    isActive ? 'text-iris-violet' : 'text-ash-gray'
   }`;
 
 export function AdminLayout() {
   const { user, logout } = useAuth();
 
   return (
-    <div className="flex min-h-screen bg-zinc-950 text-zinc-100">
-      <aside className="hidden w-[220px] shrink-0 flex-col border-r border-zinc-700 bg-zinc-900 sm:flex">
-        <div className="flex h-16 items-center gap-3 border-b border-zinc-700 px-4">
-          <span className="flex h-9 w-9 items-center justify-center rounded-md border border-cyan-400/30 bg-cyan-500/10 text-cyan-400">
-            <WalletIcon className="h-5 w-5" strokeWidth={2.2} />
-          </span>
-          <div>
-            <p className="font-heading text-base font-bold">Wallet Tree</p>
-            <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-zinc-500">Admin console</p>
-          </div>
+    <div className="flex min-h-screen bg-void-black text-bone-white">
+      <aside className="hidden w-[220px] shrink-0 flex-col border-r border-graphite-hairline sm:flex">
+        <div className="flex h-14 items-center justify-center border-b border-graphite-hairline px-4">
+          <Logo subtitle="Admin console" />
         </div>
 
-        <p className="px-4 pb-2 pt-5 font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-zinc-500">Administration</p>
-        <nav className="flex-1 space-y-1 px-3" aria-label="เมนูผู้ดูแลระบบ">
+        <p className="px-4 pb-2 pt-5 font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-iron">Administration</p>
+        <nav className="flex-1 space-y-[2px] px-3">
           {navItems.map((item) => (
             <NavLink key={item.to} to={item.to} end={item.end} className={desktopLinkClass}>
-              <item.icon className="h-5 w-5" />
-              <span>{item.label}</span>
+              {({ isActive }) => (
+                <>
+                  <span
+                    aria-hidden
+                    className={`absolute left-0 top-1/2 h-4 w-[3px] -translate-y-1/2 rounded-r-full transition-all ${
+                      isActive ? 'bg-iris-violet opacity-100' : 'opacity-0'
+                    }`}
+                  />
+                  <item.icon className="h-[18px] w-[18px]" />
+                  <span>{item.label}</span>
+                </>
+              )}
             </NavLink>
           ))}
         </nav>
 
-        <div className="m-3 rounded-md border border-zinc-700 bg-zinc-950/50 p-3">
-          <p className="truncate text-sm font-medium">{user?.name}</p>
-          <p className="mt-0.5 truncate font-mono text-[10px] uppercase text-emerald-400">Administrator active</p>
-          <button type="button" onClick={logout} className="mt-3 flex min-h-9 w-full items-center justify-center gap-2 rounded-sm border border-zinc-700 text-xs text-zinc-400 transition hover:bg-zinc-800 hover:text-rose-300">
-            <LogOutIcon className="h-4 w-4" />
-            ออกจากระบบ
-          </button>
-        </div>
+        {user ? (
+          <div className="m-3 flex items-center gap-3 rounded-[16px] border border-graphite-hairline bg-void-black px-3 py-2.5">
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[6px] border border-graphite-hairline bg-charcoal/30 text-xs font-semibold text-iris-violet">
+              {user.name.slice(0, 1).toUpperCase()}
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-[13px] font-medium text-bone-white">{user.name}</p>
+              <p className="flex items-center gap-1.5 truncate text-[10px] text-iron">
+                <span className="h-1.5 w-1.5 rounded-full bg-pulse-green" />
+                Admin
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={logout}
+              aria-label="ออกจากระบบ"
+              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[6px] text-ash-gray transition hover:bg-charcoal/30 hover:text-alarm-red"
+            >
+              <LogOutIcon className="h-4 w-4" />
+            </button>
+          </div>
+        ) : null}
       </aside>
 
-      <div className="min-w-0 flex-1">
-        <header className="flex h-12 items-center justify-between border-b border-zinc-700 bg-zinc-900 px-4 sm:hidden">
-          <span className="font-heading font-bold">Wallet Tree Admin</span>
-          <button type="button" onClick={logout} aria-label="ออกจากระบบ" className="flex h-9 w-9 items-center justify-center text-zinc-400">
-            <LogOutIcon className="h-4 w-4" />
-          </button>
+      <div className="flex min-h-screen flex-1 flex-col">
+        <header className="flex h-11 items-center justify-between border-b border-graphite-hairline bg-void-black/95 px-4 backdrop-blur sm:hidden">
+          <p className="text-sm font-bold tracking-tight">Admin</p>
+          {user ? (
+            <button
+              type="button"
+              onClick={logout}
+              aria-label="ออกจากระบบ"
+              className="flex h-7 w-7 items-center justify-center rounded-[6px] text-ash-gray transition hover:bg-charcoal/30 hover:text-alarm-red"
+            >
+              <LogOutIcon className="h-4 w-4" />
+            </button>
+          ) : null}
         </header>
-        <div className="hidden h-12 items-center justify-between border-b border-zinc-700 bg-zinc-900/80 px-5 sm:flex">
-          <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-zinc-500">Wallet Tree / Administration</p>
-          <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-emerald-400">System online</span>
-        </div>
-        <main className="p-4 pb-24 sm:p-5">
+
+        <main className="flex-1 px-6 py-6">
           <Outlet />
         </main>
       </div>
 
-      <nav className="fixed inset-x-0 bottom-0 z-30 flex border-t border-zinc-800 bg-zinc-900/95 pb-[env(safe-area-inset-bottom)] backdrop-blur sm:hidden" aria-label="เมนูผู้ดูแลระบบบนมือถือ">
+      <nav className="fixed inset-x-0 bottom-0 z-50 flex h-14 items-center justify-around border-t border-graphite-hairline bg-void-black sm:hidden">
         {navItems.map((item) => (
           <NavLink key={item.to} to={item.to} end={item.end} className={mobileLinkClass}>
-            <item.icon className="h-5 w-5" />
-            <span>{item.label}</span>
+            {({ isActive }) => (
+              <>
+                <item.icon className="h-5 w-5" />
+                <span>{item.label}</span>
+              </>
+            )}
           </NavLink>
         ))}
       </nav>

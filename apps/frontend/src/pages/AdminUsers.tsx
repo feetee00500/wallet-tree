@@ -20,7 +20,7 @@ export function AdminUsers() {
   }, []);
 
   return (
-    <div className="space-y-5">
+    <div className="flex flex-col gap-4 animate-[fadeIn_200ms_ease-out]">
       <PageHeader title="ผู้ใช้งาน" subtitle="บัญชีล่าสุดสูงสุด 100 รายการ โดยไม่แสดงข้อมูลลับ" />
       {error ? <ErrorState message={error} /> : null}
       {!users && !error ? <LoadingState variant="table" /> : null}
@@ -32,11 +32,11 @@ export function AdminUsers() {
             </thead>
             <tbody className="divide-y divide-zinc-800">
               {users.map((user) => (
-                <tr key={user.id} className="hover:bg-zinc-800/40">
+                <tr key={user.id} className="hover:bg-zinc-800/30">
                   <td className="px-4 py-3"><p className="font-medium text-zinc-100">{user.name}</p><p className="mt-0.5 font-mono text-[10px] text-zinc-500">{user.username || user.id}</p></td>
                   <td className="px-4 py-3 text-zinc-400">{user.authProvider}</td>
                   <td className="px-4 py-3 text-zinc-400">{user.role}</td>
-                  <td className="px-4 py-3"><Badge tone={user.status === 'ACTIVE' ? 'income' : 'neutral'}>{user.status}</Badge></td>
+                  <td className="px-4 py-3"><Badge tone={user.status === 'ACTIVE' ? 'success' : 'neutral'}>{user.status}</Badge></td>
                   <td className="px-4 py-3 text-zinc-400">{new Date(user.createdAt).toLocaleDateString('th-TH')}</td>
                 </tr>
               ))}

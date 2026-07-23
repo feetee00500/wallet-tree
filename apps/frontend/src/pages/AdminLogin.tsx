@@ -38,10 +38,10 @@ export function AdminLogin() {
       <form className="flex flex-col gap-4" onSubmit={submit}>
         <Input label="Username" value={username} onChange={(event) => setUsername(event.target.value)} autoComplete="username" required />
         <Input label="Password" type="password" value={password} onChange={(event) => setPassword(event.target.value)} autoComplete="current-password" required />
-        {error ? <p className="text-sm text-rose-300">{error}</p> : null}
+        {error ? <p className="text-sm text-alarm-red">{error}</p> : null}
         <Button type="submit" loading={loading}>เข้าสู่ระบบ Admin</Button>
       </form>
-      <a href="/login" className="mt-5 block text-center text-sm text-zinc-400 hover:text-zinc-200">กลับไป LINE Login</a>
+      <a href="/login" className="mt-5 block text-center text-[13px] text-ash-gray hover:text-bone-white">กลับไป LINE Login</a>
     </AuthLayout>
   );
 }

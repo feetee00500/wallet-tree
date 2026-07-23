@@ -27,7 +27,7 @@ export function LoadingState({ variant = 'list', rows = 5, className = '' }: Loa
     return (
       <div className={`grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 ${className}`}>
         {Array.from({ length: rows }).map((_, idx) => (
-          <Skeleton key={idx} className="h-16" />
+          <Skeleton key={idx} className="h-14" />
         ))}
       </div>
     );
@@ -35,11 +35,11 @@ export function LoadingState({ variant = 'list', rows = 5, className = '' }: Loa
 
   if (variant === 'table') {
     return (
-      <div className={`overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900 ${className}`}>
-        <Skeleton className="h-10 rounded-none" />
+      <div className={`overflow-hidden rounded-[6px] border border-zinc-800 bg-zinc-900 ${className}`}>
+        <Skeleton className="h-9 rounded-none" />
         <div className="divide-y divide-zinc-800">
           {Array.from({ length: rows }).map((_, idx) => (
-            <div key={idx} className="px-4 py-4">
+            <div key={idx} className="px-4 py-3.5">
               <Skeleton className="h-4 w-full" variant="line" />
             </div>
           ))}
@@ -51,7 +51,7 @@ export function LoadingState({ variant = 'list', rows = 5, className = '' }: Loa
   return (
     <div className={`flex flex-col gap-3 ${className}`}>
       {Array.from({ length: rows }).map((_, idx) => (
-        <Skeleton key={idx} className="h-16" />
+        <Skeleton key={idx} className="h-14" />
       ))}
     </div>
   );

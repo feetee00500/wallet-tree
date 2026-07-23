@@ -13,10 +13,10 @@ export function AdminAccount() {
   ];
 
   return (
-    <div className="space-y-5">
+    <div className="flex flex-col gap-4 animate-[fadeIn_200ms_ease-out]">
       <PageHeader title="บัญชี Admin" subtitle="ข้อมูลผู้ดูแลระบบที่กำลังเข้าสู่ระบบ" />
       <Card className="max-w-2xl p-5">
-        <dl className="grid grid-cols-[minmax(100px,auto)_1fr] gap-x-6 gap-y-4 text-sm">
+        <dl className="grid grid-cols-[minmax(100px,auto)_1fr] gap-x-6 gap-y-4 text-[13px]">
           {fields.map(([label, value]) => (
             <div key={label} className="contents">
               <dt className="text-zinc-500">{label}</dt>

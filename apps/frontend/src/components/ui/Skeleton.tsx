@@ -4,7 +4,7 @@ interface SkeletonProps {
 }
 
 const variantClass: Record<NonNullable<SkeletonProps['variant']>, string> = {
-  block: 'rounded-md',
+  block: 'rounded-[6px]',
   line: 'h-3 rounded-full',
   circle: 'rounded-full',
 };
@@ -12,7 +12,7 @@ const variantClass: Record<NonNullable<SkeletonProps['variant']>, string> = {
 export function Skeleton({ className = '', variant = 'block' }: SkeletonProps) {
   return (
     <div
-      className={`animate-pulse bg-zinc-800/70 ${variantClass[variant]} ${className}`}
+      className={`animate-pulse bg-charcoal/40 ${variantClass[variant]} ${className}`}
     />
   );
 }

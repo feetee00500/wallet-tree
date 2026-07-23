@@ -51,16 +51,12 @@ function hasMeaningfulMovement(points: SparkPoint[]): boolean {
   return max - min > 0;
 }
 
-interface SparkTooltipPayload {
-  payload: SparkPoint;
-}
-
-function SparkTooltip({ active, payload }: { active?: boolean; payload?: SparkTooltipPayload[] }) {
+function SparkTooltip({ active, payload }: { active?: boolean; payload?: Array<{ payload: SparkPoint }> }) {
   if (!active || !payload || payload.length === 0) return null;
   const point = payload[0]?.payload;
   if (!point) return null;
   return (
-    <div className="rounded-sm border border-zinc-700 bg-zinc-900/95 px-2.5 py-1.5 text-xs shadow-lg">
+    <div className="rounded-[4px] border border-zinc-700 bg-zinc-900/95 px-2.5 py-1.5 text-xs shadow-lg">
       <p className="text-zinc-500">วันที่ {point.day}</p>
       <p className="font-semibold tabular-nums text-cyan-400">{formatCurrency(point.balance)}</p>
     </div>
@@ -77,25 +73,23 @@ export function BalanceHero({ summary, prevSummary, month, year }: BalanceHeroPr
   const showSparkline = hasMeaningfulMovement(sparkline);
 
   return (
-    <Card className="relative overflow-hidden px-4 py-4 sm:px-5 sm:py-5">
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-400/70 to-transparent" />
-
-      <div className="relative grid gap-4 sm:grid-cols-[1fr_minmax(0,260px)]">
+    <Card className="px-4 py-4 sm:px-5 sm:py-5">
+      <div className="grid gap-4 sm:grid-cols-[1fr_minmax(0,260px)]">
         <div className="min-w-0">
           <div className="flex items-center gap-2">
-            <span className="flex h-7 w-7 items-center justify-center rounded-sm bg-cyan-500/10 text-cyan-400 ring-1 ring-cyan-400/30">
-              <WalletIcon className="h-4 w-4" />
+            <span className="flex h-6 w-6 items-center justify-center rounded-[4px] bg-cyan-500/10 text-cyan-400 ring-1 ring-cyan-400/30">
+              <WalletIcon className="h-3.5 w-3.5" />
             </span>
-            <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-zinc-500">
-              ยอดคงเหลือเดือนนี้
+            <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-zinc-500">
+              กระแสเงินสดเดือนนี้
             </p>
           </div>
 
-          <p className="mt-2 font-mono text-3xl font-bold tabular-nums text-cyan-400 sm:text-[36px]">
+          <p className="mt-2 font-mono text-[28px] font-bold tabular-nums text-cyan-400 sm:text-[32px]">
             {formatCurrency(summary.balance)}
           </p>
 
-          <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[12px]">
+          <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs">
             {delta ? (
               <span
                 className={`inline-flex items-center gap-1 font-medium ${
@@ -110,10 +104,10 @@ export function BalanceHero({ summary, prevSummary, month, year }: BalanceHeroPr
                 {delta.percent.toFixed(1)}% เทียบเดือนก่อน
               </span>
             ) : (
-              <span className="text-sm text-zinc-500">ไม่มีข้อมูลเดือนก่อน</span>
+              <span className="text-xs text-zinc-500">ไม่มีข้อมูลเดือนก่อน</span>
             )}
-            <span className="text-zinc-500">·</span>
-            <span className="text-zinc-400">
+            <span className="text-zinc-600">·</span>
+            <span className="text-zinc-500">
               อัตราเก็บออม{' '}
               <span className="font-semibold text-zinc-200 tabular-nums">
                 {savingsRate.toFixed(1)}%
@@ -140,7 +134,7 @@ export function BalanceHero({ summary, prevSummary, month, year }: BalanceHeroPr
         {showSparkline ? (
           <SparklinePanel points={sparkline} />
         ) : (
-          <div className="hidden h-full min-h-[160px] flex-col items-center justify-center rounded-md border border-dashed border-zinc-700 bg-zinc-950/40 px-4 py-6 text-center sm:flex">
+          <div className="hidden h-full min-h-[140px] flex-col items-center justify-center rounded-[6px] border border-dashed border-zinc-700 bg-zinc-950/40 px-4 py-6 text-center sm:flex">
             <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
               ยอดสะสมรายวัน
             </p>
@@ -161,7 +155,7 @@ function SparklinePanel({ points }: { points: SparkPoint[] }) {
   const trough = points.reduce((min, p) => (p.balance < min.balance ? p : min), points[0]!);
 
   return (
-    <div className="flex h-full min-h-[160px] flex-col gap-2 rounded-md border border-zinc-700 bg-zinc-950/50 px-3 py-3">
+    <div className="flex h-full min-h-[140px] flex-col gap-2 rounded-[6px] border border-zinc-700 bg-zinc-950/50 px-3 py-3">
       <div className="flex items-baseline justify-between">
         <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
           ยอดสะสมรายวัน
@@ -175,7 +169,7 @@ function SparklinePanel({ points }: { points: SparkPoint[] }) {
           <AreaChart data={points} margin={{ top: 4, right: 0, left: 0, bottom: 0 }}>
             <defs>
               <linearGradient id="balanceSpark" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#58a6ff" stopOpacity={0.4} />
+                <stop offset="0%" stopColor="#58a6ff" stopOpacity={0.3} />
                 <stop offset="100%" stopColor="#58a6ff" stopOpacity={0} />
               </linearGradient>
             </defs>
@@ -226,13 +220,13 @@ function MiniMetric({ label, amount, tone, icon }: MiniMetricProps) {
       ? 'bg-emerald-500/10 ring-emerald-500/20'
       : 'bg-orange-500/10 ring-orange-500/30';
   return (
-    <div className="flex items-center gap-3 rounded-md border border-zinc-700 bg-zinc-950/50 px-3 py-2.5">
-      <span className={`flex h-8 w-8 items-center justify-center rounded-sm ring-1 ${ringClass} ${toneClass}`}>
+    <div className="flex items-center gap-3 rounded-[6px] border border-zinc-700 bg-zinc-950/50 px-3 py-2.5">
+      <span className={`flex h-7 w-7 items-center justify-center rounded-[4px] ring-1 ${ringClass} ${toneClass}`}>
         {icon}
       </span>
       <div className="min-w-0">
-        <p className="text-[11px] font-medium uppercase tracking-wide text-zinc-500">{label}</p>
-        <p className={`text-sm font-semibold tabular-nums ${toneClass}`}>{formatCurrency(amount)}</p>
+        <p className="text-[10px] font-medium uppercase tracking-wide text-zinc-500">{label}</p>
+        <p className={`text-[13px] font-semibold tabular-nums ${toneClass}`}>{formatCurrency(amount)}</p>
       </div>
     </div>
   );
