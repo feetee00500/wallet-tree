@@ -21,8 +21,8 @@ export function App() {
   return (
     <Suspense
       fallback={
-        <div className="flex min-h-screen items-center justify-center bg-zinc-950 text-zinc-400" role="status">
-          <span className="font-mono text-[11px] uppercase tracking-[0.14em]">Loading finance module…</span>
+        <div className="flex min-h-screen items-center justify-center bg-canvas-soft text-body" role="status">
+          <span className="font-mono text-[11px] uppercase tracking-[0.08em]">Loading finance module…</span>
         </div>
       }
     >

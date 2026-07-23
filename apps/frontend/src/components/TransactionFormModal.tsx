@@ -162,7 +162,7 @@ export function TransactionFormModal({
         />
 
         {formError ? (
-          <div className="rounded-[6px] border border-rose-500/40 bg-rose-500/10 px-4 py-3 text-[13px] text-rose-300">
+          <div className="rounded-[6px] border border-error/30 bg-error-soft/30 px-4 py-3 text-[13px] text-error">
             {formError}
           </div>
         ) : null}
@@ -187,11 +187,11 @@ interface DescriptionFieldProps {
 }
 
 function DescriptionField({ value, error, onChange }: DescriptionFieldProps) {
-  const borderClass = error ? 'border-rose-500/60' : 'border-zinc-700 focus:border-cyan-400/60';
+  const borderClass = error ? 'border-error/60' : 'border-hairline focus:border-link/60';
   return (
     <div className="flex flex-col gap-1.5">
-      <label htmlFor="transaction-description" className="text-[13px] font-medium text-zinc-300">
-        รายละเอียด <span className="text-zinc-500">(ไม่บังคับ)</span>
+      <label htmlFor="transaction-description" className="text-[13px] font-medium text-body">
+        รายละเอียด <span className="text-mute">(ไม่บังคับ)</span>
       </label>
       <textarea
         id="transaction-description"
@@ -201,9 +201,9 @@ function DescriptionField({ value, error, onChange }: DescriptionFieldProps) {
         placeholder="เช่น ค่ากาแฟ"
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className={`min-h-[80px] w-full resize-none rounded-[6px] border bg-zinc-800 px-3 py-2.5 text-[13px] text-zinc-100 placeholder:text-zinc-500 outline-none transition focus:ring-2 focus:ring-cyan-400/20 ${borderClass}`}
+        className={`min-h-[80px] w-full resize-none rounded-[6px] border bg-canvas px-3 py-2.5 text-[13px] text-ink placeholder:text-mute outline-none transition focus:ring-2 focus:ring-link/20 ${borderClass}`}
       />
-      {error ? <span className="text-xs text-rose-400">{error}</span> : null}
+      {error ? <span className="text-xs text-error">{error}</span> : null}
     </div>
   );
 }

@@ -16,7 +16,7 @@ import {
 import { Badge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
 import { IconButton } from '../components/ui/IconButton';
-import { SegmentedControl, type SegmentedOption } from '../components/ui/SegmentedControl';
+import { SegmentedControl } from '../components/ui/SegmentedControl';
 import { useToast } from '../components/ui/Toast';
 import { ApiError, apiFetch } from '../lib/api';
 
@@ -25,9 +25,9 @@ type ModalState =
   | { kind: 'create'; type: TransactionType }
   | { kind: 'edit'; category: CategoryResponse };
 
-const tabOptions: SegmentedOption<TransactionType>[] = [
-  { value: TransactionType.EXPENSE, label: 'รายจ่าย', tone: 'expense' },
-  { value: TransactionType.INCOME, label: 'รายรับ', tone: 'income' },
+const tabOptions = [
+  { value: TransactionType.EXPENSE, label: 'รายจ่าย' },
+  { value: TransactionType.INCOME, label: 'รายรับ' },
 ];
 
 export function Categories() {
@@ -151,17 +151,15 @@ export function Categories() {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <SegmentedControl
           value={activeTab}
-          onChange={setActiveTab}
+          onChange={(next) => setActiveTab(next as TransactionType)}
           options={tabOptions}
-          fullWidth={false}
-          ariaLabel="ประเภทหมวดหมู่"
         />
-        <p className="text-xs text-zinc-500 sm:text-[13px]">
+        <p className="text-xs text-mute sm:text-[13px]">
           รายจ่าย{' '}
-          <span className="font-semibold text-zinc-200 tabular-nums">{counts.expense}</span>
+          <span className="font-semibold text-ink tabular-nums">{counts.expense}</span>
           {' · '}
           รายรับ{' '}
-          <span className="font-semibold text-zinc-200 tabular-nums">{counts.income}</span>
+          <span className="font-semibold text-ink tabular-nums">{counts.income}</span>
         </p>
       </div>
 
@@ -227,33 +225,28 @@ interface CategoryCardProps {
 function CategoryCard({ category, onEdit, onDelete }: CategoryCardProps) {
   const isDefault = category.userId === null;
   return (
-    <li className="flex items-center justify-between gap-3 rounded-[6px] border border-zinc-700 bg-zinc-900 px-4 py-3 shadow-[0_1px_4px_rgba(0,0,0,0.4)] transition hover:bg-zinc-800/40">
+    <li className="flex items-center justify-between gap-3 rounded-[6px] border border-hairline bg-canvas px-4 py-3 shadow-[var(--shadow-level-2)] transition hover:bg-canvas-soft-2/40">
       <div className="flex min-w-0 items-center gap-3">
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-zinc-800 text-lg">
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-canvas-soft-2 text-lg">
           {category.icon}
         </span>
-        <p className="truncate text-[13px] font-medium text-zinc-100">{category.name}</p>
+        <p className="truncate text-[13px] font-medium text-ink">{category.name}</p>
       </div>
       {isDefault ? (
         <Badge tone="neutral">เริ่มต้น</Badge>
       ) : (
         <div className="flex shrink-0 gap-1">
           <IconButton
-            size="sm"
-            tone="accent"
+            icon={PencilIcon}
             label={`แก้ไข ${category.name}`}
             onClick={() => onEdit(category)}
-          >
-            <PencilIcon className="h-3.5 w-3.5" />
-          </IconButton>
+          />
           <IconButton
-            size="sm"
+            icon={TrashIcon}
             tone="danger"
             label={`ลบ ${category.name}`}
             onClick={() => onDelete(category)}
-          >
-            <TrashIcon className="h-3.5 w-3.5" />
-          </IconButton>
+          />
         </div>
       )}
     </li>

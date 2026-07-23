@@ -43,28 +43,28 @@ function rowStatus(row: BudgetRow): RowStatus {
 function barColorClass(status: RowStatus): string {
   switch (status) {
     case 'overBudget':
-      return 'bg-rose-500';
+      return 'bg-error';
     case 'critical':
-      return 'bg-orange-500';
+      return 'bg-warning';
     case 'warn':
-      return 'bg-amber-500';
+      return 'bg-warning';
     default:
-      return 'bg-emerald-500';
+      return 'bg-cyan-deep';
   }
 }
 
 function textColorClass(status: RowStatus): string {
   switch (status) {
     case 'overBudget':
-      return 'text-rose-400';
+      return 'text-error';
     case 'critical':
-      return 'text-orange-400';
+      return 'text-error-deep';
     case 'warn':
-      return 'text-amber-400';
+      return 'text-warning';
     case 'safe':
-      return 'text-emerald-400';
+      return 'text-cyan-deep';
     default:
-      return 'text-zinc-500';
+      return 'text-mute';
   }
 }
 
@@ -264,10 +264,10 @@ function BudgetOverviewCard({ totals }: BudgetOverviewCardProps) {
     return (
       <Card className="flex items-start justify-between gap-4 px-5 py-5">
         <div>
-          <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-zinc-500">
+          <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.08em] text-mute">
             ภาพรวมงบประมาณเดือนนี้
           </p>
-          <p className="mt-1 text-[13px] text-zinc-400">ยังไม่ได้ตั้งงบ — เริ่มจากหมวดที่จ่ายบ่อยที่สุด</p>
+          <p className="mt-1 text-[13px] text-body">ยังไม่ได้ตั้งงบ — เริ่มจากหมวดที่จ่ายบ่อยที่สุด</p>
         </div>
       </Card>
     );
@@ -282,12 +282,12 @@ function BudgetOverviewCard({ totals }: BudgetOverviewCardProps) {
     <Card className="flex flex-col gap-4 px-5 py-5">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-zinc-500">
+          <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.08em] text-mute">
             ภาพรวมงบประมาณเดือนนี้
           </p>
-          <p className="mt-1 text-[22px] font-bold tabular-nums text-zinc-100 sm:text-[24px]">
+          <p className="mt-1 text-[22px] font-bold tabular-nums text-ink sm:text-[24px]">
             {formatCurrency(totalSpent)}{' '}
-            <span className="text-base font-medium text-zinc-500">
+            <span className="text-base font-medium text-mute">
               / {formatCurrency(totalBudget)}
             </span>
           </p>
@@ -304,7 +304,7 @@ function BudgetOverviewCard({ totals }: BudgetOverviewCardProps) {
         </div>
       </div>
 
-      <div className="h-2.5 overflow-hidden rounded-full bg-zinc-800">
+      <div className="h-2.5 overflow-hidden rounded-full bg-canvas-soft-2">
         <div
           className={`h-full rounded-full transition-all duration-500 ${barColorClass(status)}`}
           style={{ width: `${barWidth}%` }}
@@ -326,21 +326,21 @@ function BudgetItemRow({ row, onSet, onEdit }: BudgetItemRowProps) {
   const barWidth = Math.min(row.percentage, 100);
 
   return (
-    <li className="rounded-[6px] border border-zinc-700 bg-zinc-900 px-4 py-4 shadow-[0_1px_4px_rgba(0,0,0,0.4)] transition hover:bg-zinc-800/40">
+    <li className="rounded-[6px] border border-hairline bg-canvas px-4 py-4 shadow-[var(--shadow-level-2)] transition hover:bg-canvas-soft-2/40">
       <div className="flex items-center justify-between gap-4">
         <div className="flex min-w-0 items-center gap-3">
-          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-zinc-800 text-lg">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-canvas-soft-2 text-lg">
             {row.categoryIcon}
           </span>
           <div className="min-w-0">
-            <p className="truncate text-[13px] font-medium text-zinc-100">{row.categoryName}</p>
+            <p className="truncate text-[13px] font-medium text-ink">{row.categoryName}</p>
             {hasBudget ? (
               <p className={`text-xs font-semibold tabular-nums ${textColorClass(status)}`}>
                 {row.percentage.toFixed(0)}%
                 {status === 'overBudget' ? ' · เกินงบ' : ''}
               </p>
             ) : (
-              <p className="text-xs text-zinc-500">ยังไม่ได้ตั้งงบ</p>
+              <p className="text-xs text-mute">ยังไม่ได้ตั้งงบ</p>
             )}
           </div>
         </div>
@@ -349,19 +349,17 @@ function BudgetItemRow({ row, onSet, onEdit }: BudgetItemRowProps) {
           {hasBudget ? (
             <>
               <div className="text-right">
-                <p className="whitespace-nowrap text-[13px] font-semibold text-zinc-100 tabular-nums">
+                <p className="whitespace-nowrap text-[13px] font-semibold text-ink tabular-nums">
                   {formatCurrency(row.spentAmount)}
                 </p>
-                <p className="whitespace-nowrap text-xs text-zinc-500 tabular-nums">
+                <p className="whitespace-nowrap text-xs text-mute tabular-nums">
                   / {formatCurrency(row.budgetAmount)}
                 </p>
               </div>
-              <IconButton tone="accent" label={`แก้ไขงบ ${row.categoryName}`} onClick={onEdit}>
-                <PencilIcon className="h-4 w-4" />
-              </IconButton>
+              <IconButton icon={PencilIcon} label={`แก้ไขงบ ${row.categoryName}`} onClick={onEdit} />
             </>
           ) : (
-            <Button size="sm" onClick={onSet} className="gap-1.5">
+            <Button onClick={onSet} className="gap-1.5">
               <PlusIcon className="h-3.5 w-3.5" />
               ตั้งงบ
             </Button>
@@ -371,7 +369,7 @@ function BudgetItemRow({ row, onSet, onEdit }: BudgetItemRowProps) {
 
       {hasBudget ? (
         <div className="mt-3 space-y-1.5">
-          <div className="h-2 overflow-hidden rounded-full bg-zinc-800">
+          <div className="h-2 overflow-hidden rounded-full bg-canvas-soft-2">
             <div
               className={`h-full rounded-full transition-all duration-500 ${barColorClass(status)}`}
               style={{ width: `${barWidth}%` }}

@@ -4,7 +4,7 @@ import { TransactionType } from '@wallet-tree/shared';
 import { ChevronDownIcon, SlidersIcon } from './icons';
 import { DateField } from './ui/DateField';
 import { Select, type SelectOption } from './ui/Select';
-import { SegmentedControl, type SegmentedOption } from './ui/SegmentedControl';
+import { SegmentedControl } from './ui/SegmentedControl';
 
 export interface TransactionFiltersValue {
   categoryId: string;
@@ -13,7 +13,7 @@ export interface TransactionFiltersValue {
   endDate: string;
 }
 
-type SegmentedTypeOption = SegmentedOption<TransactionFiltersValue['type']>;
+type SegmentedTypeOption = { value: string; label: string };
 
 interface TransactionFiltersProps {
   value: TransactionFiltersValue;
@@ -109,9 +109,9 @@ export function TransactionFilters({
   ];
 
   const typeOptions: SegmentedTypeOption[] = [
-    { value: '', label: 'ทั้งหมด', tone: 'neutral' },
-    { value: TransactionType.INCOME, label: 'รายรับ', tone: 'income' },
-    { value: TransactionType.EXPENSE, label: 'รายจ่าย', tone: 'expense' },
+    { value: '', label: 'ทั้งหมด' },
+    { value: TransactionType.INCOME, label: 'รายรับ' },
+    { value: TransactionType.EXPENSE, label: 'รายจ่าย' },
   ];
 
   const handlePresetClick = (preset: DatePreset) => {
@@ -126,17 +126,15 @@ export function TransactionFilters({
       <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:gap-4">
         <div className="flex-1">
           <SegmentedControl
-            label="ประเภท"
             value={value.type}
             onChange={(next) =>
               onChange({
                 ...value,
-                type: next,
+                type: next as TransactionFiltersValue['type'],
                 categoryId: '',
               })
             }
             options={typeOptions}
-            size="md"
           />
         </div>
         <div className="lg:w-64">
@@ -150,7 +148,7 @@ export function TransactionFilters({
       </div>
 
       <div className="flex flex-col gap-2">
-        <span className="text-[13px] font-medium text-zinc-300">ช่วงเวลา</span>
+        <span className="text-[13px] font-medium text-body">ช่วงเวลา</span>
         <div className="flex flex-wrap items-center gap-2">
           {datePresets.map((preset) => {
             const isActive = activePreset === preset.key;
@@ -161,8 +159,8 @@ export function TransactionFilters({
                 onClick={() => handlePresetClick(preset)}
                 className={`inline-flex min-h-[32px] items-center rounded-full border px-3 text-xs font-medium transition ${
                   isActive
-                    ? 'border-cyan-400/40 bg-cyan-500/10 text-cyan-400'
-                    : 'border-zinc-700 bg-zinc-900 text-zinc-400 hover:border-zinc-600 hover:text-zinc-100'
+                    ? 'border-link/40 bg-link/10 text-link'
+                    : 'border-hairline bg-canvas text-body hover:border-hairline-strong hover:text-ink'
                 }`}
               >
                 {preset.label}
@@ -174,8 +172,8 @@ export function TransactionFilters({
             onClick={() => setShowCustom((prev) => !prev)}
             className={`inline-flex min-h-[32px] items-center gap-1 rounded-full border px-3 text-xs font-medium transition ${
               activePreset === 'custom' || showCustom
-                ? 'border-cyan-400/40 bg-cyan-500/10 text-cyan-400'
-                : 'border-zinc-700 bg-zinc-900 text-zinc-400 hover:border-zinc-600 hover:text-zinc-100'
+                ? 'border-link/40 bg-link/10 text-link'
+                : 'border-hairline bg-canvas text-body hover:border-hairline-strong hover:text-ink'
             }`}
           >
             <SlidersIcon className="h-3.5 w-3.5" />
@@ -206,7 +204,7 @@ export function TransactionFilters({
           <button
             type="button"
             onClick={onReset}
-            className="text-[13px] font-medium text-cyan-400 transition hover:text-cyan-300"
+            className="text-[13px] font-medium text-link transition hover:text-link/80"
           >
             ล้างตัวกรองทั้งหมด
           </button>

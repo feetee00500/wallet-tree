@@ -35,12 +35,12 @@ export function LoadingState({ variant = 'list', rows = 5, className = '' }: Loa
 
   if (variant === 'table') {
     return (
-      <div className={`overflow-hidden rounded-[6px] border border-zinc-800 bg-zinc-900 ${className}`}>
+      <div className={`overflow-hidden rounded-[6px] border border-hairline bg-canvas ${className}`}>
         <Skeleton className="h-9 rounded-none" />
-        <div className="divide-y divide-zinc-800">
+        <div className="divide-y divide-hairline">
           {Array.from({ length: rows }).map((_, idx) => (
             <div key={idx} className="px-4 py-3.5">
-              <Skeleton className="h-4 w-full" variant="line" />
+              <Skeleton className="h-4 w-full" />
             </div>
           ))}
         </div>

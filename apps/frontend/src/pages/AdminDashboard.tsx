@@ -37,14 +37,14 @@ export function AdminDashboard() {
           <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
             {metricLabels.map(([key, label, hint]) => (
               <Card key={key} className="p-4">
-                <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-zinc-500">{label}</p>
-                <p className="mt-2 text-[28px] font-bold tabular-nums text-zinc-100">{overview[key]}</p>
-                <p className="mt-1 text-[11px] text-zinc-500">{hint}</p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.08em] text-mute">{label}</p>
+                <p className="mt-2 text-[28px] font-bold tabular-nums text-ink">{overview[key]}</p>
+                <p className="mt-1 text-[11px] text-mute">{hint}</p>
               </Card>
             ))}
           </div>
-          <Card className="flex flex-col gap-2 p-4 text-[11px] text-zinc-400 sm:flex-row sm:items-center sm:justify-between">
-            <span><strong className="text-emerald-400">ระบบพร้อมใช้งาน</strong> · Admin {overview.administrators} บัญชี</span>
+          <Card className="flex flex-col gap-2 p-4 text-[11px] text-body sm:flex-row sm:items-center sm:justify-between">
+            <span><strong className="text-cyan-deep">ระบบพร้อมใช้งาน</strong> · Admin {overview.administrators} บัญชี</span>
             <span className="font-mono text-[10px] uppercase">อัปเดต {new Date(overview.generatedAt).toLocaleString('th-TH')}</span>
           </Card>
         </>

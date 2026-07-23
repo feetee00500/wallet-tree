@@ -56,9 +56,9 @@ function SparkTooltip({ active, payload }: { active?: boolean; payload?: Array<{
   const point = payload[0]?.payload;
   if (!point) return null;
   return (
-    <div className="rounded-[4px] border border-zinc-700 bg-zinc-900/95 px-2.5 py-1.5 text-xs shadow-lg">
-      <p className="text-zinc-500">วันที่ {point.day}</p>
-      <p className="font-semibold tabular-nums text-cyan-400">{formatCurrency(point.balance)}</p>
+    <div className="rounded-[4px] border border-hairline bg-canvas/95 px-2.5 py-1.5 text-xs shadow-lg">
+      <p className="text-mute">วันที่ {point.day}</p>
+      <p className="font-semibold tabular-nums text-cyan-deep">{formatCurrency(point.balance)}</p>
     </div>
   );
 }
@@ -77,15 +77,15 @@ export function BalanceHero({ summary, prevSummary, month, year }: BalanceHeroPr
       <div className="grid gap-4 sm:grid-cols-[1fr_minmax(0,260px)]">
         <div className="min-w-0">
           <div className="flex items-center gap-2">
-            <span className="flex h-6 w-6 items-center justify-center rounded-[4px] bg-cyan-500/10 text-cyan-400 ring-1 ring-cyan-400/30">
+            <span className="flex h-6 w-6 items-center justify-center rounded-[4px] bg-cyan-soft/30 text-cyan-deep ring-1 ring-cyan-deep/20">
               <WalletIcon className="h-3.5 w-3.5" />
             </span>
-            <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-zinc-500">
+            <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.08em] text-mute">
               กระแสเงินสดเดือนนี้
             </p>
           </div>
 
-          <p className="mt-2 font-mono text-[28px] font-bold tabular-nums text-cyan-400 sm:text-[32px]">
+          <p className="mt-2 font-mono text-[28px] font-bold tabular-nums text-cyan-deep sm:text-[32px]">
             {formatCurrency(summary.balance)}
           </p>
 
@@ -93,7 +93,7 @@ export function BalanceHero({ summary, prevSummary, month, year }: BalanceHeroPr
             {delta ? (
               <span
                 className={`inline-flex items-center gap-1 font-medium ${
-                  delta.isPositive ? 'text-emerald-400' : 'text-orange-400'
+                  delta.isPositive ? 'text-cyan-deep' : 'text-error-deep'
                 }`}
               >
                 {delta.isPositive ? (
@@ -104,12 +104,12 @@ export function BalanceHero({ summary, prevSummary, month, year }: BalanceHeroPr
                 {delta.percent.toFixed(1)}% เทียบเดือนก่อน
               </span>
             ) : (
-              <span className="text-xs text-zinc-500">ไม่มีข้อมูลเดือนก่อน</span>
+              <span className="text-xs text-mute">ไม่มีข้อมูลเดือนก่อน</span>
             )}
-            <span className="text-zinc-600">·</span>
-            <span className="text-zinc-500">
+            <span className="text-mute">·</span>
+            <span className="text-mute">
               อัตราเก็บออม{' '}
-              <span className="font-semibold text-zinc-200 tabular-nums">
+              <span className="font-semibold text-ink tabular-nums">
                 {savingsRate.toFixed(1)}%
               </span>
             </span>
@@ -134,11 +134,11 @@ export function BalanceHero({ summary, prevSummary, month, year }: BalanceHeroPr
         {showSparkline ? (
           <SparklinePanel points={sparkline} />
         ) : (
-          <div className="hidden h-full min-h-[140px] flex-col items-center justify-center rounded-[6px] border border-dashed border-zinc-700 bg-zinc-950/40 px-4 py-6 text-center sm:flex">
-            <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
+          <div className="hidden h-full min-h-[140px] flex-col items-center justify-center rounded-[6px] border border-dashed border-hairline bg-canvas-soft/40 px-4 py-6 text-center sm:flex">
+            <p className="text-xs font-medium uppercase tracking-wide text-mute">
               ยอดสะสมรายวัน
             </p>
-            <p className="mt-2 text-xs text-zinc-500">
+            <p className="mt-2 text-xs text-mute">
               เพิ่มรายการเพื่อดูแนวโน้ม
             </p>
           </div>
@@ -155,12 +155,12 @@ function SparklinePanel({ points }: { points: SparkPoint[] }) {
   const trough = points.reduce((min, p) => (p.balance < min.balance ? p : min), points[0]!);
 
   return (
-    <div className="flex h-full min-h-[140px] flex-col gap-2 rounded-[6px] border border-zinc-700 bg-zinc-950/50 px-3 py-3">
+    <div className="flex h-full min-h-[140px] flex-col gap-2 rounded-[6px] border border-hairline bg-canvas-soft/50 px-3 py-3">
       <div className="flex items-baseline justify-between">
-        <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
+        <p className="text-xs font-medium uppercase tracking-wide text-mute">
           ยอดสะสมรายวัน
         </p>
-        <p className="text-[11px] tabular-nums text-zinc-500">
+        <p className="text-[11px] tabular-nums text-mute">
           วันที่ {points[0]?.day ?? 1}–{points[points.length - 1]?.day ?? 1}
         </p>
       </div>
@@ -190,14 +190,14 @@ function SparklinePanel({ points }: { points: SparkPoint[] }) {
         </ResponsiveContainer>
       </div>
       <div className="flex items-baseline justify-between text-[11px] tabular-nums">
-        <span className="text-zinc-500">
-          เริ่ม <span className="text-zinc-300">{formatCurrency(start)}</span>
+        <span className="text-mute">
+          เริ่ม <span className="text-body">{formatCurrency(start)}</span>
         </span>
-        <span className={end >= start ? 'text-emerald-400' : 'text-orange-400'}>
+        <span className={end >= start ? 'text-cyan-deep' : 'text-error-deep'}>
           ล่าสุด {formatCurrency(end)}
         </span>
       </div>
-      <p className="text-[11px] text-zinc-500">
+      <p className="text-[11px] text-mute">
         สูงสุด {formatCurrency(peak.balance)} (วันที่ {peak.day})
         <span className="mx-1">·</span>
         ต่ำสุด {formatCurrency(trough.balance)} (วันที่ {trough.day})
@@ -214,18 +214,18 @@ interface MiniMetricProps {
 }
 
 function MiniMetric({ label, amount, tone, icon }: MiniMetricProps) {
-  const toneClass = tone === 'income' ? 'text-emerald-400' : 'text-orange-400';
+  const toneClass = tone === 'income' ? 'text-cyan-deep' : 'text-error-deep';
   const ringClass =
     tone === 'income'
-      ? 'bg-emerald-500/10 ring-emerald-500/20'
-      : 'bg-orange-500/10 ring-orange-500/30';
+      ? 'bg-cyan-deep/10 ring-cyan-deep/20'
+      : 'bg-warning/10 ring-warning/30';
   return (
-    <div className="flex items-center gap-3 rounded-[6px] border border-zinc-700 bg-zinc-950/50 px-3 py-2.5">
+    <div className="flex items-center gap-3 rounded-[6px] border border-hairline bg-canvas-soft/50 px-3 py-2.5">
       <span className={`flex h-7 w-7 items-center justify-center rounded-[4px] ring-1 ${ringClass} ${toneClass}`}>
         {icon}
       </span>
       <div className="min-w-0">
-        <p className="text-[10px] font-medium uppercase tracking-wide text-zinc-500">{label}</p>
+        <p className="text-[10px] font-medium uppercase tracking-wide text-mute">{label}</p>
         <p className={`text-[13px] font-semibold tabular-nums ${toneClass}`}>{formatCurrency(amount)}</p>
       </div>
     </div>

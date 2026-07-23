@@ -36,9 +36,9 @@ export function RecentTransactionsCard({ transactions, categories }: RecentTrans
   return (
     <Card className="px-4 py-4">
       <div className="flex items-baseline justify-between">
-        <h3 className="font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-zinc-500">รายการล่าสุด</h3>
+        <h3 className="font-mono text-[10px] font-semibold uppercase tracking-[0.08em] text-mute">รายการล่าสุด</h3>
         {transactions.length > 0 ? (
-          <p className="text-[11px] text-zinc-500">{transactions.length} รายการ</p>
+          <p className="text-[11px] text-mute">{transactions.length} รายการ</p>
         ) : null}
       </div>
 
@@ -51,8 +51,8 @@ export function RecentTransactionsCard({ transactions, categories }: RecentTrans
       ) : (
         <div className="mt-2 flex flex-col">
           {groups.map((group) => (
-            <section key={group.key} className="border-b border-zinc-800 last:border-b-0">
-              <h4 className="pt-3 text-[11px] font-semibold uppercase tracking-wide text-zinc-500">
+            <section key={group.key} className="border-b border-hairline last:border-b-0">
+              <h4 className="pt-3 text-[11px] font-semibold uppercase tracking-wide text-mute">
                 {group.label}
               </h4>
               <ul className="flex flex-col">

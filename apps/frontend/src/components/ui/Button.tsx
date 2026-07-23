@@ -1,6 +1,6 @@
 import type { ButtonHTMLAttributes } from 'react';
 
-type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'outline' | 'danger';
+type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
 type ButtonSize = 'sm' | 'md' | 'lg';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -11,25 +11,23 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantClass: Record<ButtonVariant, string> = {
   primary:
-    'bg-signal-blue text-white hover:bg-sky-blue focus-visible:ring-signal-blue/50 disabled:bg-signal-blue/30 disabled:text-ash-gray',
+    'bg-ink text-on-primary hover:bg-ink/90 focus-visible:ring-link/50 disabled:bg-ink/30 disabled:text-mute',
   secondary:
-    'border border-graphite-hairline bg-transparent text-bone-white hover:border-white focus-visible:ring-iris-violet/50 disabled:border-graphite-hairline/50 disabled:text-ash-gray',
+    'bg-canvas text-ink border border-hairline hover:border-hairline-strong hover:bg-canvas-soft focus-visible:ring-link/50 disabled:opacity-50',
   ghost:
-    'bg-transparent text-ash-gray hover:text-bone-white focus-visible:ring-iris-violet/30',
-  outline:
-    'border border-graphite-hairline bg-transparent text-bone-white hover:border-white focus-visible:ring-iris-violet/50',
+    'bg-transparent text-body hover:text-ink focus-visible:ring-link/30',
   danger:
-    'border border-graphite-hairline bg-transparent text-alarm-red hover:border-alarm-red hover:text-crimson focus-visible:ring-alarm-red/50 disabled:border-graphite-hairline/50 disabled:text-ash-gray',
+    'bg-canvas text-error border border-hairline hover:border-error hover:bg-error-soft/30 focus-visible:ring-error/30 disabled:opacity-50',
 };
 
 const sizeClass: Record<ButtonSize, string> = {
-  sm: 'min-h-[32px] px-3 text-body-sm',
-  md: 'min-h-[36px] px-4 text-body-sm',
-  lg: 'min-h-[40px] px-5 text-body-sm',
+  sm: 'min-h-[32px] px-3 text-body-sm font-medium',
+  md: 'min-h-[40px] px-4 text-body-sm font-medium',
+  lg: 'min-h-[48px] px-5 text-button-lg font-medium',
 };
 
 export function Button({
-  variant = 'secondary',
+  variant = 'primary',
   size = 'md',
   loading = false,
   disabled,
@@ -43,7 +41,7 @@ export function Button({
     <button
       type={type}
       disabled={isDisabled}
-      className={`inline-flex items-center justify-center rounded-[6px] font-medium transition duration-100 focus:outline-none focus-visible:ring-2 disabled:cursor-not-allowed ${variantClass[variant]} ${sizeClass[size]} ${className}`}
+      className={`inline-flex items-center justify-center rounded-[6px] transition duration-100 focus:outline-none focus-visible:ring-2 disabled:cursor-not-allowed ${variantClass[variant]} ${sizeClass[size]} ${className}`}
       {...rest}
     >
       {loading ? (

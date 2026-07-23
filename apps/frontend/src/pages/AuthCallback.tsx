@@ -24,12 +24,12 @@ export function AuthCallback() {
   return (
     <AuthLayout title="กำลังยืนยันบัญชี LINE" subtitle="กรุณารอสักครู่">
       {error ? (
-        <div className="rounded-[6px] border border-alarm-red/30 bg-alarm-red/10 p-4 text-[13px] text-alarm-red">
+        <div className="rounded-[6px] border border-error/30 bg-error/10 p-4 text-[13px] text-error">
           {error}
-          <a href="/login" className="mt-3 block font-medium underline text-iris-violet hover:text-iris-violet-glow">กลับไปหน้าเข้าสู่ระบบ</a>
+          <a href="/login" className="mt-3 block font-medium underline text-link hover:text-link-glow">กลับไปหน้าเข้าสู่ระบบ</a>
         </div>
       ) : (
-        <p className="text-center text-[13px] text-ash-gray">กำลังเข้าสู่ระบบ…</p>
+        <p className="text-center text-[13px] text-mute">กำลังเข้าสู่ระบบ…</p>
       )}
     </AuthLayout>
   );

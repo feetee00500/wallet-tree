@@ -109,7 +109,7 @@ export function BudgetFormModal({
         onChange={(e) => setAmount(e.target.value)}
         error={fieldErrors.amount}
       />
-      {formError ? <p className="text-sm text-rose-400">{formError}</p> : null}
+      {formError ? <p className="text-sm text-error">{formError}</p> : null}
     </Modal>
   );
 }

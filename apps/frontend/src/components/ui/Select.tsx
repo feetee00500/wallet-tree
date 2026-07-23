@@ -187,21 +187,21 @@ export function Select({
   };
 
   const triggerClass = [
-    'group flex min-h-[36px] w-full items-center justify-between gap-3 rounded-[6px] border bg-void-black px-3 text-left text-body-sm transition outline-none',
+    'group flex min-h-[40px] w-full items-center justify-between gap-3 rounded-[6px] border bg-canvas px-3 text-left text-body-sm transition outline-none',
     error
-      ? 'border-alarm-red/60'
+      ? 'border-error/60'
       : open
-        ? 'border-iris-violet/70 ring-2 ring-iris-violet/20'
-        : 'border-graphite-hairline hover:border-white',
+        ? 'border-link ring-2 ring-link/20'
+        : 'border-hairline hover:border-hairline-strong',
     disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer',
-    'focus-visible:ring-2 focus-visible:ring-iris-violet/40 focus-visible:border-iris-violet/70',
+    'focus-visible:ring-2 focus-visible:ring-link/40 focus-visible:border-link',
     className,
   ].join(' ');
 
   return (
     <div className="flex flex-col gap-1.5">
       {label ? (
-        <label htmlFor={triggerId} className="text-body-sm font-medium text-bone-white">
+        <label htmlFor={triggerId} className="text-body-sm font-medium text-body">
           {label}
         </label>
       ) : null}
@@ -223,28 +223,28 @@ export function Select({
       >
         <span className="flex min-w-0 items-center gap-2.5">
           {selected?.icon !== undefined ? (
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-[6px] bg-charcoal/30 text-sm">
+            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-[6px] bg-canvas-soft-2 text-sm">
               {selected.icon}
             </span>
           ) : null}
-          <span className={`truncate ${selected ? 'text-white' : 'text-iron'}`}>
+          <span className={`truncate ${selected ? 'text-ink' : 'text-mute'}`}>
             {selected ? selected.label : placeholder}
           </span>
         </span>
         <ChevronDownIcon
           className={`h-4 w-4 shrink-0 transition-all duration-200 ${
-            open ? 'rotate-180 text-iris-violet' : 'text-ash-gray group-hover:text-bone-white'
+            open ? 'rotate-180 text-link' : 'text-mute group-hover:text-ink'
           }`}
         />
       </button>
-      {error ? <span className="text-caption text-alarm-red">{error}</span> : null}
+      {error ? <span className="text-caption text-error">{error}</span> : null}
       {open && position
         ? createPortal(
             <div
               ref={popoverRef}
               id={listboxId}
               role="listbox"
-              className="fixed z-[60] overflow-hidden rounded-[16px] border border-graphite-hairline bg-void-black ring-1 ring-black/40"
+              className="fixed z-[60] overflow-hidden rounded-[8px] border border-hairline bg-canvas shadow-[var(--shadow-level-5)]"
               style={{
                 top: position.top,
                 left: position.left,
@@ -260,7 +260,7 @@ export function Select({
                 style={{ maxHeight: position.maxHeight - 2 }}
               >
                 {options.length === 0 ? (
-                  <li className="px-3 py-3 text-body-sm text-ash-gray">ไม่มีตัวเลือก</li>
+                  <li className="px-3 py-3 text-body-sm text-mute">ไม่มีตัวเลือก</li>
                 ) : null}
                 {options.map((option, idx) => {
                   const isSelected = option.value === value;
@@ -278,18 +278,18 @@ export function Select({
                       className={[
                         'mx-1 flex items-center justify-between gap-3 rounded-[6px] px-2.5 py-2 text-body-sm transition select-none',
                         option.disabled
-                          ? 'cursor-not-allowed text-iron'
+                          ? 'cursor-not-allowed text-mute'
                           : 'cursor-pointer',
-                        !option.disabled && isHighlighted ? 'bg-charcoal/30 text-bone-white' : '',
+                        !option.disabled && isHighlighted ? 'bg-canvas-soft text-ink' : '',
                         !option.disabled && !isHighlighted && isSelected
-                          ? 'text-iris-violet'
+                          ? 'text-link'
                           : '',
-                        !option.disabled && !isHighlighted && !isSelected ? 'text-bone-white' : '',
+                        !option.disabled && !isHighlighted && !isSelected ? 'text-body' : '',
                       ].join(' ')}
                     >
                       <span className="flex min-w-0 items-center gap-2.5">
                         {option.icon !== undefined ? (
-                          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-[6px] bg-charcoal/30 text-sm">
+                          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-[6px] bg-canvas-soft-2 text-sm">
                             {option.icon}
                           </span>
                         ) : null}
@@ -297,10 +297,10 @@ export function Select({
                       </span>
                       <span className="flex shrink-0 items-center gap-2">
                         {option.hint ? (
-                          <span className="text-caption text-iron">{option.hint}</span>
+                          <span className="text-caption text-mute">{option.hint}</span>
                         ) : null}
                         {isSelected ? (
-                          <CheckIcon className="h-4 w-4 text-iris-violet" />
+                          <CheckIcon className="h-4 w-4 text-link" />
                         ) : null}
                       </span>
                     </li>

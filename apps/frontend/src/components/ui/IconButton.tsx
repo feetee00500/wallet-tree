@@ -1,42 +1,28 @@
-import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from 'react';
-
-type IconButtonTone = 'neutral' | 'danger' | 'accent';
-type IconButtonSize = 'sm' | 'md';
+import type { ButtonHTMLAttributes, ComponentType, SVGProps } from 'react';
 
 interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  tone?: IconButtonTone;
-  size?: IconButtonSize;
+  icon: ComponentType<SVGProps<SVGSVGElement>>;
   label: string;
-  children: ReactNode;
+  tone?: 'default' | 'danger';
 }
 
-const sizeClass: Record<IconButtonSize, string> = {
-  sm: 'h-7 w-7',
-  md: 'h-8 w-8',
-};
-
-const toneClass: Record<IconButtonTone, string> = {
-  neutral: 'text-ash-gray hover:bg-charcoal/30 hover:text-bone-white',
-  danger: 'text-ash-gray hover:bg-alarm-red/10 hover:text-alarm-red',
-  accent: 'text-ash-gray hover:bg-iris-violet/10 hover:text-iris-violet',
-};
-
-export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
-  function IconButton(
-    { tone = 'neutral', size = 'md', label, className = '', children, type = 'button', ...rest },
-    ref,
-  ) {
-    return (
-      <button
-        ref={ref}
-        type={type}
-        aria-label={label}
-        title={label}
-        className={`inline-flex shrink-0 items-center justify-center rounded-[6px] transition focus:outline-none focus-visible:ring-2 focus-visible:ring-iris-violet/40 disabled:cursor-not-allowed disabled:opacity-50 ${sizeClass[size]} ${toneClass[tone]} ${className}`}
-        {...rest}
-      >
-        {children}
-      </button>
-    );
-  },
-);
+export function IconButton({
+  icon: Icon,
+  label,
+  tone = 'default',
+  className = '',
+  ...rest
+}: IconButtonProps) {
+  return (
+    <button
+      type="button"
+      aria-label={label}
+      className={`flex h-8 w-8 items-center justify-center rounded-full border border-hairline bg-canvas text-body transition hover:bg-canvas-soft hover:text-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-link/50 ${
+        tone === 'danger' ? 'hover:text-error hover:border-error' : ''
+      } ${className}`}
+      {...rest}
+    >
+      <Icon className="h-4 w-4" />
+    </button>
+  );
+}

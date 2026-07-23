@@ -8,10 +8,10 @@ interface PaginationProps {
 const baseButtonClass =
   'inline-flex min-h-[36px] min-w-[36px] items-center justify-center rounded-[4px] border text-[13px] font-medium transition disabled:cursor-not-allowed disabled:opacity-40';
 
-const navClass = `${baseButtonClass} border-zinc-800 bg-zinc-900 px-3 text-zinc-200 hover:border-zinc-700 hover:text-zinc-100`;
-const numberClass = `${baseButtonClass} border-zinc-800 bg-zinc-900 text-zinc-300 hover:border-zinc-700 hover:text-zinc-100`;
-const activeClass = `${baseButtonClass} border-cyan-400/40 bg-cyan-500/10 text-cyan-400`;
-const ellipsisClass = 'inline-flex min-h-[36px] min-w-[36px] items-center justify-center text-[13px] text-zinc-600';
+const navClass = `${baseButtonClass} border-hairline bg-canvas px-3 text-ink hover:border-hairline hover:text-ink`;
+const numberClass = `${baseButtonClass} border-hairline bg-canvas text-body hover:border-hairline hover:text-ink`;
+const activeClass = `${baseButtonClass} border-link/40 bg-link/10 text-link`;
+const ellipsisClass = 'inline-flex min-h-[36px] min-w-[36px] items-center justify-center text-[13px] text-mute';
 
 function buildPageList(page: number, totalPages: number): (number | 'gap')[] {
   if (totalPages <= 7) {
@@ -33,8 +33,8 @@ export function Pagination({ page, totalPages, total, onChange }: PaginationProp
 
   return (
     <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
-      <p className="text-[13px] text-zinc-400">
-        ทั้งหมด <span className="font-medium text-zinc-200">{total.toLocaleString('th-TH')}</span>{' '}
+      <p className="text-[13px] text-body">
+        ทั้งหมด <span className="font-medium text-ink">{total.toLocaleString('th-TH')}</span>{' '}
         รายการ
       </p>
       <div className="flex items-center gap-1.5">
@@ -65,7 +65,7 @@ export function Pagination({ page, totalPages, total, onChange }: PaginationProp
             ),
           )}
         </div>
-        <span className="text-[13px] text-zinc-400 sm:hidden">
+        <span className="text-[13px] text-body sm:hidden">
           หน้า {page} / {safeTotalPages}
         </span>
         <button

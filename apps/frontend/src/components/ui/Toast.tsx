@@ -28,16 +28,16 @@ interface ToastContextValue {
 
 const ToastContext = createContext<ToastContextValue | null>(null);
 
-const toneClass: Record<ToastTone, string> = {
-  success: 'border-pulse-green/30 bg-pulse-green/10 text-pulse-green',
-  error: 'border-alarm-red/30 bg-alarm-red/10 text-alarm-red',
-  info: 'border-graphite-hairline bg-void-black text-bone-white',
+const toneContainer: Record<ToastTone, string> = {
+  success: 'border-cyan-soft bg-cyan-soft/30',
+  error: 'border-error-soft bg-error-soft/30',
+  info: 'border-hairline bg-canvas',
 };
 
-const iconToneClass: Record<ToastTone, string> = {
-  success: 'text-pulse-green',
-  error: 'text-alarm-red',
-  info: 'text-ash-gray',
+const toneColor: Record<ToastTone, string> = {
+  success: 'text-cyan-deep',
+  error: 'text-error',
+  info: 'text-body',
 };
 
 export function ToastProvider({ children }: { children: ReactNode }) {
@@ -100,19 +100,19 @@ function ToastItem({ toast, onDismiss }: { toast: Toast; onDismiss: (id: number)
     <div
       role="status"
       aria-live="polite"
-      className={`pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-[16px] border px-4 py-3 text-body-sm transition-all duration-200 ${
-        toneClass[toast.tone]
+      className={`pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-[8px] border px-4 py-3 text-body-sm shadow-[var(--shadow-level-4)] transition-all duration-200 ${
+        toneContainer[toast.tone]
       } ${visible ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'}`}
     >
-      <span className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center ${iconToneClass[toast.tone]}`}>
+      <span className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center ${toneColor[toast.tone]}`}>
         <CheckIcon className="h-4 w-4" />
       </span>
-      <p className="flex-1 leading-snug">{toast.message}</p>
+      <p className={`flex-1 leading-snug ${toneColor[toast.tone]}`}>{toast.message}</p>
       <button
         type="button"
         aria-label="ปิด"
         onClick={() => onDismiss(toast.id)}
-        className="-mr-1 -mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-[6px] text-ash-gray transition hover:bg-charcoal/30 hover:text-bone-white"
+        className="-mr-1 -mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-[6px] text-mute transition hover:bg-canvas-soft hover:text-ink"
       >
         <XIcon className="h-4 w-4" />
       </button>

@@ -102,7 +102,7 @@ export function useAuth(): AuthContextValue {
 
 function AuthLoading() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-zinc-950 text-zinc-400">
+    <div className="min-h-screen flex items-center justify-center bg-canvas-soft text-body">
       <span className="text-sm">กำลังโหลด...</span>
     </div>
   );

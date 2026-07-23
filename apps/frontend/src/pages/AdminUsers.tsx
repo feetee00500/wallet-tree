@@ -27,22 +27,22 @@ export function AdminUsers() {
       {users ? (
         <Card className="overflow-x-auto">
           <table className="w-full min-w-[720px] text-left text-[13px]">
-            <thead className="border-b border-zinc-700 bg-zinc-900 text-[10px] uppercase tracking-[0.12em] text-zinc-500">
+            <thead className="border-b border-hairline bg-canvas text-[10px] uppercase tracking-[0.08em] text-mute">
               <tr><th className="px-4 py-3">ผู้ใช้งาน</th><th className="px-4 py-3">Provider</th><th className="px-4 py-3">Role</th><th className="px-4 py-3">สถานะ</th><th className="px-4 py-3">สร้างเมื่อ</th></tr>
             </thead>
-            <tbody className="divide-y divide-zinc-800">
+            <tbody className="divide-y divide-hairline">
               {users.map((user) => (
-                <tr key={user.id} className="hover:bg-zinc-800/30">
-                  <td className="px-4 py-3"><p className="font-medium text-zinc-100">{user.name}</p><p className="mt-0.5 font-mono text-[10px] text-zinc-500">{user.username || user.id}</p></td>
-                  <td className="px-4 py-3 text-zinc-400">{user.authProvider}</td>
-                  <td className="px-4 py-3 text-zinc-400">{user.role}</td>
+                <tr key={user.id} className="hover:bg-canvas-soft-2/30">
+                  <td className="px-4 py-3"><p className="font-medium text-ink">{user.name}</p><p className="mt-0.5 font-mono text-[10px] text-mute">{user.username || user.id}</p></td>
+                  <td className="px-4 py-3 text-body">{user.authProvider}</td>
+                  <td className="px-4 py-3 text-body">{user.role}</td>
                   <td className="px-4 py-3"><Badge tone={user.status === 'ACTIVE' ? 'success' : 'neutral'}>{user.status}</Badge></td>
-                  <td className="px-4 py-3 text-zinc-400">{new Date(user.createdAt).toLocaleDateString('th-TH')}</td>
+                  <td className="px-4 py-3 text-body">{new Date(user.createdAt).toLocaleDateString('th-TH')}</td>
                 </tr>
               ))}
             </tbody>
           </table>
-          {users.length === 0 ? <p className="p-8 text-center text-sm text-zinc-500">ยังไม่มีผู้ใช้งาน</p> : null}
+          {users.length === 0 ? <p className="p-8 text-center text-sm text-mute">ยังไม่มีผู้ใช้งาน</p> : null}
         </Card>
       ) : null}
     </div>

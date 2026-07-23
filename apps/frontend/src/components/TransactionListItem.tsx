@@ -9,19 +9,19 @@ interface TransactionListItemProps {
 
 export function TransactionListItem({ transaction, category }: TransactionListItemProps) {
   const isIncome = transaction.type === TransactionType.INCOME;
-  const amountClass = isIncome ? 'text-emerald-400' : 'text-orange-400';
+  const amountClass = isIncome ? 'text-cyan-deep' : 'text-error-deep';
   const sign = isIncome ? '+' : '-';
   const title = transaction.description?.trim() || category?.name || 'ไม่ระบุ';
 
   return (
-    <li className="flex min-h-11 items-center justify-between gap-3 border-b border-zinc-800 py-2 last:border-b-0 hover:bg-zinc-800/20">
+    <li className="flex min-h-11 items-center justify-between gap-3 border-b border-hairline py-2 last:border-b-0 hover:bg-canvas-soft-2/20">
       <div className="flex min-w-0 items-center gap-3">
-        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[4px] border border-zinc-700 bg-zinc-800 text-sm">
+        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[4px] border border-hairline bg-canvas-soft-2 text-sm">
           {category?.icon ?? '•'}
         </span>
         <div className="min-w-0">
-          <p className="truncate text-[13px] font-medium text-zinc-100">{title}</p>
-          <p className="truncate text-[11px] text-zinc-500">
+          <p className="truncate text-[13px] font-medium text-ink">{title}</p>
+          <p className="truncate text-[11px] text-mute">
             {(category?.name ?? 'ไม่ระบุหมวดหมู่')} · {formatDate(transaction.createdAt)}
           </p>
         </div>

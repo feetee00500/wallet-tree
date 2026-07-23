@@ -16,8 +16,8 @@ export function TopCategoriesCard({ data, className = '', limit = 5 }: TopCatego
   return (
     <Card className={`flex flex-col px-4 py-4 ${className}`}>
       <div className="flex items-baseline justify-between">
-        <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-zinc-500">หมวดที่จ่ายมากสุด</p>
-        <p className="text-[11px] text-zinc-500">{data.length} หมวด</p>
+        <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.08em] text-mute">หมวดที่จ่ายมากสุด</p>
+        <p className="text-[11px] text-mute">{data.length} หมวด</p>
       </div>
 
       {top.length === 0 ? (
@@ -34,19 +34,19 @@ export function TopCategoriesCard({ data, className = '', limit = 5 }: TopCatego
               <li key={item.name} className="flex flex-col gap-1">
                 <div className="flex items-center justify-between gap-3 text-[13px]">
                   <span className="flex min-w-0 items-center gap-2.5">
-                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-[4px] border border-zinc-700 bg-zinc-800 text-[11px]">
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-[4px] border border-hairline bg-canvas-soft-2 text-[11px]">
                       {item.icon}
                     </span>
-                    <span className="truncate text-zinc-200">{item.name}</span>
+                    <span className="truncate text-ink">{item.name}</span>
                   </span>
-                  <span className="shrink-0 tabular-nums text-zinc-300">
+                  <span className="shrink-0 tabular-nums text-body">
                     {formatCurrency(item.total)}
-                    <span className="ml-1.5 text-xs text-zinc-500">{item.percentage}%</span>
+                    <span className="ml-1.5 text-xs text-mute">{item.percentage}%</span>
                   </span>
                 </div>
-                <div className="h-1.5 overflow-hidden rounded-full bg-zinc-800">
+                <div className="h-1.5 overflow-hidden rounded-full bg-canvas-soft-2">
                   <div
-                    className="h-full rounded-full bg-orange-500/80 transition-all duration-200"
+                    className="h-full rounded-full bg-warning/80 transition-all duration-200"
                     style={{ width: `${width}%` }}
                   />
                 </div>

@@ -34,14 +34,14 @@ export function AdminLogin() {
   }
 
   return (
-    <AuthLayout title="Admin Login" subtitle="สำหรับผู้ดูแลระบบที่ได้รับอนุญาตเท่านั้น">
+    <AuthLayout title="Admin Login" subtitle="สำหรับผู้ดูแลระบบเท่านั้น">
       <form className="flex flex-col gap-4" onSubmit={submit}>
         <Input label="Username" value={username} onChange={(event) => setUsername(event.target.value)} autoComplete="username" required />
         <Input label="Password" type="password" value={password} onChange={(event) => setPassword(event.target.value)} autoComplete="current-password" required />
-        {error ? <p className="text-sm text-alarm-red">{error}</p> : null}
-        <Button type="submit" loading={loading}>เข้าสู่ระบบ Admin</Button>
+        {error ? <p className="text-sm text-error">{error}</p> : null}
+        <Button type="submit" loading={loading}>เข้าสู่ระบบ</Button>
       </form>
-      <a href="/login" className="mt-5 block text-center text-[13px] text-ash-gray hover:text-bone-white">กลับไป LINE Login</a>
+      <a href="/login" className="mt-5 block text-center text-[13px] text-mute hover:text-ink">← LINE Login</a>
     </AuthLayout>
   );
 }

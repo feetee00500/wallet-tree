@@ -115,17 +115,17 @@ export function CategoryFormModal({
           disabled={isEdit}
         />
         {isEdit ? (
-          <p className="-mt-2 text-xs text-zinc-500">ไม่สามารถเปลี่ยนประเภทของหมวดหมู่ได้</p>
+          <p className="-mt-2 text-xs text-mute">ไม่สามารถเปลี่ยนประเภทของหมวดหมู่ได้</p>
         ) : null}
 
         <div className="flex flex-col gap-1.5">
-          <span className="text-[13px] font-medium text-zinc-300">ไอคอน</span>
+          <span className="text-[13px] font-medium text-body">ไอคอน</span>
           <EmojiPicker
             value={values.icon}
             onChange={(next) => setValues((prev) => ({ ...prev, icon: next }))}
           />
           {fieldErrors.icon ? (
-            <span className="text-xs text-rose-400">{fieldErrors.icon}</span>
+            <span className="text-xs text-error">{fieldErrors.icon}</span>
           ) : null}
         </div>
 
@@ -140,7 +140,7 @@ export function CategoryFormModal({
         />
 
         {formError ? (
-          <div className="rounded-[6px] border border-rose-500/40 bg-rose-500/10 px-4 py-3 text-[13px] text-rose-300">
+          <div className="rounded-[6px] border border-error/30 bg-error-soft/30 px-4 py-3 text-[13px] text-error">
             {formError}
           </div>
         ) : null}

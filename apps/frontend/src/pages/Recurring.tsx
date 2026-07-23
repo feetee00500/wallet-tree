@@ -182,25 +182,25 @@ interface RecurringCardProps {
 
 function RecurringCard({ item, onEdit, onDelete, onToggleActive }: RecurringCardProps) {
   const isIncome = item.type === TransactionType.INCOME;
-  const amountClass = isIncome ? 'text-emerald-400' : 'text-orange-400';
+  const amountClass = isIncome ? 'text-cyan-deep' : 'text-error-deep';
   const sign = isIncome ? '+' : '-';
 
   return (
     <li
-      className={`flex flex-col gap-4 rounded-[6px] border bg-zinc-900 px-4 py-4 shadow-[0_1px_4px_rgba(0,0,0,0.4)] transition hover:bg-zinc-800/40 ${
-        item.active ? 'border-zinc-700' : 'border-zinc-800/60 opacity-75'
+      className={`flex flex-col gap-4 rounded-[6px] border bg-canvas px-4 py-4 shadow-[var(--shadow-level-2)] transition hover:bg-canvas-soft-2/40 ${
+        item.active ? 'border-hairline' : 'border-hairline/60 opacity-75'
       }`}
     >
       <div className="flex items-start justify-between gap-3">
         <div className="flex min-w-0 items-center gap-3">
-          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-zinc-800 text-lg">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-canvas-soft-2 text-lg">
             {item.categoryIcon}
           </span>
           <div className="min-w-0">
-            <p className="truncate text-[13px] font-medium text-zinc-100">
+            <p className="truncate text-[13px] font-medium text-ink">
               {item.description?.trim() || item.categoryName}
             </p>
-            <p className="truncate text-xs text-zinc-500">{item.categoryName}</p>
+            <p className="truncate text-xs text-mute">{item.categoryName}</p>
           </div>
         </div>
         <span className={`shrink-0 text-sm font-semibold tabular-nums ${amountClass}`}>
@@ -219,24 +219,20 @@ function RecurringCard({ item, onEdit, onDelete, onToggleActive }: RecurringCard
         )}
       </div>
 
-      <div className="flex items-center justify-between gap-2 border-t border-zinc-800 pt-3">
+      <div className="flex items-center justify-between gap-2 border-t border-hairline pt-3">
         <div className="flex items-center gap-2">
           <Switch
             checked={item.active}
             onChange={onToggleActive}
             label={item.active ? 'ปิดใช้งาน' : 'เปิดใช้งาน'}
           />
-          <span className="text-xs text-zinc-500">
+          <span className="text-xs text-mute">
             {item.active ? 'เปิดใช้งาน' : 'ปิดใช้งาน'}
           </span>
         </div>
         <div className="flex items-center gap-1">
-          <IconButton size="sm" tone="accent" label="แก้ไข" onClick={onEdit}>
-            <PencilIcon className="h-3.5 w-3.5" />
-          </IconButton>
-          <IconButton size="sm" tone="danger" label="ลบ" onClick={onDelete}>
-            <TrashIcon className="h-3.5 w-3.5" />
-          </IconButton>
+          <IconButton icon={PencilIcon} label="แก้ไข" onClick={onEdit} />
+          <IconButton icon={TrashIcon} tone="danger" label="ลบ" onClick={onDelete} />
         </div>
       </div>
     </li>
@@ -387,7 +383,7 @@ function RecurringFormModal({
         />
 
         {formError ? (
-          <p className="text-sm text-rose-400">{formError}</p>
+          <p className="text-sm text-error">{formError}</p>
         ) : null}
 
         <div className="flex justify-end gap-3 pt-1">

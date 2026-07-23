@@ -1,6 +1,6 @@
 import type { HTMLAttributes } from 'react';
 
-type CardVariant = 'default' | 'muted' | 'elevated';
+type CardVariant = 'default' | 'soft' | 'elevated';
 
 interface CardProps extends HTMLAttributes<HTMLDivElement> {
   variant?: CardVariant;
@@ -8,9 +8,9 @@ interface CardProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const variantClass: Record<CardVariant, string> = {
-  default: 'bg-void-black border-graphite-hairline',
-  muted: 'bg-void-black border-graphite-hairline/60',
-  elevated: 'bg-surface-gradient border-graphite-hairline',
+  default: 'bg-canvas border-hairline shadow-[var(--shadow-level-3)]',
+  soft: 'bg-canvas-soft border-hairline',
+  elevated: 'bg-canvas border-hairline shadow-[var(--shadow-level-4)]',
 };
 
 export function Card({
@@ -21,8 +21,8 @@ export function Card({
 }: CardProps) {
   return (
     <div
-      className={`rounded-[16px] border ${variantClass[variant]} ${
-        interactive ? 'transition hover:border-white' : ''
+      className={`rounded-[12px] border ${variantClass[variant]} ${
+        interactive ? 'transition hover:shadow-[var(--shadow-level-4)]' : ''
       } ${className}`}
       {...rest}
     />

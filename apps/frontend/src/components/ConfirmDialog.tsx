@@ -26,9 +26,9 @@ export function ConfirmDialog({
 }: ConfirmDialogProps) {
   return (
     <Modal open={open} onClose={loading ? () => undefined : onClose} title={title}>
-      <p className="text-[13px] text-zinc-400">{description}</p>
+      <p className="text-[13px] text-body">{description}</p>
       {error ? (
-        <div className="mt-4 rounded-[6px] border border-rose-500/40 bg-rose-500/10 px-4 py-3 text-[13px] text-rose-300">
+        <div className="mt-4 rounded-[6px] border border-error/30 bg-error-soft/30 px-4 py-3 text-[13px] text-error">
           {error}
         </div>
       ) : null}

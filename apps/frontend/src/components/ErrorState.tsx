@@ -12,9 +12,9 @@ export function ErrorState({
   className = '',
 }: ErrorStateProps) {
   return (
-    <Card className={`border-rose-500/30 bg-rose-500/5 px-4 py-3 text-[13px] text-rose-300 ${className}`}>
+    <Card className={`border-error/30 bg-error/5 px-4 py-3 text-[13px] text-error ${className}`}>
       <p className="font-medium">{message}</p>
-      {hint ? <p className="mt-1 text-xs text-rose-300/70">{hint}</p> : null}
+      {hint ? <p className="mt-1 text-xs text-error/70">{hint}</p> : null}
     </Card>
   );
 }

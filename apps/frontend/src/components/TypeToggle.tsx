@@ -1,5 +1,5 @@
 import { TransactionType } from '@wallet-tree/shared';
-import { SegmentedControl, type SegmentedOption } from './ui/SegmentedControl';
+import { SegmentedControl } from './ui/SegmentedControl';
 
 interface TypeToggleProps {
   value: TransactionType;
@@ -8,19 +8,17 @@ interface TypeToggleProps {
   label?: string;
 }
 
-const options: SegmentedOption<TransactionType>[] = [
-  { value: TransactionType.EXPENSE, label: 'รายจ่าย', tone: 'expense' },
-  { value: TransactionType.INCOME, label: 'รายรับ', tone: 'income' },
+const options = [
+  { value: TransactionType.EXPENSE, label: 'รายจ่าย' },
+  { value: TransactionType.INCOME, label: 'รายรับ' },
 ];
 
-export function TypeToggle({ value, onChange, disabled = false, label = 'ประเภท' }: TypeToggleProps) {
+export function TypeToggle({ value, onChange }: TypeToggleProps) {
   return (
     <SegmentedControl
-      label={label}
       value={value}
-      onChange={onChange}
+      onChange={(next) => onChange(next as TransactionType)}
       options={options}
-      disabled={disabled}
     />
   );
 }

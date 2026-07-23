@@ -20,9 +20,9 @@ export function TransactionsTable({
 }: TransactionsTableProps) {
   return (
     <>
-      <div className="hidden overflow-hidden rounded-[6px] border border-zinc-700 bg-zinc-900 shadow-[0_1px_4px_rgba(0,0,0,0.4)] sm:block">
+      <div className="hidden overflow-hidden rounded-[6px] border border-hairline bg-canvas shadow-[var(--shadow-level-2)] sm:block">
         <table className="w-full text-[13px]">
-          <thead className="bg-zinc-900/80 text-left text-[11px] font-semibold uppercase tracking-wide text-zinc-500">
+          <thead className="bg-canvas/80 text-left text-[11px] font-semibold uppercase tracking-wide text-mute">
             <tr>
               <th className="px-4 py-2.5 font-medium">วันที่</th>
               <th className="px-4 py-3 font-medium">รายละเอียด</th>
@@ -32,20 +32,20 @@ export function TransactionsTable({
               <th className="px-4 py-3 text-right font-medium" />
             </tr>
           </thead>
-          <tbody className="divide-y divide-zinc-800">
+          <tbody className="divide-y divide-hairline">
             {transactions.map((transaction) => {
               const category = categories.get(transaction.categoryId);
               const isIncome = transaction.type === TransactionType.INCOME;
               const description = transaction.description?.trim() || category?.name || 'ไม่ระบุ';
               return (
-                <tr key={transaction.id} className="text-zinc-100 transition hover:bg-zinc-800/30">
-                  <td className="whitespace-nowrap px-4 py-3 text-zinc-500">
+                <tr key={transaction.id} className="text-ink transition hover:bg-canvas-soft-2/30">
+                  <td className="whitespace-nowrap px-4 py-3 text-mute">
                     {formatDate(transaction.createdAt)}
                   </td>
                   <td className="px-4 py-3">{description}</td>
                   <td className="px-4 py-3">
-                    <span className="inline-flex items-center gap-2 text-zinc-300">
-                      <span className="flex h-6 w-6 items-center justify-center rounded-[4px] bg-zinc-800 text-[11px]">
+                    <span className="inline-flex items-center gap-2 text-body">
+                      <span className="flex h-6 w-6 items-center justify-center rounded-[4px] bg-canvas-soft-2 text-[11px]">
                         {category?.icon ?? '•'}
                       </span>
                       {category?.name ?? 'ไม่ระบุ'}
@@ -58,7 +58,7 @@ export function TransactionsTable({
                   </td>
                   <td
                     className={`whitespace-nowrap px-4 py-3 text-right font-semibold tabular-nums ${
-                      isIncome ? 'text-emerald-400' : 'text-orange-400'
+                      isIncome ? 'text-cyan-deep' : 'text-error-deep'
                     }`}
                   >
                     {isIncome ? '+' : '-'}
@@ -67,21 +67,16 @@ export function TransactionsTable({
                   <td className="whitespace-nowrap px-4 py-3 text-right">
                     <div className="inline-flex gap-1">
                       <IconButton
-                        size="sm"
-                        tone="accent"
+                        icon={PencilIcon}
                         label="แก้ไข"
                         onClick={() => onEdit(transaction)}
-                      >
-                        <PencilIcon className="h-3.5 w-3.5" />
-                      </IconButton>
+                      />
                       <IconButton
-                        size="sm"
+                        icon={TrashIcon}
                         tone="danger"
                         label="ลบ"
                         onClick={() => onDelete(transaction)}
-                      >
-                        <TrashIcon className="h-3.5 w-3.5" />
-                      </IconButton>
+                      />
                     </div>
                   </td>
                 </tr>
@@ -99,23 +94,23 @@ export function TransactionsTable({
           return (
             <li
               key={transaction.id}
-              className="rounded-[6px] border border-zinc-700 bg-zinc-900 px-4 py-3 shadow-[0_1px_4px_rgba(0,0,0,0.4)]"
+              className="rounded-[6px] border border-hairline bg-canvas px-4 py-3 shadow-[var(--shadow-level-2)]"
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex min-w-0 items-center gap-3">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[4px] bg-zinc-800 text-base">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[4px] bg-canvas-soft-2 text-base">
                     {category?.icon ?? '•'}
                   </span>
                   <div className="min-w-0">
-                    <p className="truncate text-[13px] font-medium text-zinc-100">{description}</p>
-                    <p className="truncate text-[11px] text-zinc-500">
+                    <p className="truncate text-[13px] font-medium text-ink">{description}</p>
+                    <p className="truncate text-[11px] text-mute">
                       {(category?.name ?? 'ไม่ระบุ')} · {formatDate(transaction.createdAt)}
                     </p>
                   </div>
                 </div>
                 <span
                   className={`shrink-0 text-[13px] font-semibold tabular-nums ${
-                    isIncome ? 'text-emerald-400' : 'text-orange-400'
+                    isIncome ? 'text-cyan-deep' : 'text-error-deep'
                   }`}
                 >
                   {isIncome ? '+' : '-'}
@@ -128,21 +123,16 @@ export function TransactionsTable({
                 </Badge>
                 <div className="flex gap-1">
                   <IconButton
-                    size="sm"
-                    tone="accent"
+                    icon={PencilIcon}
                     label="แก้ไข"
                     onClick={() => onEdit(transaction)}
-                  >
-                    <PencilIcon className="h-3.5 w-3.5" />
-                  </IconButton>
+                  />
                   <IconButton
-                    size="sm"
+                    icon={TrashIcon}
                     tone="danger"
                     label="ลบ"
                     onClick={() => onDelete(transaction)}
-                  >
-                    <TrashIcon className="h-3.5 w-3.5" />
-                  </IconButton>
+                  />
                 </div>
               </div>
             </li>

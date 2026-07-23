@@ -15,27 +15,26 @@ interface CategoryPieChartProps {
 
 interface PaletteEntry {
   hex: string;
-  dotClass: string;
 }
 
 const palettes: Record<Palette, PaletteEntry[]> = {
   expense: [
-    { hex: '#ff6b00', dotClass: 'bg-orange-500' },
-    { hex: '#f5a623', dotClass: 'bg-amber-500' },
-    { hex: '#ff8a33', dotClass: 'bg-orange-400' },
-    { hex: '#d29922', dotClass: 'bg-amber-600' },
-    { hex: '#a371f7', dotClass: 'bg-violet-400' },
-    { hex: '#db6d28', dotClass: 'bg-orange-600' },
-    { hex: '#8b949e', dotClass: 'bg-zinc-500' },
+    { hex: '#ff6b00' },
+    { hex: '#f5a623' },
+    { hex: '#ff8a33' },
+    { hex: '#d29922' },
+    { hex: '#a371f7' },
+    { hex: '#db6d28' },
+    { hex: '#8b949e' },
   ],
   income: [
-    { hex: '#3fb950', dotClass: 'bg-emerald-400' },
-    { hex: '#58a6ff', dotClass: 'bg-cyan-400' },
-    { hex: '#14b8a6', dotClass: 'bg-teal-500' },
-    { hex: '#22c55e', dotClass: 'bg-green-500' },
-    { hex: '#0ea5e9', dotClass: 'bg-sky-500' },
-    { hex: '#3b82f6', dotClass: 'bg-blue-500' },
-    { hex: '#84cc16', dotClass: 'bg-lime-500' },
+    { hex: '#3fb950' },
+    { hex: '#58a6ff' },
+    { hex: '#14b8a6' },
+    { hex: '#22c55e' },
+    { hex: '#0ea5e9' },
+    { hex: '#3b82f6' },
+    { hex: '#84cc16' },
   ],
 };
 
@@ -49,7 +48,7 @@ export function CategoryPieChart({ title, data, palette, className = '' }: Categ
 
   return (
     <Card className={`flex flex-col px-4 py-4 ${className}`}>
-      <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-zinc-500">{title}</p>
+      <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.08em] text-mute">{title}</p>
       {isEmpty ? (
         <EmptyState
           title="ยังไม่มีข้อมูลเดือนนี้"
@@ -98,10 +97,10 @@ export function CategoryPieChart({ title, data, palette, className = '' }: Categ
             {data.map((item, idx) => (
               <li key={item.name} className="flex items-center justify-between gap-3">
                 <span className="flex min-w-0 items-center gap-2">
-                  <span className={`h-2 w-2 shrink-0 rounded-full ${paletteEntry(palette, idx).dotClass}`} />
-                  <span className="truncate text-zinc-300">{item.name}</span>
+                  <span className="h-2 w-2 shrink-0 rounded-full" style={{ backgroundColor: paletteEntry(palette, idx).hex }} />
+                  <span className="truncate text-body">{item.name}</span>
                 </span>
-                <span className="shrink-0 tabular-nums text-zinc-400">
+                <span className="shrink-0 tabular-nums text-body">
                   {formatCurrency(item.total)} · {item.percentage}%
                 </span>
               </li>
